@@ -1,113 +1,146 @@
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📚 Kitap Dünyam</title>
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            background: linear-gradient(to bottom, #e0f7fa, #fff3e0); 
-            color: #333;
-        }
-        header { 
-            background: linear-gradient(135deg, #4CAF50, #2196F3); 
-            color: white; 
-            padding: 20px; 
-            text-align: center; 
-        }
-        h1 { margin: 0; font-size: 1.8em; }
-        input { 
-            width: 90%; 
-            padding: 15px; 
-            margin: 15px auto; 
-            display: block; 
-            border-radius: 25px; 
-            border: none; 
-            font-size: 1.1em;
-        }
-        .tabs { text-align: center; margin: 10px 0; }
-        button { 
-            padding: 12px 18px; 
-            margin: 5px; 
-            border: none; 
-            border-radius: 20px; 
-            background: #4CAF50; 
-            color: white; 
-            font-size: 1em;
-        }
-        .card { 
-            background: white; 
-            margin: 12px; 
-            padding: 15px; 
-            border-radius: 15px; 
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        audio { width: 100%; margin: 10px 0; }
-        .tab { display: none; }
-        .active { display: block; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitap Dünyam</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #333;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .search {
+      margin: 20px;
+      text-align: center;
+    }
+
+    input {
+      width: 80%;
+      padding: 12px;
+      border-radius: 25px;
+      border: none;
+      outline: none;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px;
+    }
+
+    .menu button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .menu button:hover {
+      background: #45a049;
+      transform: scale(1.05);
+    }
+
+    .card {
+      background: white;
+      margin: 20px;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    audio, video {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      color: white;
+      padding: 10px;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>📚 Kitap Dünyam</h1>
-        <p>Yaşa Göre Masallar, Hikayeler ve Sesli Kitaplar</p>
-    </header>
 
-    <input type="text" id="searchInput" placeholder="🔍 Masal veya hikaye ara..." onkeyup="searchContent()">
+<header>
+  <h1>📚 Kitap Dünyam</h1>
+  <p>Masallar, Hikayeler ve Videolar</p>
+</header>
 
-    <div class="tabs">
-        <button onclick="openTab('cocuk06')">0-6 Yaş Masallar</button>
-        <button onclick="openTab('cocuk712')">7-12 Yaş Hikayeler</button>
-        <button onclick="openTab('yetiskin')">Yetişkinler</button>
-    </div>
+<div class="search">
+  <input type="text" placeholder="Masal veya hikaye ara...">
+</div>
 
-    <!-- 0-6 Yaş -->
-    <div id="cocuk06" class="tab active">
-        <h2 style="text-align:center; color:#4CAF50;">🐰 0-6 Yaş Masallar</h2>
-        <div class="card">
-            <h3>1. Kırmızı Başlıklı Kız</h3>
-            <audio controls><source src="https://archive.org/download/childrens-short-works-056/kirmizi_baslikli_kiz.mp3" type="audio/mpeg"></audio>
-            <p><a href="https://youtu.be/5f4n7vNq2zM" target="_blank">🎥 Animasyon Video İzle</a></p>
-        </div>
-        <div class="card">
-            <h3>2. Üç Küçük Domuz</h3>
-            <audio controls><source src="https://archive.org/download/childrens-short-works-056/uc_kucuk_domuz.mp3" type="audio/mpeg"></audio>
-        </div>
-    </div>
+<div class="menu">
+  <button>0-6 Yaş</button>
+  <button>7-12 Yaş</button>
+  <button>Yetişkin</button>
+  <button>Popüler</button>
+  <button>Yeni Eklenenler</button>
+  <button>Sesli Kitaplar</button>
+  <button>Videolar</button>
+</div>
 
-    <!-- 7-12 Yaş -->
-    <div id="cocuk712" class="tab">
-        <h2 style="text-align:center; color:#2196F3;">🦊 7-12 Yaş Hikayeler</h2>
-        <div class="card">
-            <h3>Ali Baba ve Kırk Haramiler</h3>
-            <audio controls><source src="https://archive.org/download/alibaba-librivox/ali_baba.mp3" type="audio/mpeg"></audio>
-        </div>
-    </div>
+<div class="card">
+  <h3>1. Kırmızı Başlıklı Kız</h3>
+  <audio controls>
+    <source src="audio1.mp3" type="audio/mpeg">
+  </audio>
+  <video controls>
+    <source src="video1.mp4" type="video/mp4">
+  </video>
+</div>
 
-    <!-- Yetişkinler -->
-    <div id="yetiskin" class="tab">
-        <h2 style="text-align:center; color:#9C27B0;">📖 Yetişkinler İçin Klasikler</h2>
-        <div class="card">
-            <h3>Küçük Prens (Bölüm 1)</h3>
-            <audio controls><source src="https://archive.org/download/kucuk_prens_librivox/kucukprens_01.mp3" type="audio/mpeg"></audio>
-        </div>
-    </div>
+<div class="card">
+  <h3>2. Üç Küçük Domuz</h3>
+  <audio controls>
+    <source src="audio2.mp3" type="audio/mpeg">
+  </audio>
+</div>
 
-    <script>
-        function openTab(tabName) {
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-        }
+<div class="card">
+  <h3>3. Pamuk Prenses</h3>
+  <audio controls>
+    <source src="audio3.mp3" type="audio/mpeg">
+  </audio>
+</div>
 
-        function searchContent() {
-            let filter = document.getElementById("searchInput").value.toUpperCase();
-            let cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.style.display = card.textContent.toUpperCase().indexOf(filter) > -1 ? "" : "none";
-            });
-        }
-    </script>
+<div class="card">
+  <h3>4. Keloğlan Masalı</h3>
+  <audio controls>
+    <source src="audio4.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<div class="card">
+  <h3>5. Nasreddin Hoca Fıkraları</h3>
+  <audio controls>
+    <source src="audio5.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<footer>
+  <p>© 2026 Kitap Dünyam</p>
+</footer>
+
 </body>
 </html>
