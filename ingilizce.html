@@ -3,49 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İngilizce Öğren</title>
+<title>İngilizce Oyun</title>
 
 <style>
 body{
     margin:0;
     font-family:Arial;
     background:#FFFDF0;
-    padding:20px;
+    text-align:center;
+    padding-bottom:100px;
 }
 
-h1{
-    text-align:center;
+header{
+    background:#FFCA3A;
+    padding:20px;
+    color:white;
+    font-size:22px;
+}
+
+.box{
+    background:white;
+    margin:15px;
+    padding:20px;
+    border-radius:20px;
+    border:3px solid #FFCA3A;
+    font-size:22px;
+    cursor:pointer;
+}
+
+.score{
+    font-size:20px;
+    margin:10px;
     color:#1982C4;
 }
 
-.kart{
-    background:white;
-    padding:20px;
-    margin:15px 0;
-    border-radius:20px;
-    border:3px solid #FFCA3A;
-    text-align:center;
-    font-size:20px;
-    cursor:pointer;
+button{
+    padding:15px;
+    margin:10px;
+    width:80%;
+    border:none;
+    border-radius:15px;
+    font-size:18px;
+    background:#1982C4;
+    color:white;
+}
+
+button:hover{
+    background:#0f5c8a;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎓 İngilizce Öğren</h1>
+<header>🎮 İngilizce Oyun</header>
 
-<div class="kart" onclick="ses('Cat')">🐱 Cat = Kedi</div>
-<div class="kart" onclick="ses('Dog')">🐶 Dog = Köpek</div>
-<div class="kart" onclick="ses('Apple')">🍎 Apple = Elma</div>
-<div class="kart" onclick="ses('Car')">🚗 Car = Araba</div>
+<div class="score">
+⭐ Puan: <span id="puan">0</span> | 🏆 Level: <span id="level">1</span>
+</div>
+
+<div class="box" onclick="ses('Cat')">
+🐱 Cat = Kedi (tıkla ses için)
+</div>
+
+<div class="box" onclick="ses('Dog')">
+🐶 Dog = Köpek (tıkla ses için)
+</div>
+
+<hr>
+
+<h3>🎯 Quiz</h3>
+
+<p>“Apple” ne demek?</p>
+
+<button onclick="dogru()">🍎 Elma</button>
+<button onclick="yanlis()">🚗 Araba</button>
+<button onclick="yanlis()">🐶 Köpek</button>
 
 <script>
+
+let puan = 0;
+let level = 1;
+
+function guncelle(){
+    document.getElementById("puan").innerText = puan;
+    document.getElementById("level").innerText = level;
+}
+
 function ses(word){
     let s = new SpeechSynthesisUtterance(word);
     s.lang = "en-US";
     window.speechSynthesis.speak(s);
 }
+
+function dogru(){
+    puan += 10;
+
+    if(puan >= 30){
+        level = 2;
+    }
+    if(puan >= 60){
+        level = 3;
+    }
+
+    guncelle();
+    alert("🎉 Doğru! +10 puan");
+}
+
+function yanlis(){
+    alert("❌ Yanlış! Tekrar dene");
+}
+
+guncelle();
+
 </script>
 
 </body>
