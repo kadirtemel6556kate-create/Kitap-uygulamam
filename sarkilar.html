@@ -16,69 +16,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
-        body {
-            margin: 0;
-            font-family: 'Fredoka One', cursive;
-            background: #FFFDF0;
-            text-align: center;
-            padding-bottom: 120px;
-            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-        }
-
-        header {
-            background: #FF595E;
-            padding: 25px 20px;
-            color: white;
-            font-size: 24px;
-            border-bottom: 6px solid #D14045;
-            border-radius: 0 0 30px 30px;
-            margin-bottom: 20px;
-        }
-
+        body { margin: 0; font-family: 'Fredoka One', cursive; background: #FFFDF0; text-align: center; padding-bottom: 120px; }
+        header { background: #FF595E; padding: 25px 20px; color: white; font-size: 24px; border-bottom: 6px solid #D14045; border-radius: 0 0 30px 30px; margin-bottom: 20px; }
         .sarki-listesi { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
-
-        .sarki-kart {
-            background: white;
-            border-radius: 25px;
-            padding: 15px;
-            border: 4px solid #FFCA3A;
-            box-shadow: 0 8px 0 rgba(0,0,0,0.05);
-        }
-
-        .sarki-adi {
-            display: block;
-            font-size: 18px;
-            color: white;
-            margin-bottom: 10px;
-            background: #FFCA3A;
-            padding: 10px;
-            border-radius: 15px;
-        }
-
-        /* YouTube'u sadece ses barı yapan sihirli kutu */
+        .sarki-kart { background: white; border-radius: 25px; padding: 15px; border: 4px solid #FFCA3A; box-shadow: 0 8px 0 rgba(0,0,0,0.05); }
+        .sarki-adi { display: block; font-size: 18px; color: white; margin-bottom: 10px; background: #FFCA3A; padding: 10px; border-radius: 15px; }
+        
+        /* Pofuduk Oynatıcı Kutusu */
         .ses-oynatici {
             width: 100%;
             height: 65px;
             border-radius: 20px;
             overflow: hidden;
             position: relative;
-            background: #66BB6A; /* Yeşil pofuduk arka plan */
+            background: #66BB6A; /* Senin istediğin o yeşil buton rengi */
         }
-
         .ses-oynatici iframe {
             width: 100%;
             height: 400px;
-            margin-top: -150px; /* Videoyu yukarı itip sadece barı bırakıyoruz */
+            margin-top: -155px; /* Sadece kontrol barını bırakır */
             border: none;
         }
 
-        /* Navigasyon */
-        .candy-nav {
-            position: fixed; bottom: 20px; left: 20px; right: 20px;
-            background: white; display: flex; justify-content: space-around;
-            padding: 15px; border-radius: 50px; border: 4px solid #FF595E;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+        .candy-nav { position: fixed; bottom: 20px; left: 20px; right: 20px; background: white; display: flex; justify-content: space-around; padding: 15px; border-radius: 50px; border: 4px solid #FF595E; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .nav-link { color: #FF595E; font-size: 24px; text-decoration: none; }
     </style>
 </head>
@@ -91,28 +51,28 @@
     <div class="sarki-kart" style="border-color: #FFCA3A;">
         <span class="sarki-adi" style="background: #FFCA3A;">📯 Bak Postacı Geliyor</span>
         <div class="ses-oynatici">
-            <iframe src="https://www.youtube.com/embed/Pet2UbL966g?controls=1&showinfo=0&rel=0"></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/Pet2UbL966g?controls=1&modestbranding=1"></iframe>
         </div>
     </div>
 
     <div class="sarki-kart" style="border-color: #1982C4;">
-        <span class="sarki-adi" style="background: #1982C4;">🐟 Kırmızı Balık</span>
+        <span class="sarki-adi" style="background: #1982C4;">🐦 Mini Mini Bir Kuş</span>
         <div class="ses-oynatici" style="background: #42A5F5;">
-            <iframe src="https://www.youtube.com/embed/o_fM_S_4dUE?controls=1"></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/O-A925U9pC4?controls=1"></iframe>
         </div>
     </div>
 
     <div class="sarki-kart" style="border-color: #A44CD3;">
-        <span class="sarki-adi" style="background: #A44CD3;">🐸 Küçük Kurbağa</span>
+        <span class="sarki-adi" style="background: #A44CD3;">🪓 Baltalar Elimizde</span>
         <div class="ses-oynatici" style="background: #AB47BC;">
-            <iframe src="https://www.youtube.com/embed/S2O6P_36WvU?controls=1"></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/nU-Y03A_n5A?controls=1"></iframe>
         </div>
     </div>
 
     <div class="sarki-kart" style="border-color: #66BB6A;">
-        <span class="sarki-adi" style="background: #66BB6A;">🦆 Beş Küçük Ördek</span>
+        <span class="sarki-adi" style="background: #66BB6A;">🐝 Arı Vız Vız Vız</span>
         <div class="ses-oynatici" style="background: #81C784;">
-            <iframe src="https://www.youtube.com/embed/LndA-K0P_h0?controls=1"></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/PntA4H8R8wI?controls=1"></iframe>
         </div>
     </div>
 
