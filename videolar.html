@@ -11,29 +11,36 @@
         body { margin: 0; background: var(--arka); font-family: 'Fredoka One', cursive; padding-bottom: 120px; }
         header { background: var(--mavi); padding: 25px; text-align: center; border-bottom: 8px solid #116091; }
         h1 { margin: 0; color: white; font-size: 22px; }
-
-        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; }
-        .v-card { 
-            background: white; border-radius: 30px; padding: 20px; 
-            display: flex; flex-direction: column; align-items: center;
-            border: 4px solid var(--mavi); box-shadow: 0 8px 0 #BEE3F8;
-            cursor: pointer; transition: 0.2s;
+        
+        .list-container { padding: 20px; }
+        .video-item { 
+            background: white; 
+            border-radius: 25px; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            border: 4px solid var(--mavi);
+            box-shadow: 0 6px 0 #BEE3F8;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
         }
-        .v-card:active { transform: translateY(4px); box-shadow: 0 4px 0 #BEE3F8; }
-        .v-card i { font-size: 45px; color: var(--mavi); margin-bottom: 10px; }
-        .v-card span { font-size: 15px; color: #444; text-align: center; }
+        .video-info { display: flex; align-items: center; }
+        .video-info i { font-size: 30px; color: var(--mavi); margin-right: 15px; }
+        .video-info span { font-size: 18px; color: #444; }
+        .play-btn { background: var(--mavi); color: white; padding: 10px 20px; border-radius: 15px; font-size: 14px; }
 
-        /* Uygulama Ici Oynatici (Modal) */
-        #videoPlayer {
+        /* Uygulama Ici Oynatici */
+        #videoOverlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 5000; flex-direction: column;
+            background: rgba(0,0,0,0.95); z-index: 5000; flex-direction: column;
             align-items: center; justify-content: center;
         }
-        .close-vid {
+        .close-btn {
             position: absolute; top: 20px; right: 20px; color: white;
-            font-size: 40px; cursor: pointer; z-index: 5100;
+            font-size: 40px; cursor: pointer;
         }
-        iframe { width: 90%; height: 50%; border-radius: 20px; border: 5px solid white; }
+        iframe { width: 95%; height: 50%; border-radius: 15px; border: 4px solid white; }
 
         .candy-nav {
             position: fixed; bottom: 20px; left: 20px; right: 20px;
@@ -47,23 +54,47 @@
 </head>
 <body>
 
-<header><h1>Cizgi Filmler</h1></header>
+<header><h1>Cizgi Film Dunyasi</h1></header>
 
-<div class="video-grid">
-    <div class="v-card" onclick="izle('BURAYA_VIDEO_LINKI_1')">
-        <i class="fas fa-play-circle"></i>
-        <span>Cizgi Film 1</span>
+<div class="list-container">
+    
+    <div class="video-item" onclick="acVideo('https://www.youtube.com/embed/bxeJYeqeQn0')">
+        <div class="video-info">
+            <i class="fas fa-play-circle"></i>
+            <span>Cedric</span>
+        </div>
+        <div class="play-btn">IZLE</div>
     </div>
 
-    <div class="v-card" onclick="izle('BURAYA_VIDEO_LINKI_2')">
-        <i class="fas fa-play-circle"></i>
-        <span>Cizgi Film 2</span>
+    <div class="video-item" onclick="acVideo('https://www.youtube.com/embed/pEl3-0GHyoQ')">
+        <div class="video-info">
+            <i class="fas fa-tv"></i>
+            <span>Tom ve Jerry</span>
+        </div>
+        <div class="play-btn">IZLE</div>
     </div>
+
+    <div class="video-item" onclick="acVideo('https://www.youtube.com/embed/wOc4m1noBs0')">
+        <div class="video-info">
+            <i class="fas fa-child"></i>
+            <span>Niloya</span>
+        </div>
+        <div class="play-btn">IZLE</div>
+    </div>
+
+    <div class="video-item" onclick="acVideo('https://www.youtube.com/embed/wA5b9JJxtMc')">
+        <div class="video-info">
+            <i class="fas fa-smile"></i>
+            <span>Caillou</span>
+        </div>
+        <div class="play-btn">IZLE</div>
+    </div>
+
 </div>
 
-<div id="videoPlayer">
-    <span class="close-vid" onclick="kapat()"><i class="fas fa-times-circle"></i></span>
-    <iframe id="vidFrame" src="" frameborder="0" allowfullscreen></iframe>
+<div id="videoOverlay">
+    <span class="close-btn" onclick="kapatVideo()"><i class="fas fa-times-circle"></i></span>
+    <iframe id="videoFrame" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
 
 <nav class="candy-nav">
@@ -76,13 +107,13 @@
 </nav>
 
 <script>
-    function izle(link) {
-        document.getElementById('vidFrame').src = link;
-        document.getElementById('videoPlayer').style.display = 'flex';
+    function acVideo(link) {
+        document.getElementById('videoFrame').src = link;
+        document.getElementById('videoOverlay').style.display = 'flex';
     }
-    function kapat() {
-        document.getElementById('videoPlayer').style.display = 'none';
-        document.getElementById('vidFrame').src = '';
+    function kapatVideo() {
+        document.getElementById('videoOverlay').style.display = 'none';
+        document.getElementById('videoFrame').src = '';
     }
 </script>
 
