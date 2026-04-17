@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sihirli Kitaplık</title>
+    <title>Sihirli Kitaplik</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
@@ -23,7 +23,7 @@
         }
 
         header {
-            background: #764134; /* Ahşap raf rengi */
+            background: #764134; 
             padding: 30px;
             text-align: center;
             border-bottom: 10px solid #5d3329;
@@ -32,7 +32,6 @@
 
         h1 { margin: 0; font-size: 26px; color: #FFF; text-shadow: 2px 2px #333; }
 
-        /* Kitaplık Düzeni */
         .bookshelf {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -42,7 +41,7 @@
 
         .book {
             background: white;
-            height: 220px;
+            height: 200px;
             border-radius: 15px 30px 30px 15px;
             display: flex;
             flex-direction: column;
@@ -52,15 +51,13 @@
             position: relative;
             box-shadow: 5px 10px 0 rgba(0,0,0,0.1);
             transition: 0.3s;
-            border-left: 12px solid rgba(0,0,0,0.2); /* Kitap sırtı efekti */
+            border-left: 12px solid rgba(0,0,0,0.2);
         }
 
-        .book:active {
-            transform: scale(0.95) rotate(-2deg);
-        }
+        .book:active { transform: scale(0.95); }
 
         .book i {
-            font-size: 55px;
+            font-size: 50px;
             margin-bottom: 15px;
             color: white;
             filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.2));
@@ -74,13 +71,11 @@
             line-height: 1.2;
         }
 
-        /* Kitap Renkleri */
         .b-red { background: var(--kapak-kirmizi); }
         .b-blue { background: var(--kapak-mavi); }
         .b-purple { background: var(--kapak-mor); }
         .b-orange { background: var(--kapak-turuncu); }
 
-        /* Alt Menü */
         .candy-nav {
             position: fixed;
             bottom: 20px; left: 20px; right: 20px;
@@ -101,13 +96,13 @@
 <body>
 
     <header>
-        <h1>📚 Sihirli Kitaplık</h1>
+        <h1>Sihirli Kitaplik</h1>
     </header>
 
     <div class="bookshelf">
         <a href="masal1.html" class="book b-red">
-            <i class="fas fa-rabbit-fast"></i>
-            <span>Tavşan ve Kaplumbağa</span>
+            <i class="fas fa-rabbit"></i>
+            <span>Tavsan ve Kaplumbaga</span>
         </a>
 
         <a href="masal2.html" class="book b-blue">
@@ -116,13 +111,13 @@
         </a>
 
         <a href="masal3.html" class="book b-purple">
-            <i class="fas fa-wand-sparkles"></i>
-            <span>Sihirli Değnek</span>
+            <i class="fas fa-wand-magic"></i>
+            <span>Sihirli Degnek</span>
         </a>
 
         <a href="masal4.html" class="book b-orange">
-            <i class="fas fa-paw"></i>
-            <span>Yavru Aslan</span>
+            <i class="fas fa-cat"></i>
+            <span>Yavru Kedi</span>
         </a>
     </div>
 
