@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İngilizce Oyun</title>
+<title>English PRO Game</title>
 
 <style>
 body{
@@ -11,7 +11,7 @@ body{
     font-family:Arial;
     background:#FFFDF0;
     text-align:center;
-    padding-bottom:100px;
+    padding-bottom:120px;
 }
 
 header{
@@ -21,23 +21,20 @@ header{
     font-size:22px;
 }
 
-.score{
-    margin:10px;
-    font-size:18px;
+.stats{
+    font-size:16px;
     color:#1982C4;
+    margin:10px;
 }
 
 .card{
     background:white;
     margin:15px;
-    padding:20px;
+    padding:25px;
     border-radius:20px;
     border:3px solid #FFCA3A;
-    font-size:20px;
-    min-height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    font-size:22px;
+    min-height:70px;
 }
 
 button{
@@ -51,16 +48,26 @@ button{
     background:#1982C4;
     color:white;
 }
+
+.timer{
+    font-size:18px;
+    color:red;
+    margin:5px;
+}
 </style>
 </head>
 
 <body>
 
-<header>🎮 İngilizce 100 Soru Oyunu</header>
+<header>🎮 ENGLISH PRO GAME</header>
 
-<div class="score">
-⭐ Puan: <span id="puan">0</span>
+<div class="stats">
+⭐ Puan: <span id="puan">0</span> |
+🏆 Level: <span id="level">1</span> |
+❤️ Can: <span id="can">3</span>
 </div>
+
+<div class="timer">⏱️ <span id="time">10</span> saniye</div>
 
 <div class="card" id="soru">Yükleniyor...</div>
 
@@ -71,81 +78,99 @@ button{
 <script>
 
 let puan = 0;
+let level = 1;
+let can = 3;
 let aktif = 0;
+let time = 10;
+let interval;
 
 let sorular = [
-{ soru:"Cat ne demek?", a:"Kedi", b:"Köpek", c:"Araba", dogru:"a" },
-{ soru:"Dog ne demek?", a:"Araba", b:"Köpek", c:"Elma", dogru:"b" },
-{ soru:"Apple ne demek?", a:"Elma", b:"Araba", c:"Kedi", dogru:"a" },
-{ soru:"Car ne demek?", a:"Araba", b:"Kedi", c:"Köpek", dogru:"a" },
-{ soru:"Sun ne demek?", a:"Ay", b:"Güneş", c:"Yıldız", dogru:"b" },
-{ soru:"Moon ne demek?", a:"Güneş", b:"Ay", c:"Araba", dogru:"b" },
-{ soru:"Water ne demek?", a:"Su", b:"Ateş", c:"Toprak", dogru:"a" },
-{ soru:"Book ne demek?", a:"Kitap", b:"Kalem", c:"Silgi", dogru:"a" },
-{ soru:"Pen ne demek?", a:"Kalem", b:"Defter", c:"Silgi", dogru:"a" },
-{ soru:"School ne demek?", a:"Okul", b:"Ev", c:"Park", dogru:"a" },
-{ soru:"Milk ne demek?", a:"Süt", b:"Su", c:"Çay", dogru:"a" },
-{ soru:"Bread ne demek?", a:"Ekmek", b:"Peynir", c:"Su", dogru:"a" },
-{ soru:"Red ne demek?", a:"Kırmızı", b:"Mavi", c:"Yeşil", dogru:"a" },
-{ soru:"Blue ne demek?", a:"Mavi", b:"Kırmızı", c:"Sarı", dogru:"a" },
-{ soru:"Green ne demek?", a:"Yeşil", b:"Mor", c:"Siyah", dogru:"a" },
-{ soru:"Fish ne demek?", a:"Balık", b:"Kuş", c:"Kedi", dogru:"a" },
-{ soru:"Bird ne demek?", a:"Kuş", b:"Balık", c:"Köpek", dogru:"a" },
-{ soru:"House ne demek?", a:"Ev", b:"Araba", c:"Okul", dogru:"a" },
-{ soru:"Door ne demek?", a:"Kapı", b:"Pencere", c:"Duvar", dogru:"a" },
-{ soru:"Window ne demek?", a:"Pencere", b:"Kapı", c:"Çatı", dogru:"a" },
-
-{ soru:"Table ne demek?", a:"Masa", b:"Sandalye", c:"Kapı", dogru:"a" },
-{ soru:"Chair ne demek?", a:"Sandalye", b:"Masa", c:"Kitap", dogru:"a" },
-{ soru:"Phone ne demek?", a:"Telefon", b:"Televizyon", c:"Bilgisayar", dogru:"a" },
-{ soru:"Computer ne demek?", a:"Bilgisayar", b:"Telefon", c:"Kalem", dogru:"a" },
-{ soru:"Bag ne demek?", a:"Çanta", b:"Ayakkabı", c:"Şapka", dogru:"a" },
-
-{ soru:"Happy ne demek?", a:"Mutlu", b:"Üzgün", c:"Kızgın", dogru:"a" },
-{ soru:"Sad ne demek?", a:"Üzgün", b:"Mutlu", c:"Korkmuş", dogru:"a" },
-{ soru:"Angry ne demek?", a:"Kızgın", b:"Mutlu", c:"Yorgun", dogru:"a" },
-
-{ soru:"One ne demek?", a:"Bir", b:"İki", c:"Üç", dogru:"a" },
-{ soru:"Two ne demek?", a:"İki", b:"Bir", c:"Dört", dogru:"a" },
-{ soru:"Three ne demek?", a:"Üç", b:"Beş", c:"Altı", dogru:"a" },
-
-{ soru:"Fast ne demek?", a:"Hızlı", b:"Yavaş", c:"Ağır", dogru:"a" },
-{ soru:"Slow ne demek?", a:"Yavaş", b:"Hızlı", c:"Güçlü", dogru:"a" },
-
-{ soru:"Big ne demek?", a:"Büyük", b:"Küçük", c:"Uzun", dogru:"a" },
-{ soru:"Small ne demek?", a:"Küçük", b:"Büyük", c:"Geniş", dogru:"a" }
+{q:"Cat ne demek?", a:"Kedi", b:"Köpek", c:"Araba", d:"a"},
+{q:"Dog ne demek?", a:"Araba", b:"Köpek", c:"Elma", d:"b"},
+{q:"Apple ne demek?", a:"Elma", b:"Kedi", c:"Su", d:"a"},
+{q:"Car ne demek?", a:"Araba", b:"Ev", c:"Kuş", d:"a"},
+{q:"Sun ne demek?", a:"Ay", b:"Güneş", c:"Yıldız", d:"b"},
+{q:"Water ne demek?", a:"Su", b:"Ateş", c:"Toprak", d:"a"},
+{q:"Book ne demek?", a:"Kitap", b:"Kalem", c:"Masa", d:"a"},
+{q:"School ne demek?", a:"Okul", b:"Ev", c:"Araba", d:"a"},
+{q:"Happy ne demek?", a:"Mutlu", b:"Üzgün", c:"Kızgın", d:"a"},
+{q:"Sad ne demek?", a:"Mutlu", b:"Üzgün", c:"Korkmuş", d:"b"}
 ];
 
-function soruGoster(){
+function guncelle(){
+    document.getElementById("puan").innerText = puan;
+    document.getElementById("level").innerText = level;
+    document.getElementById("can").innerText = can;
+}
+
+function soruYukle(){
     let s = sorular[aktif];
 
-    document.getElementById("soru").innerText = s.soru;
+    document.getElementById("soru").innerText = s.q;
     document.getElementById("a").innerText = "A) " + s.a;
     document.getElementById("b").innerText = "B) " + s.b;
     document.getElementById("c").innerText = "C) " + s.c;
+
+    time = 10;
 }
 
-function cevap(secim){
-    if(secim == sorular[aktif].dogru){
-        puan += 10;
-        alert("🎉 Doğru!");
-    } else {
-        alert("❌ Yanlış!");
+function sayac(){
+    interval = setInterval(()=>{
+        time--;
+        document.getElementById("time").innerText = time;
+
+        if(time <= 0){
+            clearInterval(interval);
+            yanlis();
+        }
+    },1000);
+}
+
+function dogru(){
+    puan += 10;
+
+    if(puan >= 30) level = 2;
+    if(puan >= 60) level = 3;
+    if(puan >= 100) level = 4;
+
+    guncelle();
+}
+
+function yanlis(){
+    can--;
+
+    if(can <= 0){
+        alert("💀 OYUN BİTTİ!");
+        location.reload();
     }
 
-    document.getElementById("puan").innerText = puan;
+    guncelle();
+}
+
+function cevap(sec){
+    clearInterval(interval);
+
+    if(sec == sorular[aktif].d){
+        alert("🎉 Doğru!");
+        dogru();
+    } else {
+        alert("❌ Yanlış!");
+        yanlis();
+    }
 
     aktif++;
 
     if(aktif >= sorular.length){
         aktif = 0;
-        alert("🎮 Oyun bitti! Baştan başlıyor");
     }
 
-    soruGoster();
+    soruYukle();
+    sayac();
 }
 
-soruGoster();
+soruYukle();
+sayac();
+guncelle();
 
 </script>
 
