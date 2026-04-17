@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hafıza Oyunu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { margin: 0; background-color: #0b0b0b; color: #fff; font-family: sans-serif; padding-bottom: 120px; text-align: center; overflow: hidden; touch-action: none; }
+        
+        header { padding: 20px; background: #111; border-bottom: 2px solid #ff00ea; }
+        h1 { background: linear-gradient(45deg, #ff00ea, #00ffcc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 24px; }
+
+        .game-stats { display: flex; justify-content: center; gap: 20px; margin: 15px; font-weight: bold; color: #00ffcc; }
+
+        /* Oyun Tahtası */
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 15px;
+            perspective: 1000px;
+        }
+
+        /* Kart Tasarımı */
+        .card {
+            height: 110px;
+            background: #181818;
+            border-radius: 15px;
+            border: 2px solid #282828;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        /* Kartın Arka Yüzü (Kapalı Hali) */
+        .card::before {
+            content: '?';
+            position: absolute;
+            color: #ff00ea;
+            font-weight: bold;
+        }
+
+        .card.flipped { transform: rotateY(180deg); background: #fff; border-color: #fff; }
+        .card.flipped i { display: block; transform: rotateY(180deg); color: #000; }
+        .card i { display: none; }
+
+        /* Yeniden Başla Butonu */
+        .reset-btn {
+            background: linear-gradient(45deg, #ff00ea, #00ffcc);
+            color: #fff; border: none; padding: 12px 30px; border-radius: 25px;
+            font-weight: bold; font-size: 16px; margin-top: 10px;
+        }
+
+        /* ALT MENÜ VE PARLAYAN BUTON */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0 32px 0; border-top: 1px solid #282828; }
+        .nav-item { text-align: center; font-size: 10px; color: #b3b3b3; text-decoration: none; flex: 1; }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 5px; }
+        .nav-item.active { color: #fff; }
+
+        .game-btn-active {
+            background: linear-gradient(45deg, #ff00ea, #ffcc00, #00ffcc);
+            background-size: 200% 200%;
+            border-radius: 12px; margin: 5px; color: #fff !important;
+            animation: rainbow 3s infinite, pulse 1.5s infinite;
+        }
+        @keyframes rainbow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.1)} 100%{transform:scale(1)} }
+    </style>
+</head>
+<body>
+
+<header><h1>🎮 Eğlence Dünyası</h1></header>
+
+<div class="game-stats">
+    <div>Deneme: <span id="score">0</span></div>
+    <div>Eşleşen: <span id="matched">0</span>/6</div>
+</div>
+
+<div class="memory-game" id="gameBoard"></div>
+
+<button class="reset-btn" onclick="oyunuBaslat()">🔄 Yeni Oyun</button>
+
+<div class="bottom-nav">
+    <a href="index.html" class="nav-item"><i class="fas fa-home"></i>Anasayfa</a>
+    <a href="hikayeler.html" class="nav-item"><i class="fas fa-book-open"></i>Hikayeler</a>
+    <a href="videolar.html" class="nav-item"><i class="fas fa-video"></i>Videolar</a>
+    <a href="sesli-kitaplar.html" class="nav-item"><i class="fas fa-headphones"></i>Dinle</a>
+    <a href="boyama.html" class="nav-item"><i class="fas fa-paint-brush"></i>Boyama</a>
+    <a href="oyunlar.html" class="nav-item game-btn-active"><i class="fas fa-gamepad"></i>Oyunlar</a>
+</div>
+
+<script>
+    const icons = ['fa-ghost', 'fa-robot', 'fa-rocket', 'fa-star', 'fa-paw', 'fa-ice-cream'];
+    let cards = [...icons, ...icons];
+    let flippedCards = [];
+    let matchedCount = 0;
+    let score = 0;
+
+    function oyunuBaslat() {
+        const board = document.getElementById('gameBoard');
+        board.innerHTML = '';
+        flippedCards = [];
+        matchedCount = 0;
+        score = 0;
+        document.getElementById('score').innerText = score;
+        document.getElementById('matched').innerText = matchedCount;
+        
+        cards.sort(() => Math.random() - 0.5);
+
+        cards.forEach((icon) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.icon = icon;
+            card.innerHTML = `<i class="fas ${icon}"></i>`;
+            card.onclick = () => flipCard(card);
+            board.appendChild(card);
+        });
+    }
+
+    function flipCard(card) {
+        if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
+            card.classList.add('flipped');
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                score++;
+                document.getElementById('score').innerText = score;
+                checkMatch();
+            }
+        }
+    }
+
+    function checkMatch() {
+        const [card1, card2] = flippedCards;
+        if (card1.dataset.icon === card2.dataset.icon) {
+            matchedCount++;
+            document.getElementById('matched').innerText = matchedCount;
+            flippedCards = [];
+            if (matchedCount === icons.length) {
+                setTimeout(() => alert("Harikasın Kadir! Hafızan çok güçlü! 🌟"), 500);
+            }
+        } else {
+            setTimeout(() => {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+                flippedCards = [];
+            }, 700);
+        }
+    }
+
+    oyunuBaslat();
+</script>
+
+</body>
+</html>
