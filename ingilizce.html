@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İngilizce Öğren</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#FFFDF0;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+    color:#1982C4;
+}
+
+.kart{
+    background:white;
+    padding:20px;
+    margin:15px 0;
+    border-radius:20px;
+    border:3px solid #FFCA3A;
+    text-align:center;
+    font-size:20px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎓 İngilizce Öğren</h1>
+
+<div class="kart" onclick="ses('Cat')">🐱 Cat = Kedi</div>
+<div class="kart" onclick="ses('Dog')">🐶 Dog = Köpek</div>
+<div class="kart" onclick="ses('Apple')">🍎 Apple = Elma</div>
+<div class="kart" onclick="ses('Car')">🚗 Car = Araba</div>
+
+<script>
+function ses(word){
+    let s = new SpeechSynthesisUtterance(word);
+    s.lang = "en-US";
+    window.speechSynthesis.speak(s);
+}
+</script>
+
+</body>
+</html>
