@@ -1,1 +1,115 @@
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Boyama Dünyası</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { margin: 0; background-color: #000; color: #fff; font-family: sans-serif; overflow: hidden; }
+        header { padding: 15px; background: #111; text-align: center; border-bottom: 1px solid #222; }
+        h1 { color: #1DB954; font-size: 20px; margin: 0; }
+
+        /* Çizim Alanı */
+        #paintCanvas { background: #fff; display: block; margin: 10px auto; border-radius: 10px; touch-action: none; cursor: crosshair; }
+
+        /* Araç Çubuğu */
+        .tools { display: flex; justify-content: center; gap: 10px; padding: 10px; background: #111; position: fixed; bottom: 85px; width: 100%; }
+        .color-btn { width: 35px; height: 35px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; }
+        .clear-btn { background: #ff4444; color: white; border: none; padding: 5px 15px; border-radius: 20px; font-weight: bold; }
+
+        /* Alt Navigasyon */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0 32px 0; border-top: 1px solid #282828; }
+        .nav-item { text-align: center; font-size: 11px; color: #b3b3b3; text-decoration: none; flex: 1; }
+        .nav-item i { font-size: 22px; display: block; margin-bottom: 5px; }
+        .nav-item.active { color: #fff; }
+    </style>
+</head>
+<body>
+
+<header><h1>🎨 Boyama Alanı</h1></header>
+
+<canvas id="paintCanvas"></canvas>
+
+<div class="tools">
+    <div class="color-btn" style="background: #000;" onclick="renkDegis('#000')"></div>
+    <div class="color-btn" style="background: #ff0000;" onclick="renkDegis('#ff0000')"></div>
+    <div class="color-btn" style="background: #1DB954;" onclick="renkDegis('#1DB954')"></div>
+    <div class="color-btn" style="background: #0000ff;" onclick="renkDegis('#0000ff')"></div>
+    <div class="color-btn" style="background: #ffff00;" onclick="renkDegis('#ffff00')"></div>
+    <button class="clear-btn" onclick="temizle()">SİL</button>
+</div>
+
+<div class="bottom-nav">
+    <a href="index.html" class="nav-item"><i class="fas fa-home"></i>Anasayfa</a>
+    <a href="hikayeler.html" class="nav-item"><i class="fas fa-book-open"></i>Hikayeler</a>
+    <a href="videolar.html" class="nav-item"><i class="fas fa-video"></i>Videolar</a>
+    <a href="sesli-kitaplar.html" class="nav-item"><i class="fas fa-headphones"></i>Dinle</a>
+    <a href="boyama.html" class="nav-item active"><i class="fas fa-paint-brush"></i>Boyama</a>
+</div>
+
+<script>
+    const canvas = document.getElementById('paintCanvas');
+    const ctx = canvas.getContext('2d');
+    let ciziyor = false;
+    let renk = '#000';
+
+    // Canvas boyutunu ayarla
+    canvas.width = window.innerWidth - 20;
+    canvas.height = window.innerHeight - 250;
+
+    // Çizim Ayarları
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = renk;
+
+    function basla(e) {
+        ciziyor = true;
+        ciz(e);
+    }
+
+    function dur() {
+        ciziyor = false;
+        ctx.beginPath();
+    }
+
+    function ciz(e) {
+        if (!ciziyor) return;
+        
+        // Dokunmatik veya Fare koordinatlarını al
+        let clientX = e.clientX || e.touches[0].clientX;
+        let clientY = e.clientY || e.touches[0].clientY;
+        
+        let rect = canvas.getBoundingClientRect();
+        let x = clientX - rect.left;
+        let y = clientY - rect.top;
+
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    }
+
+    function renkDegis(yeniRenk) {
+        renk = yeniRenk;
+        ctx.strokeStyle = renk;
+    }
+
+    function temizle() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Olay Dinleyiciler (Dokunmatik ve Fare)
+    canvas.addEventListener('mousedown', basla);
+    canvas.addEventListener('mousemove', ciz);
+    canvas.addEventListener('mouseup', dur);
+
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); basla(e); });
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); ciz(e); });
+    canvas.addEventListener('touchend', dur);
+
+</script>
+
+</body>
+</html>
