@@ -46,13 +46,11 @@ header {
     padding: 15px;
     border: 4px solid #4CC9F0;
     transition: 0.1s;
-    position: relative;
-    overflow: hidden;
 }
 
 .calgi-kutu:active {
     transform: scale(0.95);
-    box-shadow: 0 0 25px rgba(76,201,240,0.5);
+    box-shadow: 0 0 25px rgba(76,201,240,0.4);
 }
 
 .calgi-icon {
@@ -66,22 +64,7 @@ header {
     margin-bottom: 10px;
 }
 
-.pad button {
-    margin: 3px;
-    padding: 8px 10px;
-    border-radius: 10px;
-    border: none;
-    background: #4CC9F0;
-    color: white;
-    cursor: pointer;
-    transition: 0.1s;
-}
-
-.pad button:active {
-    transform: scale(0.85);
-}
-
-/* 🌈 IŞIK EFECT */
+/* FX */
 #fx {
     position: fixed;
     top: 0;
@@ -89,7 +72,6 @@ header {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    overflow: hidden;
 }
 
 .particle {
@@ -131,11 +113,10 @@ header {
 <body>
 
 <header>🎹 CEDRICIN MUZIK ODASI 🎹</header>
-<div class="oda-bilgi">ENSTRÜMANLARA BAS VE IŞIKLARI PATLAT 🎶</div>
+<div class="oda-bilgi">ENSTRÜMANLARA BAS VE ÇAL 🎶</div>
 
 <div class="calgi-izgara">
 
-<!-- PİYANO -->
 <div class="calgi-kutu">
 <i class="fas fa-keyboard calgi-icon"></i>
 <span class="calgi-yazi">PIYANO</span>
@@ -150,7 +131,6 @@ header {
 </div>
 </div>
 
-<!-- DAVUL -->
 <div class="calgi-kutu" style="border-color:#FFCA3A;">
 <i class="fas fa-drum calgi-icon" style="color:#FFCA3A;"></i>
 <span class="calgi-yazi">DAVUL</span>
@@ -161,7 +141,6 @@ header {
 </div>
 </div>
 
-<!-- GİTAR -->
 <div class="calgi-kutu" style="border-color:#FF595E;">
 <i class="fas fa-guitar calgi-icon" style="color:#FF595E;"></i>
 <span class="calgi-yazi">GITAR</span>
@@ -172,7 +151,6 @@ header {
 </div>
 </div>
 
-<!-- TROMPET -->
 <div class="calgi-kutu" style="border-color:#A44CD3;">
 <i class="fas fa-trumpet calgi-icon" style="color:#A44CD3;"></i>
 <span class="calgi-yazi">TROMPET</span>
@@ -184,47 +162,50 @@ header {
 
 </div>
 
-<!-- IŞIK FX -->
 <div id="fx"></div>
 
-<!-- NAV -->
+<!-- 🔥 NAV (DÜZELTİLDİ) -->
 <nav class="candy-nav">
-<a href="#" class="nav-link"><i class="fas fa-house"></i></a>
-<a href="#" class="nav-link"><i class="fas fa-play"></i></a>
-<a href="#" class="nav-link"><i class="fas fa-music"></i></a>
-<a href="#" class="nav-link" style="color:#FFCA3A;"><i class="fas fa-guitar"></i></a>
+
+<a href="index.html" class="nav-link">
+<i class="fas fa-house"></i>
+</a>
+
+<a href="videolar.html" class="nav-link">
+<i class="fas fa-play"></i>
+</a>
+
+<a href="sarkilar.html" class="nav-link">
+<i class="fas fa-music"></i>
+</a>
+
+<a href="muzik-odasi.html" class="nav-link" style="color:#FFCA3A;">
+<i class="fas fa-guitar"></i>
+</a>
+
 </nav>
 
 <script>
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-/* 🌈 efekt */
 function efekt() {
     const fx = document.getElementById("fx");
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 8; i++) {
         const p = document.createElement("div");
         p.className = "particle";
 
         p.style.left = Math.random() * window.innerWidth + "px";
         p.style.top = Math.random() * window.innerHeight + "px";
-        p.style.background = randomColor();
+        p.style.background = ["#4CC9F0","#FFCA3A","#FF595E","#A44CD3"][Math.floor(Math.random()*4)];
 
         fx.appendChild(p);
-
         setTimeout(() => p.remove(), 600);
     }
 }
 
-function randomColor() {
-    const colors = ["#4CC9F0", "#FFCA3A", "#FF595E", "#A44CD3", "#66BB6A"];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
-
-/* 🎵 SESLER */
 function nota(f) {
     efekt();
-
     let o = ctx.createOscillator();
     let g = ctx.createGain();
 
@@ -240,17 +221,7 @@ function nota(f) {
 }
 
 function gitar(f){ nota(f); }
-
-function trumpet(f){
-    efekt();
-    let o=ctx.createOscillator();
-    o.type="sawtooth";
-    o.frequency.value=f;
-    o.connect(ctx.destination);
-    o.start();
-    o.stop(ctx.currentTime+0.6);
-}
-
+function trumpet(f){ nota(f*1.5); }
 function kick(){ nota(90); }
 function snare(){ nota(180); }
 function hihat(){ nota(400); }
