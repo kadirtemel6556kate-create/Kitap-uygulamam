@@ -38,4 +38,57 @@
 
         /* Alt Menü */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0 32px 0; border-top: 1px solid #282828; }
-        .nav-item { text-align: center; font-size: 11px; color: #b3b3b3; text-
+        .nav-item { text-align: center; font-size: 11px; color: #b3b3b3; text-decoration: none; flex: 1; }
+        .nav-item i { font-size: 22px; display: block; margin-bottom: 5px; }
+        .nav-item.active { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header><h1>🎬 Video Masallar</h1></header>
+
+    <div class="video-list">
+        <div class="video-item" onclick="videoAc('dJMn3kwCYtc')">
+            <div class="video-thumbnail">
+                <img src="https://img.youtube.com/vi/dJMn3kwCYtc/mqdefault.jpg" alt="Video">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <div class="video-details">
+                <h3>Verilen Söz Tutulmalı</h3>
+                <span>Masal Dünyası • 4:40 dk</span>
+            </div>
+        </div>
+        
+        </div>
+
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-video" onclick="videoKapat()">&times;</span>
+            <div class="video-container">
+                <iframe id="videoFrame" src="" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item"><i class="fas fa-home"></i>Anasayfa</a>
+        <a href="hikayeler.html" class="nav-item"><i class="fas fa-book-open"></i>Hikayeler</a>
+        <a href="videolar.html" class="nav-item active"><i class="fas fa-video"></i>Videolar</a>
+        <a href="sesli-kitaplar.html" class="nav-item"><i class="fas fa-headphones"></i>Dinle</a>
+    </div>
+
+    <script>
+        function videoAc(id) {
+            var url = "https://www.youtube.com/embed/" + id + "?autoplay=1";
+            document.getElementById('videoFrame').src = url;
+            document.getElementById('videoModal').style.display = "block";
+        }
+
+        function videoKapat() {
+            document.getElementById('videoModal').style.display = "none";
+            document.getElementById('videoFrame').src = ""; // Videoyu durdurmak için adresi siliyoruz
+        }
+    </script>
+
+</body>
+</html>
