@@ -7,66 +7,195 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        :root { --nane: #8AC926; --arka-plan: #F0F4F8; }
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; overscroll-behavior-y: contain; background: var(--arka-plan); font-family: 'Fredoka One', cursive; touch-action: none; }
-        header { background: white; padding: 15px; border-bottom: 6px solid var(--nane); border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; text-align: center; }
-        h1 { margin: 0; font-size: 22px; color: var(--nane); }
-        .templates { display: flex; justify-content: center; gap: 10px; padding: 10px; }
-        .template-btn { background: white; border: 3px solid #ddd; border-radius: 15px; padding: 8px; font-size: 25px; }
-        .template-btn.active { border-color: var(--nane); transform: scale(1.1); }
-        .canvas-area { position: relative; width: 90vw; height: 50vh; margin: 10px auto; background: white; border-radius: 25px; border: 8px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); overflow: hidden; }
-        #paintingCanvas { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 100%; }
-        #templateImage { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 80%; object-fit: contain; opacity: 0.2; z-index: 1; pointer-events: none; display: none; }
-        .palette { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px; }
-        .color-btn { width: 45px; height: 45px; border-radius: 50%; border: 4px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .color-btn.active { transform: scale(1.2); border-color: #444; }
-        .eraser-btn { background: #f0f0f0; color: #666; font-size: 20px; }
-        .candy-nav { position: fixed; bottom: 20px; left: 20px; right: 20px; background: white; display: flex; justify-content: space-around; padding: 15px; border-radius: 40px; border: 4px solid var(--nane); box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 1000; }
+        :root {
+            --nane: #8AC926;
+            --elma: #FF595E;
+            --deniz: #1982C4;
+            --arka: #F0FDF4;
+        }
+
+        body { 
+            margin: 0; 
+            background: var(--arka);
+            font-family: 'Fredoka One', cursive;
+            padding-bottom: 120px;
+            overflow-x: hidden;
+            touch-action: none;
+        }
+
+        header {
+            background: var(--nane); 
+            padding: 25px;
+            text-align: center;
+            border-bottom: 8px solid #6FB11D;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0; font-size: 22px; color: white; text-shadow: 1px 1px rgba(0,0,0,0.1); }
+
+        /* Sablon Secimi */
+        .template-shelf {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 20px;
+            scrollbar-width: none;
+        }
+        .template-card {
+            background: white;
+            min-width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            border: 4px solid #ddd;
+            flex-shrink: 0;
+        }
+        .template-card.active { border-color: var(--nane); transform: scale(1.1); }
+
+        /* Cizim Alani */
+        .canvas-container {
+            position: relative;
+            width: 90vw;
+            height: 45vh;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            border: 6px solid var(--nane);
+            box-shadow: 0 10px 0 rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        #mainCanvas { position: absolute; top:0; left:0; z-index: 5; width: 100%; height: 100%; }
+        #bgImg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; opacity: 0.2; z-index: 1; pointer-events: none; }
+
+        /* Renk Paleti */
+        .palette {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        .color-dot {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+        }
+        .color-dot.active { transform: scale(1.2); border-color: #333; }
+
+        .candy-nav {
+            position: fixed;
+            bottom: 20px; left: 20px; right: 20px;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            border-radius: 40px;
+            border: 4px solid var(--nane);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
         .nav-link { color: #BBB; text-decoration: none; font-size: 24px; }
         .active-link { color: var(--nane); }
     </style>
 </head>
 <body>
-    <header><h1>🎨 Sihirli Boyama</h1></header>
-    <div class="templates">
-        <div class="template-btn active" onclick="setTemplate('', this)">⬜</div>
-        <div class="template-btn" onclick="setTemplate('https://cdn-icons-png.flaticon.com/512/415/415733.png', this)">🍎</div>
-        <div class="template-btn" onclick="setTemplate('https://cdn-icons-png.flaticon.com/512/741/741407.png', this)">🚗</div>
-        <div class="template-btn" onclick="setTemplate('https://cdn-icons-png.flaticon.com/512/616/616430.png', this)">🐱</div>
+
+    <header><h1>Boyama Yap</h1></header>
+
+    <div class="template-shelf">
+        <div class="template-card active" onclick="setBg('', this)">⬜</div>
+        <div class="template-card" onclick="setBg('https://cdn-icons-png.flaticon.com/512/415/415733.png', this)">🍎</div>
+        <div class="template-card" onclick="setBg('https://cdn-icons-png.flaticon.com/512/741/741407.png', this)">🚗</div>
+        <div class="template-card" onclick="setBg('https://cdn-icons-png.flaticon.com/512/616/616430.png', this)">🐱</div>
     </div>
-    <div class="canvas-area" id="canvasContainer"><img id="templateImage" src=""><canvas id="paintingCanvas"></canvas></div>
+
+    <div class="canvas-container" id="cBox">
+        <img id="bgImg" src="">
+        <canvas id="mainCanvas"></canvas>
+    </div>
+
     <div class="palette">
-        <div class="color-btn active" style="background: #FF595E;" onclick="setColor('#FF595E', this)"></div>
-        <div class="color-btn" style="background: #FFCA3A;" onclick="setColor('#FFCA3A', this)"></div>
-        <div class="color-btn" style="background: #8AC926;" onclick="setColor('#8AC926', this)"></div>
-        <div class="color-btn" style="background: #1982C4;" onclick="setColor('#1982C4', this)"></div>
-        <div class="color-btn" style="background: #000000;" onclick="setColor('#000000', this)"></div>
-        <div class="color-btn eraser-btn" onclick="setEraser(this)"><i class="fas fa-eraser"></i></div>
+        <div class="color-dot active" style="background:#FF595E" onclick="setColor('#FF595E', this)"></div>
+        <div class="color-dot" style="background:#FFCA3A" onclick="setColor('#FFCA3A', this)"></div>
+        <div class="color-dot" style="background:#1982C4" onclick="setColor('#1982C4', this)"></div>
+        <div class="color-dot" style="background:#000000" onclick="setColor('#000000', this)"></div>
+        <div class="color-dot" style="background:#eee; display:flex; align-items:center; justify-content:center;" onclick="setEraser(this)"><i class="fas fa-eraser"></i></div>
     </div>
-    <div style="display:flex; justify-content:center;"><button style="padding:10px 20px; border-radius:20px; border:none; background:white; font-family:'Fredoka One';" onclick="ctx.clearRect(0,0,canvas.width,canvas.height)">🗑️ Hepsini Sil</button></div>
+
+    <div style="text-align:center;">
+        <button onclick="clearCanvas()" style="background:white; border:2px solid var(--nane); padding:10px 20px; border-radius:20px; font-family:'Fredoka One';">🗑️ Hepsini Sil</button>
+    </div>
+
     <nav class="candy-nav">
         <a href="index.html" class="nav-link"><i class="fas fa-house-chimney"></i></a>
         <a href="hikayeler.html" class="nav-link"><i class="fas fa-book-open"></i></a>
         <a href="videolar.html" class="nav-link"><i class="fas fa-play-circle"></i></a>
-        <a href="sesli-kitaplar.html" class="nav-link"><i class="fas fa-volume-up"></i></a>
+        <a href="sesli-kitaplar.html" class="nav-link"><i class="fas fa-headphones"></i></a>
         <a href="boyama.html" class="nav-link active-link"><i class="fas fa-palette"></i></a>
-        <a href="oyunlar.html" class="nav-link"><i class="fas fa-gamepad"></i></a>
+        <a href="oyunlar.html" class="nav-link"><i class="fas fa-ghost"></i></a>
     </nav>
+
     <script>
-        const canvas = document.getElementById('paintingCanvas'); const ctx = canvas.getContext('2d');
-        const container = document.getElementById('canvasContainer'); const templateImg = document.getElementById('templateImage');
-        let painting = false; let color = "#FF595E"; let eraserActive = false;
-        document.addEventListener('touchmove', function(e) { if (e.target.id === 'paintingCanvas') e.preventDefault(); }, { passive: false });
-        function setupCanvas() { canvas.width = container.clientWidth; canvas.height = container.clientHeight; ctx.lineCap = 'round'; ctx.lineWidth = 12; }
-        window.onload = setupCanvas;
-        function getCoords(e) { const rect = canvas.getBoundingClientRect(); const cx = e.touches ? e.touches[0].clientX : e.clientX; const cy = e.touches ? e.touches[0].clientY : e.clientY; return { x: cx - rect.left, y: cy - rect.top }; }
-        function startPosition(e) { painting = true; const c = getCoords(e); ctx.beginPath(); ctx.moveTo(c.x, c.y); }
-        function draw(e) { if (!painting) return; const c = getCoords(e); if(eraserActive) { ctx.globalCompositeOperation = 'destination-out'; ctx.lineWidth = 30; } else { ctx.globalCompositeOperation = 'source-over'; ctx.strokeStyle = color; ctx.lineWidth = 12; } ctx.lineTo(c.x, c.y); ctx.stroke(); }
-        canvas.addEventListener('mousedown', startPosition); canvas.addEventListener('mousemove', draw); canvas.addEventListener('mouseup', () => painting = false);
-        canvas.addEventListener('touchstart', startPosition); canvas.addEventListener('touchmove', draw); canvas.addEventListener('touchend', () => painting = false);
-        function setColor(c, b) { color = c; eraserActive = false; document.querySelectorAll('.color-btn').forEach(x => x.classList.remove('active')); b.classList.add('active'); }
-        function setEraser(b) { eraserActive = true; document.querySelectorAll('.color-btn').forEach(x => x.classList.remove('active')); b.classList.add('active'); }
-        function setTemplate(s, b) { if(s==='') { templateImg.style.display='none'; } else { templateImg.style.display='block'; templateImg.src=s; } document.querySelectorAll('.template-btn').forEach(x => x.classList.remove('active')); b.classList.add('active'); }
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const cBox = document.getElementById('cBox');
+        let drawing = false;
+        let activeColor = '#FF595E';
+        let eraser = false;
+
+        function init() {
+            canvas.width = cBox.clientWidth;
+            canvas.height = cBox.clientHeight;
+            ctx.lineCap = 'round';
+            ctx.lineWidth = 10;
+        }
+        window.onload = init;
+
+        function getPos(e) {
+            const r = canvas.getBoundingClientRect();
+            const tx = e.touches ? e.touches[0].clientX : e.clientX;
+            const ty = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: tx - r.left, y: ty - r.top };
+        }
+
+        function start(e) { drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
+        function draw(e) {
+            if(!drawing) return;
+            const p = getPos(e);
+            ctx.globalCompositeOperation = eraser ? 'destination-out' : 'source-over';
+            ctx.strokeStyle = activeColor;
+            ctx.lineWidth = eraser ? 30 : 10;
+            ctx.lineTo(p.x, p.y);
+            ctx.stroke();
+        }
+
+        canvas.addEventListener('touchstart', start); canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchend', () => drawing = false);
+        canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => drawing = false);
+
+        function setColor(c, btn) {
+            activeColor = c; eraser = false;
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+            btn.classList.add('active');
+        }
+        function setEraser(btn) {
+            eraser = true;
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+            btn.classList.add('active');
+        }
+        function setBg(s, btn) {
+            const img = document.getElementById('bgImg');
+            img.src = s; img.style.display = s ? 'block' : 'none';
+            document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+        }
+        function clearCanvas() { ctx.clearRect(0,0,canvas.width,canvas.height); }
     </script>
 </body>
 </html>
