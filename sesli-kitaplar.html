@@ -2,147 +2,132 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sesli Kitaplar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        body { margin: 0; background-color: #000; color: #fff; font-family: sans-serif; padding-bottom: 160px; }
-        header { padding: 25px 20px; background: #111; border-bottom: 1px solid #222; text-align: center; }
-        h1 { color: #1DB954; font-size: 24px; }
-        
-        /* Liste Tasarımı */
-        .audio-list { padding: 20px; }
-        .audio-item { 
-            background: #181818; 
-            padding: 15px; 
-            border-radius: 12px; 
-            margin-bottom: 12px; 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-            border: 1px solid #282828; 
-            cursor: pointer;
-            transition: 0.2s;
+        :root {
+            --ses-sari: #FFCA3A;
+            --ses-turuncu: #FF924C;
+            --ses-kirmizi: #FF595E;
+            --ses-mor: #6A4C93;
+            --arka-plan: #FFFDF0;
         }
-        .audio-item:active { background: #282828; transform: scale(0.98); }
-        .audio-item i { font-size: 30px; color: #1DB954; }
-        .audio-details h3 { margin: 0; font-size: 16px; color: #fff; }
-        .audio-details p { margin: 5px 0 0; font-size: 12px; color: #b3b3b3; }
 
-        /* ALT OYNATICI PANELİ */
-        .player-footer {
-            position: fixed;
-            bottom: 85px; 
-            left: 10px; right: 10px;
-            background: #1DB954;
-            padding: 12px;
-            border-radius: 15px;
-            display: none; 
+        body { 
+            margin: 0; 
+            background: var(--arka-plan);
+            font-family: 'Fredoka One', cursive;
+            padding-bottom: 120px;
+        }
+
+        header {
+            background: var(--ses-sari); 
+            padding: 30px;
+            text-align: center;
+            border-bottom: 10px solid #E5B534;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0; font-size: 26px; color: #FFF; text-shadow: 2px 2px rgba(0,0,0,0.1); }
+
+        .audio-shelf {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 25px;
+        }
+
+        .audio-card {
+            background: white;
+            height: 180px;
+            border-radius: 30px;
+            display: flex;
             flex-direction: column;
-            gap: 8px;
-            z-index: 1001;
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 10px 0 rgba(0,0,0,0.05);
+            transition: 0.3s;
+            border: 4px solid;
         }
-        .player-info { display: flex; align-items: center; gap: 10px; color: #000; font-weight: bold; font-size: 14px; }
-        audio { width: 100%; height: 35px; }
 
-        /* Alt Navigasyon */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0 32px 0; border-top: 1px solid #282828; z-index: 1000; }
-        .nav-item { text-align: center; font-size: 10px; color: #b3b3b3; text-decoration: none; flex: 1; }
-        .nav-item i { font-size: 20px; display: block; margin-bottom: 5px; }
-        .nav-item.active { color: #fff; }
+        .audio-card:active { transform: scale(0.95); }
 
-        /* PARLAYAN OYUNLAR BUTONU CSS */
-        .game-btn {
-            background: linear-gradient(45deg, #ff00ea, #ffcc00, #00ffcc);
-            background-size: 200% 200%;
-            border-radius: 12px;
-            margin: 5px;
-            color: #fff !important;
-            animation: rainbow 3s ease infinite, pulse 1.5s infinite;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        .audio-card i {
+            font-size: 45px;
+            margin-bottom: 12px;
+            filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1));
         }
-        .game-btn i { color: #fff !important; }
 
-        @keyframes rainbow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .audio-card span {
+            font-size: 16px;
+            text-align: center;
+            padding: 0 10px;
+            line-height: 1.2;
+            font-weight: bold;
         }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+
+        /* Kart Renkleri ve Borderlar */
+        .c-yellow { border-color: var(--ses-sari); color: var(--ses-sari); }
+        .c-orange { border-color: var(--ses-turuncu); color: var(--ses-turuncu); }
+        .c-red { border-color: var(--ses-kirmizi); color: var(--ses-kirmizi); }
+        .c-purple { border-color: var(--ses-mor); color: var(--ses-mor); }
+
+        .candy-nav {
+            position: fixed;
+            bottom: 20px; left: 20px; right: 20px;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            border-radius: 40px;
+            border: 4px solid var(--ses-sari);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
+
+        .nav-link { color: #BBB; text-decoration: none; font-size: 24px; }
+        .active { color: var(--ses-sari); }
     </style>
 </head>
 <body>
 
-<header><h1>🎧 Sesli Kitaplar</h1></header>
+    <header>
+        <h1>Sesli Kitaplar</h1>
+    </header>
 
-<div class="audio-list">
-    <div class="audio-item" onclick="cal('Tembelliği Bırak Çalış', 'https://www.xn--edebiyatgretmeni-twb.net/wp-content/uploads/2014/06/tembelligi_birak_calis.mp3')">
-        <i class="fas fa-play-circle"></i>
-        <div class="audio-details">
-            <h3>Tembelliği Bırak Çalış</h3>
-            <p>Sesli Anlatım • Dinlemek için tıkla</p>
-        </div>
+    <div class="audio-shelf">
+        <a href="dinle1.html" class="audio-card c-yellow">
+            <i class="fas fa-headphones"></i>
+            <span>Uyku Masali</span>
+        </a>
+
+        <a href="dinle2.html" class="audio-card c-orange">
+            <i class="fas fa-music"></i>
+            <span>Neseli Sarkilar</span>
+        </a>
+
+        <a href="dinle3.html" class="audio-card c-red">
+            <i class="fas fa-volume-up"></i>
+            <span>Orman Sesleri</span>
+        </a>
+
+        <a href="dinle4.html" class="audio-card c-purple">
+            <i class="fas fa-microphone-alt"></i>
+            <span>Masal Anlatıcısı</span>
+        </a>
     </div>
 
-    <div class="audio-item" onclick="cal('Tavşanlarla Tilkiler', 'https://www.xn--edebiyatgretmeni-twb.net/wp-content/uploads/2014/06/tavsanlarla_tilkiler.mp3')">
-        <i class="fas fa-play-circle"></i>
-        <div class="audio-details">
-            <h3>Tavşanlarla Tilkiler</h3>
-            <p>Sesli Anlatım • Dinlemek için tıkla</p>
-        </div>
-    </div>
-
-    <div class="audio-item" onclick="cal('Kırmızı Başlıklı Kız', '1.mp3')">
-        <i class="fas fa-play-circle"></i>
-        <div class="audio-details">
-            <h3>Kırmızı Başlıklı Kız</h3>
-            <p>Sesli Anlatım • Dinlemek için tıkla</p>
-        </div>
-    </div>
-
-    <div class="audio-item" onclick="cal('Üç Küçük Domuz', '2.mp3')">
-        <i class="fas fa-play-circle"></i>
-        <div class="audio-details">
-            <h3>Üç Küçük Domuz</h3>
-            <p>Sesli Anlatım • Dinlemek için tıkla</p>
-        </div>
-    </div>
-</div>
-
-<div id="playerFooter" class="player-footer">
-    <div class="player-info">
-        <i class="fas fa-music"></i>
-        <span id="playingTitle">Masal Seçildi</span>
-    </div>
-    <audio id="audioElement" controls></audio>
-</div>
-
-<div class="bottom-nav">
-    <a href="index.html" class="nav-item"><i class="fas fa-home"></i>Anasayfa</a>
-    <a href="hikayeler.html" class="nav-item"><i class="fas fa-book-open"></i>Hikayeler</a>
-    <a href="videolar.html" class="nav-item"><i class="fas fa-video"></i>Videolar</a>
-    <a href="sesli-kitaplar.html" class="nav-item active"><i class="fas fa-headphones"></i>Dinle</a>
-    <a href="boyama.html" class="nav-item"><i class="fas fa-paint-brush"></i>Boyama</a>
-    <a href="oyunlar.html" class="nav-item game-btn"><i class="fas fa-gamepad"></i>Oyunlar</a>
-</div>
-
-<script>
-    function cal(ad, dosya) {
-        const footer = document.getElementById('playerFooter');
-        const audio = document.getElementById('audioElement');
-        const title = document.getElementById('playingTitle');
-
-        title.innerText = ad;
-        audio.src = dosya;
-        footer.style.display = "flex"; 
-        audio.play(); 
-    }
-</script>
+    <nav class="candy-nav">
+        <a href="index.html" class="nav-link"><i class="fas fa-house-chimney"></i></a>
+        <a href="hikayeler.html" class="nav-link"><i class="fas fa-book-open"></i></a>
+        <a href="videolar.html" class="nav-link"><i class="fas fa-play-circle"></i></a>
+        <a href="sesli-kitaplar.html" class="nav-link active"><i class="fas fa-headphones"></i></a>
+        <a href="boyama.html" class="nav-link"><i class="fas fa-palette"></i></a>
+        <a href="oyunlar.html" class="nav-link"><i class="fas fa-ghost"></i></a>
+    </nav>
 
 </body>
 </html>
