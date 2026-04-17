@@ -37,12 +37,31 @@
 </head>
 <body>
 
-<header><h1>Sesli Kitaplar</h1></header>
+<header><h1>Sesli Hikayeler</h1></header>
 
 <div class="list-container">
     <div class="audio-item">
-        <div class="info"><i class="fas fa-headphones"></i><span>Masal Dinle</span></div>
-        <button class="play-btn" onclick="sesCal('SENIN_SES_LINKIN')">DINLE</button>
+        <div class="info">
+            <i class="fas fa-headphones"></i>
+            <span>Verilen Soz Tutulmali</span>
+        </div>
+        <button class="play-btn" onclick="sesCal('https://www.edebiyatogretmeni.net/wp-content/uploads/2014/06/verilen_soz_tutulmali.mp3')">DINLE</button>
+    </div>
+
+    <div class="audio-item">
+        <div class="info">
+            <i class="fas fa-headphones"></i>
+            <span>Tavsanlarla Tilkiler</span>
+        </div>
+        <button class="play-btn" onclick="sesCal('https://www.edebiyatogretmeni.net/wp-content/uploads/2014/06/tavsanlarla_tilkiler.mp3')">DINLE</button>
+    </div>
+
+    <div class="audio-item">
+        <div class="info">
+            <i class="fas fa-headphones"></i>
+            <span>Pamuk Prenses</span>
+        </div>
+        <button class="play-btn" onclick="sesCal('https://www.edebiyatogretmeni.net/wp-content/uploads/2014/06/pamuk_prenses.mp3')">DINLE</button>
     </div>
 </div>
 
@@ -56,10 +75,11 @@
 </nav>
 
 <script>
-    var ses = new Audio();
+    var audioPlayer = new Audio();
     function sesCal(link) {
-        ses.src = link;
-        ses.play();
+        audioPlayer.pause();
+        audioPlayer.src = link;
+        audioPlayer.play();
     }
 </script>
 
