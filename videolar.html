@@ -18,7 +18,7 @@ body {
 }
 
 header {
-    background: #FF595E; /* Cizgi film sayfasi icin canli kirmizi */
+    background: #FF595E;
     padding: 20px;
     color: white;
     font-size: 22px;
@@ -30,33 +30,36 @@ header {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 
-/* Video Kart Tasarimi */
+/* Pofuduk Video Kartlari */
 .video-card {
     background: white;
     border-radius: 25px 35px 20px 40px;
-    border: 5px solid #FF595E;
     padding: 15px;
-    box-shadow: 8px 8px 0px rgba(255, 89, 94, 0.1);
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.05);
     overflow: hidden;
+    transition: transform 0.2s;
 }
+
+.video-card:active { transform: scale(0.98); }
 
 .video-card h3 {
-    margin: 10px 0;
+    margin: 10px 0 15px 0;
     color: #333;
-    font-size: 18px;
+    font-size: 20px;
 }
 
-/* Video Cercevesi (Uygulamanın icinde kalmasi icin) */
+/* Video Cercevesi */
 .video-wrapper {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 Oran */
+    padding-bottom: 56.25%;
     height: 0;
-    border-radius: 15px;
+    border-radius: 20px;
     overflow: hidden;
-    background: #eee;
+    background: #000;
+    border: 3px solid #eee;
 }
 
 .video-wrapper iframe {
@@ -65,6 +68,12 @@ header {
     width: 100%; height: 100%;
     border: none;
 }
+
+/* Kart Renkleri */
+.card-cedric { border: 5px solid #FFCA3A; box-shadow: 8px 8px 0px rgba(255, 202, 58, 0.2); }
+.card-tom { border: 5px solid #1982C4; box-shadow: 8px 8px 0px rgba(25, 130, 196, 0.2); }
+.card-sirinler { border: 5px solid #66BB6A; box-shadow: 8px 8px 0px rgba(102, 187, 106, 0.2); }
+.card-caillou { border: 5px solid #FF595E; box-shadow: 8px 8px 0px rgba(255, 89, 94, 0.2); }
 
 /* ALT MENU */
 .candy-nav {
@@ -81,8 +90,8 @@ header {
 
 .nav-link {
     text-decoration: none;
-    font-size: 22px;
-    color: #BBB;
+    font-size: 24px;
+    color: #DDD;
 }
 .nav-link.active { color: #FF595E; }
 </style>
@@ -93,25 +102,39 @@ header {
 
 <div class="video-container">
     
-    <div class="video-card">
-        <h3>Cedric - Bolum 1</h3>
+    <div class="video-card card-cedric">
+        <h3>Cedric</h3>
         <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/bxeJYeqeQn0" allowfullscreen></iframe>
         </div>
     </div>
 
-    <div class="video-card" style="border-color: #26C6DA;">
-        <h3>Cedric - Bolum 2</h3>
+    <div class="video-card card-tom">
+        <h3>Tom ve Jerry</h3>
         <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/pEl3-0GHyoQ" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="video-card card-sirinler">
+        <h3>Sirinler - Numara Yapma</h3>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/wh2HzUCYU60" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="video-card card-caillou">
+        <h3>Caillou</h3>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/wkLwG6s8q5g" allowfullscreen></iframe>
         </div>
     </div>
 
 </div>
 
 <nav class="candy-nav">
-    <a href="index.html" class="nav-link"><i class="fas fa-house-chimney"></i></a>
-    <a href="videolar.html" class="nav-link active"><i class="fas fa-play-circle"></i></a>
+    <a href="index.html" class="nav-link">🏠</a>
+    <a href="videolar.html" class="nav-link active">🎬</a>
 </nav>
 
 </body>
