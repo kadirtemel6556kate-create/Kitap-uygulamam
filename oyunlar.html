@@ -3,151 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cedric'in Oyun Dünyası</title>
+    <title>Oyun Dunyasi</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        :root { --mor: #A29BFE; --pembe: #FF85A2; --mavi: #4ECDC4; --arka-plan: #F0F4F8; }
-        body { margin: 0; background: var(--arka-plan); font-family: 'Fredoka One', cursive; text-align: center; padding-bottom: 120px; overflow-x: hidden; touch-action: manipulation; }
-        header { background: white; padding: 25px; border-bottom: 6px solid var(--mor); border-bottom-left-radius: 50px; border-bottom-right-radius: 50px; }
-        h1 { margin: 0; font-size: 24px; color: var(--mor); }
+        :root { --mor: #A29BFE; --arka: #F8F7FF; --pembe: #FF85A2; --mavi: #4ECDC4; }
+        body { margin: 0; background: var(--arka); font-family: 'Fredoka One', cursive; padding-bottom: 120px; text-align: center; }
+        
+        header { background: var(--mor); padding: 25px; border-bottom: 10px solid #867bef; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { margin: 0; color: white; font-size: 22px; }
 
-        .game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
-        .game-card { background: white; border-radius: 30px; padding: 20px; display: flex; flex-direction: column; align-items: center; border: 4px solid var(--mor); box-shadow: 0 8px 0 #D1C9FF; text-decoration: none; color: var(--mor); transition: 0.2s; }
-        .game-card:active { transform: translateY(4px); box-shadow: 0 4px 0 #D1C9FF; }
-        .game-card i { font-size: 45px; margin-bottom: 10px; }
+        .game-shelf { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 25px; }
+        .game-card { 
+            background: white; height: 160px; border-radius: 35px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-decoration: none; border: 5px solid var(--mor); 
+            box-shadow: 0 10px 0 rgba(162, 155, 254, 0.2); transition: 0.2s;
+        }
+        .game-card:active { transform: translateY(5px); box-shadow: 0 4px 0 rgba(162, 155, 254, 0.2); }
+        .game-card i { font-size: 45px; color: var(--mor); margin-bottom: 10px; }
+        .game-card span { font-size: 16px; color: #444; font-weight: bold; }
 
         /* Oyun Penceresi */
-        #gameStage { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; flex-direction: column; align-items: center; }
-        .close-btn { position: absolute; top: 15px; right: 15px; font-size: 35px; color: var(--pembe); z-index: 2100; }
-        #gameContainer { width: 100%; height: 100%; position: relative; overflow: hidden; }
+        #gameStage { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: white; z-index: 5000; flex-direction: column; align-items: center; 
+        }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 40px; color: var(--pembe); z-index: 5100; }
+        #gameArea { width: 100%; height: 80%; position: relative; overflow: hidden; margin-top: 60px; }
 
-        /* Hafıza Oyunu Stili */
-        .memory-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 20px; max-width: 350px; margin: auto; }
-        .card { height: 80px; background: #eee; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 35px; cursor: pointer; transition: 0.4s; border: 3px solid #ddd; }
-        .card.flipped { transform: rotateY(180deg); background: white; border-color: var(--mavi); }
-        .card span { display: none; }
-        .card.flipped span { display: block; transform: rotateY(180deg); }
+        /* Hafiza Oyunu */
+        .memory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 20px; max-width: 350px; margin: auto; }
+        .m-card { height: 80px; background: #eee; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 30px; border: 3px solid #ddd; }
+        .m-card.flipped { background: white; border-color: var(--mor); }
 
-        /* Balon Stili */
-        .balloon { position: absolute; width: 70px; height: 90px; border-radius: 50%; animation: fly 4s linear forwards; display: flex; align-items: center; justify-content: center; font-size: 30px; }
-        @keyframes fly { from { bottom: -100px; } to { bottom: 110%; } }
+        /* Balon/Yildiz Nesneleri */
+        .obj { position: absolute; font-size: 40px; animation: moveUp 4s linear forwards; cursor: pointer; }
+        @keyframes moveUp { from { bottom: -100px; } to { bottom: 110%; } }
 
-        .candy-nav { position: fixed; bottom: 20px; left: 20px; right: 20px; background: white; display: flex; justify-content: space-around; padding: 15px; border-radius: 40px; border: 4px solid var(--mor); box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 1000; }
+        .candy-nav {
+            position: fixed; bottom: 20px; left: 20px; right: 20px;
+            background: white; display: flex; justify-content: space-around;
+            padding: 15px; border-radius: 40px; border: 4px solid var(--mor);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
         .nav-link { color: #BBB; text-decoration: none; font-size: 24px; }
         .active { color: var(--mor); }
     </style>
 </head>
 <body>
 
-<header><h1>🎮Cedric'in Oyun Dünyası</h1></header>
+<header><h1>Oyun Dunyasi</h1></header>
 
-<div class="game-grid">
-    <div class="game-card" onclick="baslatHafiza()">
+<div class="game-shelf">
+    <div class="game-card" onclick="startMemory()">
         <i class="fas fa-th-large"></i>
-        <span>Kart Eslestir</span>
+        <span>Kart Esle</span>
     </div>
-    <div class="game-card" onclick="baslatBalon()">
+    <div class="game-card" onclick="startBalloons()">
         <i class="fas fa-popelease"></i>
         <span>Balon Patlat</span>
+    </div>
+    <div class="game-card" onclick="startStars()">
+        <i class="fas fa-star"></i>
+        <span>Yildiz Topla</span>
+    </div>
+    <div class="game-card" onclick="startColors()">
+        <i class="fas fa-palette"></i>
+        <span>Renk Bul</span>
     </div>
 </div>
 
 <div id="gameStage">
-    <span class="close-btn" onclick="oyunKapat()"><i class="fas fa-times-circle"></i></span>
-    <h2 id="gameTitle" style="margin-top:20px; color: var(--mor);">Oyun</h2>
-    <div id="gameContainer"></div>
+    <span class="close-btn" onclick="stopGame()"><i class="fas fa-times-circle"></i></span>
+    <div id="gameArea"></div>
 </div>
 
 <nav class="candy-nav">
     <a href="index.html" class="nav-link"><i class="fas fa-house-chimney"></i></a>
     <a href="hikayeler.html" class="nav-link"><i class="fas fa-book-open"></i></a>
     <a href="videolar.html" class="nav-link"><i class="fas fa-play-circle"></i></a>
-    <a href="sesli-kitaplar.html" class="nav-link"><i class="fas fa-volume-up"></i></a>
+    <a href="sesli-kitaplar.html" class="nav-link"><i class="fas fa-headphones"></i></a>
     <a href="boyama.html" class="nav-link"><i class="fas fa-palette"></i></a>
     <a href="oyunlar.html" class="nav-link active"><i class="fas fa-gamepad"></i></a>
 </nav>
 
 <script>
-    const container = document.getElementById('gameContainer');
+    const area = document.getElementById('gameArea');
     const stage = document.getElementById('gameStage');
-    const title = document.getElementById('gameTitle');
-    let gameTimer;
-    
-    // Ses Motoru
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    function sesCal(freq, type, dur) {
-        const osc = audioCtx.createOscillator(); const g = audioCtx.createGain();
-        osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        osc.connect(g); g.connect(audioCtx.destination);
-        g.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + dur);
-        osc.start(); osc.stop(audioCtx.currentTime + dur);
+    let timer;
+
+    function stopGame() {
+        stage.style.display = 'none';
+        area.innerHTML = '';
+        clearInterval(timer);
     }
 
-    function oyunKapat() {
-        stage.style.display = "none";
-        container.innerHTML = "";
-        clearInterval(gameTimer);
-        sesCal(200, 'triangle', 0.2);
-    }
-
-    function baslatHafiza() {
-        sesCal(500, 'sine', 0.1);
-        stage.style.display = "flex";
-        title.innerText = "Kartları Eşleştir!";
-        container.innerHTML = '<div class="memory-board" id="board"></div>';
-        const icons = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊'];
+    // 1. Kart Esleme
+    function startMemory() {
+        stage.style.display = 'flex';
+        area.innerHTML = '<div class="memory-grid" id="grid"></div>';
+        const icons = ['🐶','🐱','🐭','🐰','🦁','🐷'];
         let cards = [...icons, ...icons].sort(() => Math.random() - 0.5);
         let flipped = [];
-        
-        cards.forEach((emoji) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.dataset.val = emoji;
-            card.innerHTML = `<span>${emoji}</span>`;
-            card.onclick = function() {
+        cards.forEach(emoji => {
+            const div = document.createElement('div');
+            div.className = 'm-card';
+            div.onclick = function() {
                 if(flipped.length < 2 && !this.classList.contains('flipped')) {
-                    sesCal(600, 'sine', 0.1);
-                    this.classList.add('flipped');
+                    this.innerText = emoji; this.classList.add('flipped');
                     flipped.push(this);
                     if(flipped.length === 2) {
-                        if(flipped[0].dataset.val === flipped[1].dataset.val) {
-                            setTimeout(() => sesCal(800, 'square', 0.2), 200);
-                            flipped = [];
-                        } else {
-                            setTimeout(() => {
-                                flipped.forEach(c => c.classList.remove('flipped'));
-                                flipped = [];
-                            }, 700);
-                        }
+                        if(flipped[0].innerText === flipped[1].innerText) flipped = [];
+                        else setTimeout(() => { flipped.forEach(c => {c.innerText=''; c.classList.remove('flipped')}); flipped = []; }, 600);
                     }
                 }
             };
-            document.getElementById('board').appendChild(card);
+            document.getElementById('grid').appendChild(div);
         });
     }
 
-    function baslatBalon() {
-        sesCal(500, 'sine', 0.1);
-        stage.style.display = "flex";
-        title.innerText = "Balonları Yakala!";
-        container.innerHTML = '<div style="padding:10px;">Puan: <span id="sc">0</span></div>';
+    // 2. Balon Patlatma
+    function startBalloons() {
+        stage.style.display = 'flex';
+        area.innerHTML = '<div style="font-size:20px;">Puan: <span id="sc">0</span></div>';
         let score = 0;
-        gameTimer = setInterval(() => {
+        timer = setInterval(() => {
             const b = document.createElement('div');
-            b.className = 'balloon';
-            b.style.left = Math.random() * (window.innerWidth - 70) + 'px';
-            b.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 80%)`;
-            b.innerHTML = "🎈";
-            b.onclick = function() {
-                score++; document.getElementById('sc').innerText = score;
-                sesCal(1000, 'sine', 0.05);
-                this.remove();
-            };
-            container.appendChild(b);
+            b.className = 'obj'; b.innerText = '🎈';
+            b.style.left = Math.random() * 80 + '%';
+            b.onclick = function() { score++; document.getElementById('sc').innerText = score; this.remove(); };
+            area.appendChild(b);
             setTimeout(() => b.remove(), 4000);
         }, 1000);
+    }
+
+    // 3. Yildiz Toplama
+    function startStars() {
+        stage.style.display = 'flex';
+        area.innerHTML = '<div style="font-size:20px;">Yildizlar: <span id="sc">0</span></div>';
+        let score = 0;
+        timer = setInterval(() => {
+            const s = document.createElement('div');
+            s.className = 'obj'; s.innerText = '⭐';
+            s.style.left = Math.random() * 80 + '%';
+            s.style.color = 'gold';
+            s.onclick = function() { score++; document.getElementById('sc').innerText = score; this.remove(); };
+            area.appendChild(s);
+            setTimeout(() => s.remove(), 4000);
+        }, 800);
+    }
+
+    // 4. Renk Bulma
+    function startColors() {
+        stage.style.display = 'flex';
+        const colors = ['Kirmizi', 'Mavi', 'Sari', 'Yesil'];
+        const hex = ['#FF595E', '#1982C4', '#FFCA3A', '#8AC926'];
+        let target = Math.floor(Math.random() * 4);
+        area.innerHTML = `<h2 style="color:${hex[target]}">${colors[target]} Rengi Hangisi?</h2><div id="opts" style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; padding:20px;"></div>`;
+        hex.forEach((h, i) => {
+            const d = document.createElement('div');
+            d.style.width = '80px'; d.style.height = '80px'; d.style.borderRadius = '20px'; d.style.background = h;
+            d.onclick = function() {
+                if(i === target) { alert('Tebrikler!'); startColors(); }
+                else { alert('Tekrar Dene!'); }
+            };
+            document.getElementById('opts').appendChild(d);
+        });
     }
 </script>
 </body>
