@@ -11,7 +11,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cedric ile Çocuk Şarkıları</title>
+    <title>Cedric Müzik Kutusu</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -35,12 +35,7 @@
             margin-bottom: 20px;
         }
 
-        .sarki-kutusu {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
+        .sarki-kutusu { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
 
         .sarki-item {
             background: white;
@@ -53,15 +48,17 @@
         .sarki-adi {
             display: block;
             font-size: 18px;
-            color: #444;
-            margin-bottom: 15px;
-            background: #FFCA3A;
             color: white;
-            padding: 5px;
-            border-radius: 10px;
+            margin-bottom: 12px;
+            background: #FFCA3A;
+            padding: 8px;
+            border-radius: 15px;
         }
 
-        /* YouTube Videosunu Pofuduk Yapan Kısım */
+        /* Ses Dosyası Oynatıcısı */
+        audio { width: 100%; margin-top: 10px; border-radius: 10px; }
+
+        /* Video Kapsayıcı */
         .video-container {
             position: relative;
             padding-bottom: 56.25%;
@@ -69,50 +66,43 @@
             overflow: hidden;
             border-radius: 15px;
         }
-
         .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
         }
 
-        /* Alt Menü Navigasyonu */
+        /* Navigasyon */
         .candy-nav {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px;
-            border-radius: 50px;
-            border: 4px solid #FF595E;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 1000;
+            position: fixed; bottom: 20px; left: 20px; right: 20px;
+            background: white; display: flex; justify-content: space-around;
+            padding: 15px; border-radius: 50px; border: 4px solid #FF595E;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 1000;
         }
-
         .nav-link { color: #FF595E; font-size: 24px; text-decoration: none; }
         .active-nav { color: #FFCA3A; }
     </style>
 </head>
 <body>
 
-<header>🎵 Şarkı Zamanı Kadir! 🎵</header>
+<header>🎵 Müzik Kutusu 🎵</header>
 
 <div class="sarki-kutusu">
     
+    <div class="sarki-item" style="border-color: #1982C4;">
+        <span class="sarki-adi" style="background: #1982C4;">🌟 Neseli Cocuk Müzigi</span>
+        <audio controls>
+            <source src="https://lesfm.net/wp-content/uploads/2022/02/Funny-Music-For-Children.mp3" type="audio/mpeg">
+            Tarayıcın bunu desteklemiyor dostum.
+        </audio>
+    </div>
+
     <div class="sarki-item">
-        <span class="sarki-adi">🐮 Ali Baba'nın Çiftliği</span>
+        <span class="sarki-adi">🐮 Ali Baba'nın ciftligi</span>
         <div class="video-container">
             <iframe src="https://www.youtube.com/embed/S2O6P_36WvU" allowfullscreen></iframe>
         </div>
     </div>
 
-    </div>
+</div>
 
 <nav class="candy-nav">
     <a href="index.html" class="nav-link"><i class="fas fa-house"></i></a>
