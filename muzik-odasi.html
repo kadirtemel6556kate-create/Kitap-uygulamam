@@ -35,12 +35,10 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
     background: #4CC9F0;
     color: white;
     cursor: pointer;
-    transition: 0.1s;
 }
 
 .pad button:active {
     transform: scale(0.85);
-    background: #3aa7cc;
 }
 
 .candy-nav {
@@ -70,7 +68,6 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
 <div class="calgi-kutu">
 <i class="fas fa-keyboard calgi-icon"></i>
 <span class="calgi-yazi">PIYANO</span>
-
 <div class="pad">
 <button onclick="nota(261)">DO</button>
 <button onclick="nota(293)">RE</button>
@@ -85,8 +82,7 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
 <!-- DAVUL -->
 <div class="calgi-kutu" style="border-color:#FFCA3A;">
 <i class="fas fa-drum calgi-icon" style="color:#FFCA3A;"></i>
-<span class="calgi-yazi">DAVUL SETİ</span>
-
+<span class="calgi-yazi">DAVUL</span>
 <div class="pad">
 <button onclick="kick()">KICK</button>
 <button onclick="snare()">SNARE</button>
@@ -98,7 +94,6 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
 <div class="calgi-kutu" style="border-color:#FF595E;">
 <i class="fas fa-guitar calgi-icon" style="color:#FF595E;"></i>
 <span class="calgi-yazi">GITAR</span>
-
 <div class="pad">
 <button onclick="gitar(220)">TEL 1</button>
 <button onclick="gitar(247)">TEL 2</button>
@@ -110,20 +105,49 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
 <div class="calgi-kutu" style="border-color:#A44CD3;">
 <i class="fas fa-trumpet calgi-icon" style="color:#A44CD3;"></i>
 <span class="calgi-yazi">TROMPET</span>
-
 <div class="pad">
 <button onclick="trumpet(300)">ÇAL</button>
 <button onclick="trumpet(500)">YÜKSEK</button>
 </div>
 </div>
 
-<!-- ZİL -->
-<div class="calgi-kutu" style="border-color:#66BB6A;">
-<i class="fas fa-bell calgi-icon" style="color:#66BB6A;"></i>
-<span class="calgi-yazi">ZIL</span>
-
+<!-- 🔥 YENİ: SAX -->
+<div class="calgi-kutu" style="border-color:#FF8C00;">
+<i class="fas fa-music calgi-icon" style="color:#FF8C00;"></i>
+<span class="calgi-yazi">SAKSAFON</span>
 <div class="pad">
-<button onclick="zil()">ÇAL</button>
+<button onclick="sax(300)">LOW</button>
+<button onclick="sax(600)">HIGH</button>
+</div>
+</div>
+
+<!-- 🔥 YENİ: KEMAN -->
+<div class="calgi-kutu" style="border-color:#8A2BE2;">
+<i class="fas fa-violin calgi-icon" style="color:#8A2BE2;"></i>
+<span class="calgi-yazi">KEMAN</span>
+<div class="pad">
+<button onclick="keman(440)">NOTE</button>
+<button onclick="keman(660)">HIGH</button>
+</div>
+</div>
+
+<!-- 🔥 YENİ: BANJO -->
+<div class="calgi-kutu" style="border-color:#DEB887;">
+<i class="fas fa-guitar calgi-icon" style="color:#DEB887;"></i>
+<span class="calgi-yazi">BANJO</span>
+<div class="pad">
+<button onclick="banjo(350)">TINK</button>
+<button onclick="banjo(500)">PLINK</button>
+</div>
+</div>
+
+<!-- 🔥 YENİ: SYNTH -->
+<div class="calgi-kutu" style="border-color:#00CED1;">
+<i class="fas fa-wave-square calgi-icon" style="color:#00CED1;"></i>
+<span class="calgi-yazi">SYNTH</span>
+<div class="pad">
+<button onclick="synth(200)">SPACE</button>
+<button onclick="synth(800)">LASER</button>
 </div>
 </div>
 
@@ -139,53 +163,67 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
 <script>
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-function nota(freq) {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = "sine";
-    osc.frequency.value = freq;
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start();
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1);
-    osc.stop(ctx.currentTime + 1);
+function nota(f) {
+    let o = ctx.createOscillator();
+    let g = ctx.createGain();
+    o.type = "sine";
+    o.frequency.value = f;
+    o.connect(g);
+    g.connect(ctx.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1);
+    o.stop(ctx.currentTime + 1);
 }
 
-function gitar(freq) {
-    const osc = ctx.createOscillator();
-    osc.type = "triangle";
-    osc.frequency.value = freq;
-    osc.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.5);
+function gitar(f){nota(f);}
+
+function trumpet(f){
+    let o=ctx.createOscillator();
+    o.type="sawtooth";
+    o.frequency.value=f;
+    o.connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime+0.6);
 }
 
-function trumpet(freq) {
-    const osc = ctx.createOscillator();
-    osc.type = "sawtooth";
-    osc.frequency.value = freq;
-    osc.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.7);
+function kick(){nota(90);}
+function snare(){nota(180);}
+function hihat(){nota(400);}
+
+function sax(f){
+    let o=ctx.createOscillator();
+    o.type="triangle";
+    o.frequency.value=f;
+    o.connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime+0.7);
 }
 
-function kick() {
-    nota(100);
+function keman(f){
+    let o=ctx.createOscillator();
+    o.type="sine";
+    o.frequency.value=f;
+    o.connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime+1);
 }
 
-function snare() {
-    nota(200);
+function banjo(f){
+    let o=ctx.createOscillator();
+    o.type="square";
+    o.frequency.value=f;
+    o.connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime+0.4);
 }
 
-function hihat() {
-    nota(400);
-}
-
-function zil() {
-    nota(800);
-    nota(1200);
+function synth(f){
+    let o=ctx.createOscillator();
+    o.type="sawtooth";
+    o.frequency.value=f;
+    o.connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime+1);
 }
 </script>
 
