@@ -7,24 +7,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        :root { --sari: #FFCA3A; --arka: #FFFDF0; }
+        :root { --sari: #FFCA3A; --arka: #FFFDF0; --mavi: #1982C4; }
         body { margin: 0; background: var(--arka); font-family: 'Fredoka One', cursive; padding-bottom: 120px; }
         header { background: var(--sari); padding: 25px; text-align: center; border-bottom: 8px solid #E5B534; }
-        h1 { margin: 0; color: white; font-size: 22px; }
+        h1 { margin: 0; color: white; font-size: 22px; text-shadow: 1px 1px rgba(0,0,0,0.1); }
         
         .list-container { padding: 20px; }
         .audio-item { 
             background: white; 
-            border-radius: 25px; 
+            border-radius: 30px; 
             padding: 20px; 
             margin-bottom: 20px; 
             border: 4px solid var(--sari);
-            box-shadow: 0 6px 0 #F7E7C2;
+            box-shadow: 0 8px 0 #F7E7C2;
         }
-        .audio-item h3 { margin: 0 0 10px 0; color: #555; font-size: 18px; display: flex; align-items: center; }
-        .audio-item i { margin-right: 10px; color: var(--sari); }
+        .audio-item h3 { margin: 0 0 15px 0; color: #555; font-size: 18px; display: flex; align-items: center; }
+        .audio-item i { margin-right: 12px; color: var(--sari); font-size: 24px; }
         
-        audio { width: 100%; height: 40px; margin-top: 10px; }
+        audio { width: 100%; height: 45px; border-radius: 15px; }
 
         .candy-nav {
             position: fixed;
@@ -36,6 +36,7 @@
             border-radius: 40px;
             border: 4px solid var(--sari);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
         .nav-link { color: #BBB; text-decoration: none; font-size: 24px; }
         .active { color: var(--sari); }
@@ -43,24 +44,34 @@
 </head>
 <body>
 
-<header><h1>Sesli Masallar</h1></header>
+<header><h1>Sesli Masal Dunyasi</h1></header>
 
 <div class="list-container">
+    
     <div class="audio-item">
-        <h3><i class="fas fa-moon"></i> Uyku Masali</h3>
+        <h3><i class="fas fa-handshake"></i> Verilen Soz Tutulmali</h3>
         <audio controls>
-            <source src="uyku_masali.mp3" type="audio/mpeg">
+            <source src="https://www.edebiyatogretmeni.net/wp-content/uploads/2014/06/verilen_soz_tutulmali.mp3" type="audio/mpeg">
             Tarayiciniz ses dosyasini desteklemiyor.
         </audio>
     </div>
 
     <div class="audio-item">
-        <h3><i class="fas fa-music"></i> Neseli Sarkilar</h3>
+        <h3><i class="fas fa-paw"></i> Tavsanlarla Tilkiler</h3>
         <audio controls>
-            <source src="neseli_sarkilar.mp3" type="audio/mpeg">
+            <source src="https://www.edebiyatogretmeni.net/wp-content/uploads/2014/06/tavsanlarla_tilkiler.mp3" type="audio/mpeg">
             Tarayiciniz ses dosyasini desteklemiyor.
         </audio>
     </div>
+
+    <div class="audio-item">
+        <h3><i class="fas fa-crown"></i> Pamuk Prenses</h3>
+        <audio controls>
+            <source src="https://www.edebiyatogretmeni.net/wp-content/uploads/2014/06/pamuk_prenses.mp3" type="audio/mpeg">
+            Tarayiciniz ses dosyasini desteklemiyor.
+        </audio>
+    </div>
+
 </div>
 
 <nav class="candy-nav">
