@@ -1,121 +1,118 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cizgi Filmler</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        :root { --mavi: #1982C4; --arka: #F0F9FF; }
-        body { margin: 0; background: var(--arka); font-family: 'Fredoka One', cursive; padding-bottom: 120px; }
-        header { background: var(--mavi); padding: 25px; text-align: center; border-bottom: 8px solid #116091; }
-        h1 { margin: 0; color: white; font-size: 22px; }
-        
-        .list-container { padding: 20px; }
-        .video-item { 
-            background: white; 
-            border-radius: 25px; 
-            padding: 20px; 
-            margin-bottom: 20px; 
-            border: 4px solid var(--mavi);
-            box-shadow: 0 6px 0 #BEE3F8;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-        .video-info { display: flex; align-items: center; }
-        .video-info i { font-size: 30px; color: var(--mavi); margin-right: 15px; }
-        .video-info span { font-size: 18px; color: #444; }
-        .play-btn { background: var(--mavi); color: white; padding: 10px 20px; border-radius: 15px; font-size: 14px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cizgi Film Izle</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-        /* Uygulama Ici Oynatici */
-        #videoOverlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 5000; flex-direction: column;
-            align-items: center; justify-content: center;
-        }
-        .close-btn {
-            position: absolute; top: 20px; right: 20px; color: white;
-            font-size: 40px; cursor: pointer;
-        }
-        iframe { width: 95%; height: 50%; border-radius: 15px; border: 4px solid white; }
+<style>
+body {
+    margin: 0;
+    font-family: 'Fredoka One', cursive;
+    background: #FFFDF0;
+    text-align: center;
+    padding-bottom: 120px;
+    background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+}
 
-        .candy-nav {
-            position: fixed; bottom: 20px; left: 20px; right: 20px;
-            background: white; display: flex; justify-content: space-around;
-            padding: 15px; border-radius: 40px; border: 4px solid var(--mavi);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .nav-link { color: #BBB; text-decoration: none; font-size: 24px; }
-        .active { color: var(--mavi); }
-    </style>
+header {
+    background: #FF595E; /* Cizgi film sayfasi icin canli kirmizi */
+    padding: 20px;
+    color: white;
+    font-size: 22px;
+    border-bottom: 6px solid #D6454B;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+}
+
+.video-container {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Video Kart Tasarimi */
+.video-card {
+    background: white;
+    border-radius: 25px 35px 20px 40px;
+    border: 5px solid #FF595E;
+    padding: 15px;
+    box-shadow: 8px 8px 0px rgba(255, 89, 94, 0.1);
+    overflow: hidden;
+}
+
+.video-card h3 {
+    margin: 10px 0;
+    color: #333;
+    font-size: 18px;
+}
+
+/* Video Cercevesi (Uygulamanın icinde kalmasi icin) */
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Oran */
+    height: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #eee;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+}
+
+/* ALT MENU */
+.candy-nav {
+    position: fixed;
+    bottom: 15px; left: 15px; right: 15px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+    border-radius: 40px;
+    border: 4px solid #FF595E;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.nav-link {
+    text-decoration: none;
+    font-size: 22px;
+    color: #BBB;
+}
+.nav-link.active { color: #FF595E; }
+</style>
 </head>
 <body>
 
-<header><h1>Cizgi Film Dunyasi</h1></header>
+<header>🎬 CIZGI FILM IZLE</header>
 
-<div class="list-container">
+<div class="video-container">
     
-    <div class="video-item" onclick="acVideo('https://www.youtube.com/embed/bxeJYeqeQn0')">
-        <div class="video-info">
-            <i class="fas fa-play-circle"></i>
-            <span>Cedric</span>
+    <div class="video-card">
+        <h3>Cedric - Bolum 1</h3>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
         </div>
-        <div class="play-btn">IZLE</div>
     </div>
 
-    <div class="video-item" onclick="acVideo('https://www.youtube.com/embed/pEl3-0GHyoQ')">
-        <div class="video-info">
-            <i class="fas fa-tv"></i>
-            <span>Tom ve Jerry</span>
+    <div class="video-card" style="border-color: #26C6DA;">
+        <h3>Cedric - Bolum 2</h3>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
         </div>
-        <div class="play-btn">IZLE</div>
     </div>
 
-    <div class="video-item" onclick="acVideo('https://www.youtube.com/embed/wOc4m1noBs0')">
-        <div class="video-info">
-            <i class="fas fa-child"></i>
-            <span>Niloya</span>
-        </div>
-        <div class="play-btn">IZLE</div>
-    </div>
-
-    <div class="video-item" onclick="acVideo('https://www.youtube.com/embed/wA5b9JJxtMc')">
-        <div class="video-info">
-            <i class="fas fa-smile"></i>
-            <span>Caillou</span>
-        </div>
-        <div class="play-btn">IZLE</div>
-    </div>
-
-</div>
-
-<div id="videoOverlay">
-    <span class="close-btn" onclick="kapatVideo()"><i class="fas fa-times-circle"></i></span>
-    <iframe id="videoFrame" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
 
 <nav class="candy-nav">
     <a href="index.html" class="nav-link"><i class="fas fa-house-chimney"></i></a>
-    <a href="hikayeler.html" class="nav-link"><i class="fas fa-book-open"></i></a>
     <a href="videolar.html" class="nav-link active"><i class="fas fa-play-circle"></i></a>
-    <a href="sesli-kitaplar.html" class="nav-link"><i class="fas fa-headphones"></i></a>
-    <a href="boyama.html" class="nav-link"><i class="fas fa-palette"></i></a>
-    <a href="oyunlar.html" class="nav-link"><i class="fas fa-ghost"></i></a>
 </nav>
-
-<script>
-    function acVideo(link) {
-        document.getElementById('videoFrame').src = link;
-        document.getElementById('videoOverlay').style.display = 'flex';
-    }
-    function kapatVideo() {
-        document.getElementById('videoOverlay').style.display = 'none';
-        document.getElementById('videoFrame').src = '';
-    }
-</script>
 
 </body>
 </html>
