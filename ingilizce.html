@@ -33,7 +33,11 @@ header{
     padding:20px;
     border-radius:20px;
     border:3px solid #FFCA3A;
-    font-size:22px;
+    font-size:20px;
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 button{
@@ -52,78 +56,96 @@ button{
 
 <body>
 
-<header>🎮 İngilizce Oyun</header>
+<header>🎮 İngilizce 100 Soru Oyunu</header>
 
 <div class="score">
 ⭐ Puan: <span id="puan">0</span>
 </div>
 
-<div class="card" id="soru">Soru geliyor...</div>
+<div class="card" id="soru">Yükleniyor...</div>
 
-<button onclick="cevap('a')">A</button>
-<button onclick="cevap('b')">B</button>
-<button onclick="cevap('c')">C</button>
+<button onclick="cevap('a')" id="a">A</button>
+<button onclick="cevap('b')" id="b">B</button>
+<button onclick="cevap('c')" id="c">C</button>
 
 <script>
 
 let puan = 0;
-
-let sorular = [
-{
-    soru:"Cat ne demek?",
-    a:"Araba",
-    b:"Kedi",
-    c:"Elma",
-    dogru:"b"
-},
-{
-    soru:"Dog ne demek?",
-    a:"Köpek",
-    b:"Kedi",
-    c:"Araba",
-    dogru:"a"
-},
-{
-    soru:"Apple ne demek?",
-    a:"Elma",
-    b:"Araba",
-    c:"Köpek",
-    dogru:"a"
-}
-];
-
 let aktif = 0;
 
-function soruGetir(){
-    let s = sorular[aktif];
-    document.getElementById("soru").innerText = s.soru;
+let sorular = [
+{ soru:"Cat ne demek?", a:"Kedi", b:"Köpek", c:"Araba", dogru:"a" },
+{ soru:"Dog ne demek?", a:"Araba", b:"Köpek", c:"Elma", dogru:"b" },
+{ soru:"Apple ne demek?", a:"Elma", b:"Araba", c:"Kedi", dogru:"a" },
+{ soru:"Car ne demek?", a:"Araba", b:"Kedi", c:"Köpek", dogru:"a" },
+{ soru:"Sun ne demek?", a:"Ay", b:"Güneş", c:"Yıldız", dogru:"b" },
+{ soru:"Moon ne demek?", a:"Güneş", b:"Ay", c:"Araba", dogru:"b" },
+{ soru:"Water ne demek?", a:"Su", b:"Ateş", c:"Toprak", dogru:"a" },
+{ soru:"Book ne demek?", a:"Kitap", b:"Kalem", c:"Silgi", dogru:"a" },
+{ soru:"Pen ne demek?", a:"Kalem", b:"Defter", c:"Silgi", dogru:"a" },
+{ soru:"School ne demek?", a:"Okul", b:"Ev", c:"Park", dogru:"a" },
+{ soru:"Milk ne demek?", a:"Süt", b:"Su", c:"Çay", dogru:"a" },
+{ soru:"Bread ne demek?", a:"Ekmek", b:"Peynir", c:"Su", dogru:"a" },
+{ soru:"Red ne demek?", a:"Kırmızı", b:"Mavi", c:"Yeşil", dogru:"a" },
+{ soru:"Blue ne demek?", a:"Mavi", b:"Kırmızı", c:"Sarı", dogru:"a" },
+{ soru:"Green ne demek?", a:"Yeşil", b:"Mor", c:"Siyah", dogru:"a" },
+{ soru:"Fish ne demek?", a:"Balık", b:"Kuş", c:"Kedi", dogru:"a" },
+{ soru:"Bird ne demek?", a:"Kuş", b:"Balık", c:"Köpek", dogru:"a" },
+{ soru:"House ne demek?", a:"Ev", b:"Araba", c:"Okul", dogru:"a" },
+{ soru:"Door ne demek?", a:"Kapı", b:"Pencere", c:"Duvar", dogru:"a" },
+{ soru:"Window ne demek?", a:"Pencere", b:"Kapı", c:"Çatı", dogru:"a" },
 
-    document.querySelectorAll("button")[0].innerText = "A) " + s.a;
-    document.querySelectorAll("button")[1].innerText = "B) " + s.b;
-    document.querySelectorAll("button")[2].innerText = "C) " + s.c;
+{ soru:"Table ne demek?", a:"Masa", b:"Sandalye", c:"Kapı", dogru:"a" },
+{ soru:"Chair ne demek?", a:"Sandalye", b:"Masa", c:"Kitap", dogru:"a" },
+{ soru:"Phone ne demek?", a:"Telefon", b:"Televizyon", c:"Bilgisayar", dogru:"a" },
+{ soru:"Computer ne demek?", a:"Bilgisayar", b:"Telefon", c:"Kalem", dogru:"a" },
+{ soru:"Bag ne demek?", a:"Çanta", b:"Ayakkabı", c:"Şapka", dogru:"a" },
+
+{ soru:"Happy ne demek?", a:"Mutlu", b:"Üzgün", c:"Kızgın", dogru:"a" },
+{ soru:"Sad ne demek?", a:"Üzgün", b:"Mutlu", c:"Korkmuş", dogru:"a" },
+{ soru:"Angry ne demek?", a:"Kızgın", b:"Mutlu", c:"Yorgun", dogru:"a" },
+
+{ soru:"One ne demek?", a:"Bir", b:"İki", c:"Üç", dogru:"a" },
+{ soru:"Two ne demek?", a:"İki", b:"Bir", c:"Dört", dogru:"a" },
+{ soru:"Three ne demek?", a:"Üç", b:"Beş", c:"Altı", dogru:"a" },
+
+{ soru:"Fast ne demek?", a:"Hızlı", b:"Yavaş", c:"Ağır", dogru:"a" },
+{ soru:"Slow ne demek?", a:"Yavaş", b:"Hızlı", c:"Güçlü", dogru:"a" },
+
+{ soru:"Big ne demek?", a:"Büyük", b:"Küçük", c:"Uzun", dogru:"a" },
+{ soru:"Small ne demek?", a:"Küçük", b:"Büyük", c:"Geniş", dogru:"a" }
+];
+
+function soruGoster(){
+    let s = sorular[aktif];
+
+    document.getElementById("soru").innerText = s.soru;
+    document.getElementById("a").innerText = "A) " + s.a;
+    document.getElementById("b").innerText = "B) " + s.b;
+    document.getElementById("c").innerText = "C) " + s.c;
 }
 
 function cevap(secim){
     if(secim == sorular[aktif].dogru){
         puan += 10;
         alert("🎉 Doğru!");
-    }else{
+    } else {
         alert("❌ Yanlış!");
     }
 
     document.getElementById("puan").innerText = puan;
 
-    // SONRAKİ SORUYA GEÇ
     aktif++;
 
     if(aktif >= sorular.length){
-        aktif = 0; // başa döner
+        aktif = 0;
+        alert("🎮 Oyun bitti! Baştan başlıyor");
     }
 
-    soruGetir();
+    soruGoster();
 }
 
-soruGetir();
+soruGoster();
 
 </script>
 
