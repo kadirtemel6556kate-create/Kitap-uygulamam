@@ -7,135 +7,84 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        :root {
-            --deniz-mavi: #1982C4;
-            --acik-mavi: #4ECDC4;
-            --koyu-mavi: #116091;
-            --arka-plan: #F0F9FF;
+        :root { --mavi: #1982C4; --arka: #F0F9FF; }
+        body { margin: 0; background: var(--arka); font-family: 'Fredoka One', cursive; padding-bottom: 120px; }
+        header { background: var(--mavi); padding: 25px; text-align: center; border-bottom: 8px solid #116091; }
+        h1 { margin: 0; color: white; font-size: 22px; }
+
+        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; }
+        .v-card { 
+            background: white; border-radius: 30px; padding: 20px; 
+            display: flex; flex-direction: column; align-items: center;
+            border: 4px solid var(--mavi); box-shadow: 0 8px 0 #BEE3F8;
+            cursor: pointer; transition: 0.2s;
         }
+        .v-card:active { transform: translateY(4px); box-shadow: 0 4px 0 #BEE3F8; }
+        .v-card i { font-size: 45px; color: var(--mavi); margin-bottom: 10px; }
+        .v-card span { font-size: 15px; color: #444; text-align: center; }
 
-        body { 
-            margin: 0; 
-            background: var(--arka-plan);
-            font-family: 'Fredoka One', cursive;
-            padding-bottom: 120px;
+        /* Uygulama Ici Oynatici (Modal) */
+        #videoPlayer {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 5000; flex-direction: column;
+            align-items: center; justify-content: center;
         }
-
-        header {
-            background: var(--deniz-mavi); 
-            padding: 30px;
-            text-align: center;
-            border-bottom: 10px solid var(--koyu-mavi);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .close-vid {
+            position: absolute; top: 20px; right: 20px; color: white;
+            font-size: 40px; cursor: pointer; z-index: 5100;
         }
-
-        h1 { margin: 0; font-size: 26px; color: #FFF; text-shadow: 2px 2px rgba(0,0,0,0.2); }
-
-        .video-shelf {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            padding: 25px;
-        }
-
-        .video-card {
-            background: white;
-            height: 180px;
-            border-radius: 35px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 10px 0 rgba(25, 130, 196, 0.2);
-            transition: 0.3s;
-            border: 5px solid var(--deniz-mavi);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .video-card:active { transform: scale(0.95); }
-
-        /* Play Butonu Efekti */
-        .video-card i {
-            font-size: 50px;
-            color: var(--deniz-mavi);
-            margin-bottom: 10px;
-            filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1));
-        }
-
-        .video-card span {
-            color: #444;
-            font-size: 16px;
-            text-align: center;
-            padding: 0 10px;
-            font-weight: bold;
-        }
-
-        .video-card::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            height: 60px;
-            background: rgba(25, 130, 196, 0.05);
-            border-radius: 25px 25px 5px 5px;
-        }
+        iframe { width: 90%; height: 50%; border-radius: 20px; border: 5px solid white; }
 
         .candy-nav {
-            position: fixed;
-            bottom: 20px; left: 20px; right: 20px;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px;
-            border-radius: 40px;
-            border: 4px solid var(--deniz-mavi);
+            position: fixed; bottom: 20px; left: 20px; right: 20px;
+            background: white; display: flex; justify-content: space-around;
+            padding: 15px; border-radius: 40px; border: 4px solid var(--mavi);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            z-index: 1000;
         }
-
         .nav-link { color: #BBB; text-decoration: none; font-size: 24px; }
-        .active { color: var(--deniz-mavi); }
+        .active { color: var(--mavi); }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Cizgi Filmler</h1>
-    </header>
+<header><h1>Cizgi Filmler</h1></header>
 
-    <div class="video-shelf">
-        <a href="video1.html" class="video-card">
-            <i class="fas fa-play-circle"></i>
-            <span>Cedric Izle</span>
-        </a>
-
-        <a href="video2.html" class="video-card">
-            <i class="fas fa-tv"></i>
-            <span>Neseli Dostlar</span>
-        </a>
-
-        <a href="video3.html" class="video-card">
-            <i class="fas fa-film"></i>
-            <span>Boya ve Ogren</span>
-        </a>
-
-        <a href="video4.html" class="video-card">
-            <i class="fas fa-circle-play"></i>
-            <span>Sarkili Masal</span>
-        </a>
+<div class="video-grid">
+    <div class="v-card" onclick="izle('BURAYA_VIDEO_LINKI_1')">
+        <i class="fas fa-play-circle"></i>
+        <span>Cizgi Film 1</span>
     </div>
 
-    <nav class="candy-nav">
-        <a href="index.html" class="nav-link"><i class="fas fa-house-chimney"></i></a>
-        <a href="hikayeler.html" class="nav-link"><i class="fas fa-book-open"></i></a>
-        <a href="videolar.html" class="nav-link active"><i class="fas fa-play-circle"></i></a>
-        <a href="sesli-kitaplar.html" class="nav-link"><i class="fas fa-headphones"></i></a>
-        <a href="boyama.html" class="nav-link"><i class="fas fa-palette"></i></a>
-        <a href="oyunlar.html" class="nav-link"><i class="fas fa-ghost"></i></a>
-    </nav>
+    <div class="v-card" onclick="izle('BURAYA_VIDEO_LINKI_2')">
+        <i class="fas fa-play-circle"></i>
+        <span>Cizgi Film 2</span>
+    </div>
+</div>
+
+<div id="videoPlayer">
+    <span class="close-vid" onclick="kapat()"><i class="fas fa-times-circle"></i></span>
+    <iframe id="vidFrame" src="" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<nav class="candy-nav">
+    <a href="index.html" class="nav-link"><i class="fas fa-house-chimney"></i></a>
+    <a href="hikayeler.html" class="nav-link"><i class="fas fa-book-open"></i></a>
+    <a href="videolar.html" class="nav-link active"><i class="fas fa-play-circle"></i></a>
+    <a href="sesli-kitaplar.html" class="nav-link"><i class="fas fa-headphones"></i></a>
+    <a href="boyama.html" class="nav-link"><i class="fas fa-palette"></i></a>
+    <a href="oyunlar.html" class="nav-link"><i class="fas fa-ghost"></i></a>
+</nav>
+
+<script>
+    function izle(link) {
+        document.getElementById('vidFrame').src = link;
+        document.getElementById('videoPlayer').style.display = 'flex';
+    }
+    function kapat() {
+        document.getElementById('videoPlayer').style.display = 'none';
+        document.getElementById('vidFrame').src = '';
+    }
+</script>
 
 </body>
 </html>
