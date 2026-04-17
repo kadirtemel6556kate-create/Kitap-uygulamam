@@ -24,10 +24,13 @@
         #paintingCanvas { position: absolute; top: 0; left: 0; z-index: 2; cursor: crosshair; touch-action: none; }
         #templateImage { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 80%; object-fit: contain; opacity: 0.2; z-index: 1; pointer-events: none; }
 
-        /* Renk Paleti */
+        /* Renk Paleti ve Silgi */
         .palette { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 10px; }
-        .color-btn { width: 45px; height: 45px; border-radius: 50%; border: 4px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s; }
+        .color-btn { width: 45px; height: 45px; border-radius: 50%; border: 4px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; color: #444; font-size: 20px; }
         .color-btn.active { transform: scale(1.2); border-color: #444; }
+
+        /* Silgi Özel Stil */
+        .eraser-btn { background: #eee; color: #666; }
 
         .controls { display: flex; justify-content: center; gap: 20px; margin-top: 10px; }
         .action-btn { background: white; border: none; padding: 12px 25px; border-radius: 20px; font-family: 'Fredoka One'; color: #666; box-shadow: 0 5px 0 #ddd; cursor: pointer; }
@@ -43,14 +46,14 @@
 <header><h1>🎨 Sihirli Boyama</h1></header>
 
 <div class="templates">
-    <div class="template-btn" onclick="setTemplate('')">⬜</div>
+    <div class="template-btn active" onclick="setTemplate('https://cdn-icons-png.flaticon.com/512/411/411797.png')">☁️</div>
     <div class="template-btn" onclick="setTemplate('https://cdn-icons-png.flaticon.com/512/415/415733.png')">🍎</div>
     <div class="template-btn" onclick="setTemplate('https://cdn-icons-png.flaticon.com/512/741/741407.png')">🚗</div>
     <div class="template-btn" onclick="setTemplate('https://cdn-icons-png.flaticon.com/512/616/616430.png')">🐱</div>
 </div>
 
 <div class="canvas-area" id="canvasContainer">
-    <img id="templateImage" src="" alt="">
+    <img id="templateImage" src="https://cdn-icons-png.flaticon.com/512/411/411797.png" alt="">
     <canvas id="paintingCanvas"></canvas>
 </div>
 
@@ -61,10 +64,13 @@
     <div class="color-btn" style="background: #1982C4;" onclick="setColor('#1982C4', this)"></div>
     <div class="color-btn" style="background: #6A4C93;" onclick="setColor('#6A4C93', this)"></div>
     <div class="color-btn" style="background: #000000;" onclick="setColor('#000000', this)"></div>
+    <div class="color-btn eraser-btn" onclick="setEraser(this)">
+        <i class="fas fa-eraser"></i>
+    </div>
 </div>
 
 <div class="controls">
-    <button class="action-btn" onclick="clearCanvas()"><i class="fas fa-trash"></i> Sil</button>
+    <button class="action-btn" onclick="clearCanvas()"><i class="fas fa-trash"></i> Hepsini Sil</button>
 </div>
 
 <nav class="candy-nav">
@@ -82,6 +88,7 @@
     const container = document.getElementById('canvasContainer');
     let painting = false;
     let color = "#FF595E";
+    let eraserActive = false; // Yeni: Silgi modu takibi
 
     // Ses Motoru
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -109,7 +116,16 @@
         const x = (e.clientX || e.touches[0].clientX) - rect.left;
         const y = (e.clientY || e.touches[0].clientY) - rect.top;
 
-        ctx.strokeStyle = color;
+        // DÜZELTME: Silgi modu kontrolü
+        if(eraserActive) {
+            ctx.globalCompositeOperation = 'destination-out'; // Bu mod boyayı siler (arkayı gösterir)
+            ctx.lineWidth = 25; // Silgi daha kalın olsun
+        } else {
+            ctx.globalCompositeOperation = 'source-over'; // Normal boyama modu
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 10;
+        }
+
         ctx.lineTo(x, y);
         ctx.stroke();
         ctx.beginPath();
@@ -125,7 +141,17 @@
 
     function setColor(newColor, btn) {
         color = newColor;
+        eraserActive = false; // Renk seçince silgiyi kapat
         sesCal(600, 'sine', 0.1);
+        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    // YENİ: Silgi modu fonksiyonu
+    function setEraser(btn) {
+        eraserActive = true;
+        color = ""; // Silgide renge gerek yok
+        sesCal(300, 'triangle', 0.1); // Silgi için farklı bir ses
         document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     }
@@ -133,6 +159,9 @@
     function setTemplate(src) {
         document.getElementById('templateImage').src = src;
         sesCal(800, 'sine', 0.1);
+        // Hangi buton tıklandıysa onu aktif yap
+        document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
     }
 
     function clearCanvas() {
