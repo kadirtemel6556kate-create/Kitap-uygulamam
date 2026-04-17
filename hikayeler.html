@@ -10,9 +10,22 @@
         header { padding: 25px 20px; background: #111; border-bottom: 1px solid #222; text-align: center; }
         h1 { color: #1DB954; font-size: 24px; }
         .content { padding: 20px; }
-        .story-card { background: #181818; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #1DB954; }
-        .story-card h2 { font-size: 18px; margin: 0 0 10px 0; color: #fff; }
-        .story-text { color: #b3b3b3; line-height: 1.6; font-size: 15px; }
+        
+        /* Liste Tasarımı */
+        .story-item {
+            background: #1e1e1e;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            cursor: pointer;
+            border-left: 5px solid #1db954;
+        }
+        .ok { color: #1db954; font-weight: bold; }
+
+        /* Menü Tasarımı */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0 32px 0; border-top: 1px solid #282828; }
         .nav-item { text-align: center; font-size: 11px; color: #b3b3b3; text-decoration: none; flex: 1; }
         .nav-item i { font-size: 22px; display: block; margin-bottom: 5px; }
@@ -21,17 +34,45 @@
 </head>
 <body>
     <header><h1>📖 Yazılı Hikayeler</h1></header>
+    
     <div class="content">
-        <div class="story-card">
-            <h2>Kırmızı Başlıklı Kız</h2>
-            <p class="story-text">Bir varmış, bir yokmuş... (Buraya hikaye metnini ekleyebilirsin)</p>
+        <div class="story-list">
+            <div class="story-item" onclick="hikayeAc('Kırmızı Başlıklı Kız', 'Bir varmış bir yokmuş... Evvel zaman içinde, kalbur saman içinde; ormanın derinliklerinde annesiyle yaşayan dünya tatlısı bir kız varmış. Bir gün büyükannesine kurabiye götürürken yolda kurnaz bir kurtla karşılaşmış...')">
+                <span>Kırmızı Başlıklı Kız</span>
+                <span class="ok">→</span>
+            </div>
+
+            <div class="story-item" onclick="hikayeAc('Aslan ile Fare', 'Ormanlar kralı aslan, bir gün ağaç gölgesinde uyurken küçük bir fare üzerinden geçmiş. Aslan sinirlenmiş ama fare yalvarmış: Beni bırak, belki bir gün işine yararım. Aslan gülmüş ve fareyi bırakmış. Gün gelmiş, aslan avcıların ağına düşmüş ve fare gelip ağı kemirerek kralı kurtarmış.')">
+                <span>Aslan ile Fare</span>
+                <span class="ok">→</span>
+            </div>
         </div>
-    </div>
-    <div class="bottom-nav">
+    </div> <div class="bottom-nav">
         <a href="index.html" class="nav-item"><i class="fas fa-home"></i>Anasayfa</a>
         <a href="hikayeler.html" class="nav-item active"><i class="fas fa-book-open"></i>Hikayeler</a>
         <a href="videolar.html" class="nav-item"><i class="fas fa-video"></i>Videolar</a>
         <a href="sesli-kitaplar.html" class="nav-item"><i class="fas fa-headphones"></i>Dinle</a>
     </div>
+
+    <div id="storyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999;">
+        <div style="background:#121212; margin:15% auto; padding:20px; width:85%; border-radius:15px; border:1px solid #1db954; color:white; max-height:70vh; overflow-y:auto;">
+            <span onclick="hikayeKapat()" style="float:right; font-size:30px; color:#1db954; cursor:pointer;">&times;</span>
+            <h2 id="modalTitle" style="color:#1db954;"></h2>
+            <hr style="border:0.5px solid #333;">
+            <p id="modalBody" style="line-height:1.6; font-size:16px;"></p>
+        </div>
+    </div>
+
+    <script>
+    function hikayeAc(baslik, metin) {
+        document.getElementById('modalTitle').innerText = baslik;
+        document.getElementById('modalBody').innerText = metin;
+        document.getElementById('storyModal').style.display = "block";
+    }
+
+    function hikayeKapat() {
+        document.getElementById('storyModal').style.display = "none";
+    }
+    </script>
 </body>
 </html>
