@@ -57,20 +57,26 @@
             font-weight: bold; font-size: 16px; margin-top: 10px;
         }
 
-        /* ALT MENÜ VE PARLAYAN BUTON */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0 32px 0; border-top: 1px solid #282828; }
+        /* ALT MENÜ TASARIMI */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0 32px 0; border-top: 1px solid #282828; z-index: 1000; }
         .nav-item { text-align: center; font-size: 10px; color: #b3b3b3; text-decoration: none; flex: 1; }
         .nav-item i { font-size: 20px; display: block; margin-bottom: 5px; }
         .nav-item.active { color: #fff; }
 
-        .game-btn-active {
+        /* DİĞER SAYFALARLA AYNI OLAN PARLAYAN BUTON CSS */
+        .game-btn {
             background: linear-gradient(45deg, #ff00ea, #ffcc00, #00ffcc);
             background-size: 200% 200%;
-            border-radius: 12px; margin: 5px; color: #fff !important;
-            animation: rainbow 3s infinite, pulse 1.5s infinite;
+            border-radius: 12px;
+            margin: 5px;
+            color: #fff !important;
+            animation: rainbow 3s ease infinite, pulse 1.5s infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
+        .game-btn i { color: #fff !important; }
+
         @keyframes rainbow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-        @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.1)} 100%{transform:scale(1)} }
+        @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
     </style>
 </head>
 <body>
@@ -92,7 +98,7 @@
     <a href="videolar.html" class="nav-item"><i class="fas fa-video"></i>Videolar</a>
     <a href="sesli-kitaplar.html" class="nav-item"><i class="fas fa-headphones"></i>Dinle</a>
     <a href="boyama.html" class="nav-item"><i class="fas fa-paint-brush"></i>Boyama</a>
-    <a href="oyunlar.html" class="nav-item game-btn-active"><i class="fas fa-gamepad"></i>Oyunlar</a>
+    <a href="oyunlar.html" class="nav-item active game-btn"><i class="fas fa-gamepad"></i>Oyunlar</a>
 </div>
 
 <script>
