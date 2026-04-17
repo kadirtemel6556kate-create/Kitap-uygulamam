@@ -11,7 +11,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cedric Müzik Kutusu</title>
+    <title>Cedric'in Müzik Listesi</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -22,6 +22,7 @@
             background: #FFFDF0;
             text-align: center;
             padding-bottom: 120px;
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
         }
 
         header {
@@ -40,9 +41,8 @@
             background: white;
             border-radius: 25px;
             padding: 15px;
-            border: 4px solid #1982C4;
+            border: 4px solid #FFCA3A;
             box-shadow: 0 8px 0 rgba(0,0,0,0.05);
-            overflow: hidden;
         }
 
         .sarki-adi {
@@ -50,23 +50,25 @@
             font-size: 18px;
             color: white;
             margin-bottom: 10px;
-            background: #1982C4;
-            padding: 8px;
+            background: #FFCA3A;
+            padding: 10px;
             border-radius: 15px;
         }
 
-        /* YouTube oynatıcısını MP3 çalar gibi incecik yapan sihirli ayar */
-        .muzik-calar {
+        /* YouTube'u sadece ses barı yapan sihirli kutu */
+        .ses-oynatici {
             width: 100%;
-            height: 60px; /* Sadece kontrol çubuğu görünecek kadar dar */
-            border-radius: 15px;
+            height: 65px;
+            border-radius: 20px;
             overflow: hidden;
+            position: relative;
+            background: #66BB6A; /* Yeşil pofuduk arka plan */
         }
 
-        .muzik-calar iframe {
+        .ses-oynatici iframe {
             width: 100%;
-            height: 300px; /* Videoyu aşağıda bırakıyoruz */
-            margin-top: -120px; /* Videonun üst kısmını gizleyip sadece barı bırakıyoruz */
+            height: 400px;
+            margin-top: -150px; /* Videoyu yukarı itip sadece barı bırakıyoruz */
             border: none;
         }
 
@@ -88,8 +90,29 @@
     
     <div class="sarki-kart" style="border-color: #FFCA3A;">
         <span class="sarki-adi" style="background: #FFCA3A;">📯 Bak Postacı Geliyor</span>
-        <div class="muzik-calar">
-            <iframe src="https://www.youtube.com/embed/Pet2UbL966g?controls=1&showinfo=0&rel=0" allowfullscreen></iframe>
+        <div class="ses-oynatici">
+            <iframe src="https://www.youtube.com/embed/Pet2UbL966g?controls=1&showinfo=0&rel=0"></iframe>
+        </div>
+    </div>
+
+    <div class="sarki-kart" style="border-color: #1982C4;">
+        <span class="sarki-adi" style="background: #1982C4;">🐟 Kırmızı Balık</span>
+        <div class="ses-oynatici" style="background: #42A5F5;">
+            <iframe src="https://www.youtube.com/embed/o_fM_S_4dUE?controls=1"></iframe>
+        </div>
+    </div>
+
+    <div class="sarki-kart" style="border-color: #A44CD3;">
+        <span class="sarki-adi" style="background: #A44CD3;">🐸 Küçük Kurbağa</span>
+        <div class="ses-oynatici" style="background: #AB47BC;">
+            <iframe src="https://www.youtube.com/embed/S2O6P_36WvU?controls=1"></iframe>
+        </div>
+    </div>
+
+    <div class="sarki-kart" style="border-color: #66BB6A;">
+        <span class="sarki-adi" style="background: #66BB6A;">🦆 Beş Küçük Ördek</span>
+        <div class="ses-oynatici" style="background: #81C784;">
+            <iframe src="https://www.youtube.com/embed/LndA-K0P_h0?controls=1"></iframe>
         </div>
     </div>
 
