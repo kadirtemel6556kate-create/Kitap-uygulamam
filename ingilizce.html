@@ -4,14 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ingilizce Kelime Oyunu</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
 
 <style>
 body{
     margin:0;
-    font-family:Arial;
+    font-family: 'Fredoka One', cursive; /* Daha cocuksu font */
     background:#FFFDF0;
     text-align:center;
     padding-bottom:120px;
+    background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
 }
 
 header{
@@ -19,43 +21,77 @@ header{
     padding:20px;
     color:white;
     font-size:22px;
+    border-bottom: 6px solid #e5b534;
 }
 
 .stats{
     font-size:16px;
     color:#1982C4;
     margin:10px;
+    background: white;
+    padding: 10px;
+    border-radius: 20px;
+    display: inline-block;
+    border: 3px solid #1982C4;
 }
 
 .card{
     background:white;
     margin:15px;
     padding:25px;
-    border-radius:20px;
-    border:3px solid #FFCA3A;
+    border-radius:25px 35px 20px 40px;
+    border:5px solid #FFCA3A;
     font-size:22px;
     min-height:70px;
+    box-shadow: 8px 8px 0px rgba(255, 202, 58, 0.2);
 }
 
 button{
     display:block;
-    margin:10px auto;
+    margin:15px auto;
     padding:15px;
-    width:80%;
+    width:85%;
     border:none;
-    border-radius:15px;
+    border-radius:20px;
     font-size:18px;
     background:#1982C4;
     color:white;
+    font-family: 'Fredoka One', cursive;
+    box-shadow: 0 6px 0 #13669a;
+    transition: 0.1s;
 }
 
-.timer{
-    font-size:18px;
-    color:red;
-    margin:5px;
+button:active { transform: translateY(4px); box-shadow: 0 2px 0 #13669a; }
+
+.timer{ font-size:20px; color:#FF595E; margin:10px; font-weight: bold; }
+
+/* --- YENİ ÇOCUKSU MESAJ KUTUSU --- */
+#mesaj-kutusu {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 8px solid #FFCA3A;
+    border-radius: 40px;
+    padding: 30px;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 0 100px rgba(0,0,0,0.2);
+    width: 280px;
+}
+#mesaj-kutusu h2 { margin: 0 0 20px 0; font-size: 28px; }
+#mesaj-kutusu button { width: 100%; background: #66BB6A; box-shadow: 0 6px 0 #4d8d50; }
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
 }
 
-/* ALT MENÜ (bozmadan ekli) */
+/* ALT MENÜ */
 .candy-nav{
     position:fixed;
     bottom:15px;
@@ -69,11 +105,7 @@ button{
     border:4px solid #FFCA3A;
     box-shadow:0 10px 30px rgba(0,0,0,0.1);
 }
-
-.nav-link{
-    text-decoration:none;
-    font-size:22px;
-}
+.nav-link{ text-decoration:none; font-size:22px; }
 </style>
 </head>
 
@@ -95,8 +127,13 @@ button{
 <button onclick="cevap('b')" id="b">B</button>
 <button onclick="cevap('c')" id="c">C</button>
 
-<script>
+<div class="overlay" id="perde"></div>
+<div id="mesaj-kutusu">
+    <h2 id="mesaj-baslik">Başlık</h2>
+    <button onclick="mesajKapat()" id="mesaj-buton">Tamam!</button>
+</div>
 
+<script>
 let puan = 0;
 let level = 1;
 let can = 3;
@@ -104,54 +141,17 @@ let aktif = 0;
 let time = 10;
 let interval;
 
-/* 50 SORU */
 let sorular = [
-{q:"Cat ne demek?", a:"Kedi", b:"Köpek", c:"Araba", d:"a"},
-{q:"Dog ne demek?", a:"Köpek", b:"Kedi", c:"Su", d:"a"},
-{q:"Apple ne demek?", a:"Elma", b:"Araba", c:"Kuş", d:"a"},
-{q:"Car ne demek?", a:"Araba", b:"Ev", c:"Kedi", d:"a"},
-{q:"Sun ne demek?", a:"Güneş", b:"Ay", c:"Yıldız", d:"a"},
-{q:"Moon ne demek?", a:"Ay", b:"Güneş", c:"Araba", d:"a"},
-{q:"Water ne demek?", a:"Su", b:"Ateş", c:"Toprak", d:"a"},
-{q:"Book ne demek?", a:"Kitap", b:"Kalem", c:"Defter", d:"a"},
-{q:"Pen ne demek?", a:"Kalem", b:"Kitap", c:"Silgi", d:"a"},
-{q:"School ne demek?", a:"Okul", b:"Ev", c:"Park", d:"a"},
-
-{q:"Milk ne demek?", a:"Süt", b:"Su", c:"Çay", d:"a"},
-{q:"Bread ne demek?", a:"Ekmek", b:"Peynir", c:"Su", d:"a"},
-{q:"Red ne demek?", a:"Kırmızı", b:"Mavi", c:"Yeşil", d:"a"},
-{q:"Blue ne demek?", a:"Mavi", b:"Kırmızı", c:"Sarı", d:"a"},
-{q:"Green ne demek?", a:"Yeşil", b:"Siyah", c:"Beyaz", d:"a"},
-
-{q:"Fish ne demek?", a:"Balık", b:"Kuş", c:"Kedi", d:"a"},
-{q:"Bird ne demek?", a:"Kuş", b:"Balık", c:"Köpek", d:"a"},
-{q:"House ne demek?", a:"Ev", b:"Araba", c:"Okul", d:"a"},
-{q:"Door ne demek?", a:"Kapı", b:"Pencere", c:"Duvar", d:"a"},
-{q:"Window ne demek?", a:"Pencere", b:"Kapı", c:"Çatı", d:"a"},
-
-{q:"Table ne demek?", a:"Masa", b:"Sandalye", c:"Kitap", d:"a"},
-{q:"Chair ne demek?", a:"Sandalye", b:"Masa", c:"Kalem", d:"a"},
-{q:"Phone ne demek?", a:"Telefon", b:"TV", c:"Radyo", d:"a"},
-{q:"Computer ne demek?", a:"Bilgisayar", b:"Telefon", c:"Kitap", d:"a"},
-{q:"TV ne demek?", a:"Televizyon", b:"Radyo", c:"Telefon", d:"a"},
-
-{q:"Bag ne demek?", a:"Çanta", b:"Ayakkabı", c:"Şapka", d:"a"},
-{q:"Happy ne demek?", a:"Mutlu", b:"Üzgün", c:"Kızgın", d:"a"},
-{q:"Sad ne demek?", a:"Üzgün", b:"Mutlu", c:"Korkmuş", d:"a"},
-{q:"Angry ne demek?", a:"Kızgın", b:"Mutlu", c:"Yorgun", d:"a"},
-{q:"Tired ne demek?", a:"Yorgun", b:"Mutlu", c:"Güçlü", d:"a"},
-
-{q:"One ne demek?", a:"Bir", b:"İki", c:"Üç", d:"a"},
-{q:"Two ne demek?", a:"İki", b:"Bir", c:"Dört", d:"a"},
-{q:"Three ne demek?", a:"Üç", b:"Beş", c:"Altı", d:"a"},
-{q:"Four ne demek?", a:"Dört", b:"Beş", c:"Bir", d:"a"},
-{q:"Five ne demek?", a:"Beş", b:"Altı", c:"Yedi", d:"a"},
-
-{q:"Dog ne yer?", a:"Et", b:"Taş", c:"Cam", d:"a"},
-{q:"Cat ne yer?", a:"Balık", b:"Su", c:"Toprak", d:"a"},
-{q:"Lion ne demek?", a:"Aslan", b:"Kaplan", c:"Kedi", d:"a"},
-{q:"Tiger ne demek?", a:"Kaplan", b:"Aslan", c:"Köpek", d:"a"},
-{q:"Elephant ne demek?", a:"Fil", b:"At", c:"Kedi", d:"a"}
+    {q:"Cat ne demek?", a:"Kedi", b:"Köpek", c:"Araba", d:"a"},
+    {q:"Dog ne demek?", a:"Köpek", b:"Kedi", c:"Su", d:"a"},
+    {q:"Apple ne demek?", a:"Elma", b:"Araba", c:"Kuş", d:"a"},
+    {q:"Car ne demek?", a:"Araba", b:"Ev", c:"Kedi", d:"a"},
+    {q:"Sun ne demek?", a:"Güneş", b:"Ay", c:"Yıldız", d:"a"},
+    {q:"Moon ne demek?", a:"Ay", b:"Güneş", c:"Araba", d:"a"},
+    {q:"Water ne demek?", a:"Su", b:"Ateş", c:"Toprak", d:"a"},
+    {q:"Book ne demek?", a:"Kitap", b:"Kalem", c:"Defter", d:"a"},
+    {q:"Pen ne demek?", a:"Kalem", b:"Kitap", c:"Silgi", d:"a"},
+    {q:"School ne demek?", a:"Okul", b:"Ev", c:"Park", d:"a"}
 ];
 
 function guncelle(){
@@ -162,79 +162,71 @@ function guncelle(){
 
 function soruYukle(){
     let s = sorular[aktif];
-
     document.getElementById("soru").innerText = s.q;
     document.getElementById("a").innerText = "A) " + s.a;
     document.getElementById("b").innerText = "B) " + s.b;
     document.getElementById("c").innerText = "C) " + s.c;
-
     time = 10;
+    sayac();
 }
 
 function sayac(){
+    clearInterval(interval);
     interval = setInterval(()=>{
         time--;
         document.getElementById("time").innerText = time;
-
         if(time <= 0){
             clearInterval(interval);
+            ozelMesajGoster("⏰ Süre Bitti!", "#FF595E");
             yanlis();
         }
     },1000);
 }
 
-function dogru(){
-    puan += 10;
-
-    if(puan >= 30) level = 2;
-    if(puan >= 60) level = 3;
-    if(puan >= 100) level = 4;
-
-    guncelle();
+function ozelMesajGoster(metin, renk) {
+    document.getElementById("mesaj-baslik").innerText = metin;
+    document.getElementById("mesaj-baslik").style.color = renk;
+    document.getElementById("mesaj-kutusu").style.borderColor = renk;
+    document.getElementById("mesaj-kutusu").style.display = "block";
+    document.getElementById("perde").style.display = "block";
 }
 
-function yanlis(){
-    can--;
-
-    if(can <= 0){
-        alert("💀 OYUN BİTTİ!");
+function mesajKapat() {
+    document.getElementById("mesaj-kutusu").style.display = "none";
+    document.getElementById("perde").style.display = "none";
+    
+    if (can <= 0) {
         location.reload();
+    } else {
+        aktif++;
+        if(aktif >= sorular.length) aktif = 0;
+        soruYukle();
     }
-
-    guncelle();
 }
 
 function cevap(sec){
     clearInterval(interval);
-
     if(sec == sorular[aktif].d){
-        alert("🎉 Doğru!");
-        dogru();
+        puan += 10;
+        if(puan >= 30) level = 2;
+        ozelMesajGoster("🎉 Harika! Doğru", "#66BB6A");
     } else {
-        alert("❌ Yanlış!");
-        yanlis();
+        can--;
+        if(can <= 0) {
+            ozelMesajGoster("💀 Oyun Bitti!", "#FF595E");
+        } else {
+            ozelMesajGoster("❌ Ups! Yanlış", "#FF595E");
+        }
     }
-
-    aktif++;
-
-    if(aktif >= sorular.length){
-        aktif = 0;
-    }
-
-    soruYukle();
-    sayac();
+    guncelle();
 }
 
 soruYukle();
-sayac();
 guncelle();
-
 </script>
 
-<!-- ALT MENÜ -->
 <nav class="candy-nav">
     <a href="index.html" class="nav-link">🏠</a>
-    
 </nav>
 
 </body>
