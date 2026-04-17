@@ -3,176 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İngilizce kelime yarısı</title>
+<title>Quiz</title>
 
 <style>
-body{
-    margin:0;
-    font-family:Arial;
-    background:#FFFDF0;
-    text-align:center;
-    padding-bottom:120px;
-}
-
-header{
-    background:#FFCA3A;
-    padding:20px;
-    color:white;
-    font-size:22px;
-}
-
-.stats{
-    font-size:16px;
-    color:#1982C4;
-    margin:10px;
-}
-
-.card{
-    background:white;
-    margin:15px;
-    padding:25px;
-    border-radius:20px;
-    border:3px solid #FFCA3A;
-    font-size:22px;
-    min-height:70px;
-}
-
-button{
-    display:block;
-    margin:10px auto;
-    padding:15px;
-    width:80%;
-    border:none;
-    border-radius:15px;
-    font-size:18px;
-    background:#1982C4;
-    color:white;
-}
-
-.timer{
-    font-size:18px;
-    color:red;
-    margin:5px;
-}
+body{text-align:center;font-family:Arial;background:#FFFDF0;padding-bottom:120px;}
+header{background:#FFCA3A;padding:20px;color:white;font-size:22px;}
+button{width:80%;padding:15px;margin:10px;border:none;border-radius:15px;background:#1982C4;color:white;}
+.card{margin:20px;font-size:20px;}
+.candy-nav{position:fixed;bottom:15px;left:15px;right:15px;background:white;display:flex;justify-content:space-around;padding:12px;border-radius:40px;border:4px solid #FFCA3A;}
+.nav-link{text-decoration:none;font-size:22px;}
 </style>
 </head>
 
 <body>
 
-<header>🎮 İngilizce kelime yarısı</header>
+<header>🎮 Quiz</header>
 
-<div class="stats">
-⭐ Puan: <span id="puan">0</span> |
-🏆 Level: <span id="level">1</span> |
-❤️ Can: <span id="can">3</span>
-</div>
+<div class="card" id="q">Soru</div>
 
-<div class="timer">⏱️ <span id="time">10</span> saniye</div>
-
-<div class="card" id="soru">Yükleniyor...</div>
-
-<button onclick="cevap('a')" id="a">A</button>
-<button onclick="cevap('b')" id="b">B</button>
-<button onclick="cevap('c')" id="c">C</button>
+<button onclick="c('a')" id="a"></button>
+<button onclick="c('b')" id="b"></button>
+<button onclick="c('c')" id="c"></button>
 
 <script>
-
-let puan = 0;
-let level = 1;
-let can = 3;
-let aktif = 0;
-let time = 10;
-let interval;
-
-let sorular = [
-{q:"Cat ne demek?", a:"Kedi", b:"Köpek", c:"Araba", d:"a"},
-{q:"Dog ne demek?", a:"Araba", b:"Köpek", c:"Elma", d:"b"},
-{q:"Apple ne demek?", a:"Elma", b:"Kedi", c:"Su", d:"a"},
-{q:"Car ne demek?", a:"Araba", b:"Ev", c:"Kuş", d:"a"},
-{q:"Sun ne demek?", a:"Ay", b:"Güneş", c:"Yıldız", d:"b"},
-{q:"Water ne demek?", a:"Su", b:"Ateş", c:"Toprak", d:"a"},
-{q:"Book ne demek?", a:"Kitap", b:"Kalem", c:"Masa", d:"a"},
-{q:"School ne demek?", a:"Okul", b:"Ev", c:"Araba", d:"a"},
-{q:"Happy ne demek?", a:"Mutlu", b:"Üzgün", c:"Kızgın", d:"a"},
-{q:"Sad ne demek?", a:"Mutlu", b:"Üzgün", c:"Korkmuş", d:"b"}
+let i=0;
+let s=[
+{q:"Cat?",a:"Kedi",b:"Köpek",c:"Araba",d:"a"},
+{q:"Dog?",a:"Köpek",b:"Kedi",c:"Su",d:"a"},
+{q:"Apple?",a:"Elma",b:"Araba",c:"Kuş",d:"a"}
 ];
 
-function guncelle(){
-    document.getElementById("puan").innerText = puan;
-    document.getElementById("level").innerText = level;
-    document.getElementById("can").innerText = can;
+function load(){
+let x=s[i];
+q.innerText=x.q;
+a.innerText="A "+x.a;
+b.innerText="B "+x.b;
+c.innerText="C "+x.c;
 }
 
-function soruYukle(){
-    let s = sorular[aktif];
-
-    document.getElementById("soru").innerText = s.q;
-    document.getElementById("a").innerText = "A) " + s.a;
-    document.getElementById("b").innerText = "B) " + s.b;
-    document.getElementById("c").innerText = "C) " + s.c;
-
-    time = 10;
+function c(v){
+i++;
+if(i>=s.length)i=0;
+load();
 }
 
-function sayac(){
-    interval = setInterval(()=>{
-        time--;
-        document.getElementById("time").innerText = time;
-
-        if(time <= 0){
-            clearInterval(interval);
-            yanlis();
-        }
-    },1000);
-}
-
-function dogru(){
-    puan += 10;
-
-    if(puan >= 30) level = 2;
-    if(puan >= 60) level = 3;
-    if(puan >= 100) level = 4;
-
-    guncelle();
-}
-
-function yanlis(){
-    can--;
-
-    if(can <= 0){
-        alert("💀 OYUN BİTTİ!");
-        location.reload();
-    }
-
-    guncelle();
-}
-
-function cevap(sec){
-    clearInterval(interval);
-
-    if(sec == sorular[aktif].d){
-        alert("🎉 Doğru!");
-        dogru();
-    } else {
-        alert("❌ Yanlış!");
-        yanlis();
-    }
-
-    aktif++;
-
-    if(aktif >= sorular.length){
-        aktif = 0;
-    }
-
-    soruYukle();
-    sayac();
-}
-
-soruYukle();
-sayac();
-guncelle();
-
+load();
 </script>
+
+<nav class="candy-nav">
+<a href="index.html" class="nav-link">🏠</a>
+<a href="ingilizce.html" class="nav-link">🎮</a>
+<a href="ingilizce-eslestirme.html" class="nav-link">🧠</a>
+<a href="ingilizce-balon.html" class="nav-link">🎈</a>
+<a href="sesli-kitaplar.html" class="nav-link">🎧</a>
+</nav>
 
 </body>
 </html>
