@@ -3,59 +3,241 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz</title>
+<title>English PRO Game</title>
 
 <style>
-body{text-align:center;font-family:Arial;background:#FFFDF0;padding-bottom:120px;}
-header{background:#FFCA3A;padding:20px;color:white;font-size:22px;}
-button{width:80%;padding:15px;margin:10px;border:none;border-radius:15px;background:#1982C4;color:white;}
-.card{margin:20px;font-size:20px;}
-.candy-nav{position:fixed;bottom:15px;left:15px;right:15px;background:white;display:flex;justify-content:space-around;padding:12px;border-radius:40px;border:4px solid #FFCA3A;}
-.nav-link{text-decoration:none;font-size:22px;}
+body{
+    margin:0;
+    font-family:Arial;
+    background:#FFFDF0;
+    text-align:center;
+    padding-bottom:120px;
+}
+
+header{
+    background:#FFCA3A;
+    padding:20px;
+    color:white;
+    font-size:22px;
+}
+
+.stats{
+    font-size:16px;
+    color:#1982C4;
+    margin:10px;
+}
+
+.card{
+    background:white;
+    margin:15px;
+    padding:25px;
+    border-radius:20px;
+    border:3px solid #FFCA3A;
+    font-size:22px;
+    min-height:70px;
+}
+
+button{
+    display:block;
+    margin:10px auto;
+    padding:15px;
+    width:80%;
+    border:none;
+    border-radius:15px;
+    font-size:18px;
+    background:#1982C4;
+    color:white;
+}
+
+.timer{
+    font-size:18px;
+    color:red;
+    margin:5px;
+}
+
+/* ALT MENÜ (bozmadan ekli) */
+.candy-nav{
+    position:fixed;
+    bottom:15px;
+    left:15px;
+    right:15px;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    padding:12px;
+    border-radius:40px;
+    border:4px solid #FFCA3A;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.nav-link{
+    text-decoration:none;
+    font-size:22px;
+}
 </style>
 </head>
 
 <body>
 
-<header>🎮 Quiz</header>
+<header>🎮 ENGLISH PRO GAME</header>
 
-<div class="card" id="q">Soru</div>
+<div class="stats">
+⭐ Puan: <span id="puan">0</span> |
+🏆 Level: <span id="level">1</span> |
+❤️ Can: <span id="can">3</span>
+</div>
 
-<button onclick="c('a')" id="a"></button>
-<button onclick="c('b')" id="b"></button>
-<button onclick="c('c')" id="c"></button>
+<div class="timer">⏱️ <span id="time">10</span> saniye</div>
+
+<div class="card" id="soru">Yükleniyor...</div>
+
+<button onclick="cevap('a')" id="a">A</button>
+<button onclick="cevap('b')" id="b">B</button>
+<button onclick="cevap('c')" id="c">C</button>
 
 <script>
-let i=0;
-let s=[
-{q:"Cat?",a:"Kedi",b:"Köpek",c:"Araba",d:"a"},
-{q:"Dog?",a:"Köpek",b:"Kedi",c:"Su",d:"a"},
-{q:"Apple?",a:"Elma",b:"Araba",c:"Kuş",d:"a"}
+
+let puan = 0;
+let level = 1;
+let can = 3;
+let aktif = 0;
+let time = 10;
+let interval;
+
+/* 50 SORU */
+let sorular = [
+{q:"Cat ne demek?", a:"Kedi", b:"Köpek", c:"Araba", d:"a"},
+{q:"Dog ne demek?", a:"Köpek", b:"Kedi", c:"Su", d:"a"},
+{q:"Apple ne demek?", a:"Elma", b:"Araba", c:"Kuş", d:"a"},
+{q:"Car ne demek?", a:"Araba", b:"Ev", c:"Kedi", d:"a"},
+{q:"Sun ne demek?", a:"Güneş", b:"Ay", c:"Yıldız", d:"a"},
+{q:"Moon ne demek?", a:"Ay", b:"Güneş", c:"Araba", d:"a"},
+{q:"Water ne demek?", a:"Su", b:"Ateş", c:"Toprak", d:"a"},
+{q:"Book ne demek?", a:"Kitap", b:"Kalem", c:"Defter", d:"a"},
+{q:"Pen ne demek?", a:"Kalem", b:"Kitap", c:"Silgi", d:"a"},
+{q:"School ne demek?", a:"Okul", b:"Ev", c:"Park", d:"a"},
+
+{q:"Milk ne demek?", a:"Süt", b:"Su", c:"Çay", d:"a"},
+{q:"Bread ne demek?", a:"Ekmek", b:"Peynir", c:"Su", d:"a"},
+{q:"Red ne demek?", a:"Kırmızı", b:"Mavi", c:"Yeşil", d:"a"},
+{q:"Blue ne demek?", a:"Mavi", b:"Kırmızı", c:"Sarı", d:"a"},
+{q:"Green ne demek?", a:"Yeşil", b:"Siyah", c:"Beyaz", d:"a"},
+
+{q:"Fish ne demek?", a:"Balık", b:"Kuş", c:"Kedi", d:"a"},
+{q:"Bird ne demek?", a:"Kuş", b:"Balık", c:"Köpek", d:"a"},
+{q:"House ne demek?", a:"Ev", b:"Araba", c:"Okul", d:"a"},
+{q:"Door ne demek?", a:"Kapı", b:"Pencere", c:"Duvar", d:"a"},
+{q:"Window ne demek?", a:"Pencere", b:"Kapı", c:"Çatı", d:"a"},
+
+{q:"Table ne demek?", a:"Masa", b:"Sandalye", c:"Kitap", d:"a"},
+{q:"Chair ne demek?", a:"Sandalye", b:"Masa", c:"Kalem", d:"a"},
+{q:"Phone ne demek?", a:"Telefon", b:"TV", c:"Radyo", d:"a"},
+{q:"Computer ne demek?", a:"Bilgisayar", b:"Telefon", c:"Kitap", d:"a"},
+{q:"TV ne demek?", a:"Televizyon", b:"Radyo", c:"Telefon", d:"a"},
+
+{q:"Bag ne demek?", a:"Çanta", b:"Ayakkabı", c:"Şapka", d:"a"},
+{q:"Happy ne demek?", a:"Mutlu", b:"Üzgün", c:"Kızgın", d:"a"},
+{q:"Sad ne demek?", a:"Üzgün", b:"Mutlu", c:"Korkmuş", d:"a"},
+{q:"Angry ne demek?", a:"Kızgın", b:"Mutlu", c:"Yorgun", d:"a"},
+{q:"Tired ne demek?", a:"Yorgun", b:"Mutlu", c:"Güçlü", d:"a"},
+
+{q:"One ne demek?", a:"Bir", b:"İki", c:"Üç", d:"a"},
+{q:"Two ne demek?", a:"İki", b:"Bir", c:"Dört", d:"a"},
+{q:"Three ne demek?", a:"Üç", b:"Beş", c:"Altı", d:"a"},
+{q:"Four ne demek?", a:"Dört", b:"Beş", c:"Bir", d:"a"},
+{q:"Five ne demek?", a:"Beş", b:"Altı", c:"Yedi", d:"a"},
+
+{q:"Dog ne yer?", a:"Et", b:"Taş", c:"Cam", d:"a"},
+{q:"Cat ne yer?", a:"Balık", b:"Su", c:"Toprak", d:"a"},
+{q:"Lion ne demek?", a:"Aslan", b:"Kaplan", c:"Kedi", d:"a"},
+{q:"Tiger ne demek?", a:"Kaplan", b:"Aslan", c:"Köpek", d:"a"},
+{q:"Elephant ne demek?", a:"Fil", b:"At", c:"Kedi", d:"a"}
 ];
 
-function load(){
-let x=s[i];
-q.innerText=x.q;
-a.innerText="A "+x.a;
-b.innerText="B "+x.b;
-c.innerText="C "+x.c;
+function guncelle(){
+    document.getElementById("puan").innerText = puan;
+    document.getElementById("level").innerText = level;
+    document.getElementById("can").innerText = can;
 }
 
-function c(v){
-i++;
-if(i>=s.length)i=0;
-load();
+function soruYukle(){
+    let s = sorular[aktif];
+
+    document.getElementById("soru").innerText = s.q;
+    document.getElementById("a").innerText = "A) " + s.a;
+    document.getElementById("b").innerText = "B) " + s.b;
+    document.getElementById("c").innerText = "C) " + s.c;
+
+    time = 10;
 }
 
-load();
+function sayac(){
+    interval = setInterval(()=>{
+        time--;
+        document.getElementById("time").innerText = time;
+
+        if(time <= 0){
+            clearInterval(interval);
+            yanlis();
+        }
+    },1000);
+}
+
+function dogru(){
+    puan += 10;
+
+    if(puan >= 30) level = 2;
+    if(puan >= 60) level = 3;
+    if(puan >= 100) level = 4;
+
+    guncelle();
+}
+
+function yanlis(){
+    can--;
+
+    if(can <= 0){
+        alert("💀 OYUN BİTTİ!");
+        location.reload();
+    }
+
+    guncelle();
+}
+
+function cevap(sec){
+    clearInterval(interval);
+
+    if(sec == sorular[aktif].d){
+        alert("🎉 Doğru!");
+        dogru();
+    } else {
+        alert("❌ Yanlış!");
+        yanlis();
+    }
+
+    aktif++;
+
+    if(aktif >= sorular.length){
+        aktif = 0;
+    }
+
+    soruYukle();
+    sayac();
+}
+
+soruYukle();
+sayac();
+guncelle();
+
 </script>
 
+<!-- ALT MENÜ -->
 <nav class="candy-nav">
-<a href="index.html" class="nav-link">🏠</a>
-<a href="ingilizce.html" class="nav-link">🎮</a>
-<a href="ingilizce-eslestirme.html" class="nav-link">🧠</a>
-<a href="ingilizce-balon.html" class="nav-link">🎈</a>
-<a href="sesli-kitaplar.html" class="nav-link">🎧</a>
+    <a href="index.html" class="nav-link">🏠</a>
+    <a href="sesli-kitaplar.html" class="nav-link">🎧</a>
+    <a href="ingilizce.html" class="nav-link">🎮</a>
+    <a href="ingilizce-eslestirme.html" class="nav-link">🧠</a>
+    <a href="ingilizce-balon.html" class="nav-link">🎈</a>
 </nav>
 
 </body>
