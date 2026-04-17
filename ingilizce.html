@@ -21,35 +21,31 @@ header{
     font-size:22px;
 }
 
-.box{
+.score{
+    margin:10px;
+    font-size:18px;
+    color:#1982C4;
+}
+
+.card{
     background:white;
     margin:15px;
     padding:20px;
     border-radius:20px;
     border:3px solid #FFCA3A;
     font-size:22px;
-    cursor:pointer;
-}
-
-.score{
-    font-size:20px;
-    margin:10px;
-    color:#1982C4;
 }
 
 button{
+    display:block;
+    margin:10px auto;
     padding:15px;
-    margin:10px;
     width:80%;
     border:none;
     border-radius:15px;
     font-size:18px;
     background:#1982C4;
     color:white;
-}
-
-button:hover{
-    background:#0f5c8a;
 }
 </style>
 </head>
@@ -59,62 +55,75 @@ button:hover{
 <header>🎮 İngilizce Oyun</header>
 
 <div class="score">
-⭐ Puan: <span id="puan">0</span> | 🏆 Level: <span id="level">1</span>
+⭐ Puan: <span id="puan">0</span>
 </div>
 
-<div class="box" onclick="ses('Cat')">
-🐱 Cat = Kedi (tıkla ses için)
-</div>
+<div class="card" id="soru">Soru geliyor...</div>
 
-<div class="box" onclick="ses('Dog')">
-🐶 Dog = Köpek (tıkla ses için)
-</div>
-
-<hr>
-
-<h3>🎯 Quiz</h3>
-
-<p>“Apple” ne demek?</p>
-
-<button onclick="dogru()">🍎 Elma</button>
-<button onclick="yanlis()">🚗 Araba</button>
-<button onclick="yanlis()">🐶 Köpek</button>
+<button onclick="cevap('a')">A</button>
+<button onclick="cevap('b')">B</button>
+<button onclick="cevap('c')">C</button>
 
 <script>
 
 let puan = 0;
-let level = 1;
 
-function guncelle(){
+let sorular = [
+{
+    soru:"Cat ne demek?",
+    a:"Araba",
+    b:"Kedi",
+    c:"Elma",
+    dogru:"b"
+},
+{
+    soru:"Dog ne demek?",
+    a:"Köpek",
+    b:"Kedi",
+    c:"Araba",
+    dogru:"a"
+},
+{
+    soru:"Apple ne demek?",
+    a:"Elma",
+    b:"Araba",
+    c:"Köpek",
+    dogru:"a"
+}
+];
+
+let aktif = 0;
+
+function soruGetir(){
+    let s = sorular[aktif];
+    document.getElementById("soru").innerText = s.soru;
+
+    document.querySelectorAll("button")[0].innerText = "A) " + s.a;
+    document.querySelectorAll("button")[1].innerText = "B) " + s.b;
+    document.querySelectorAll("button")[2].innerText = "C) " + s.c;
+}
+
+function cevap(secim){
+    if(secim == sorular[aktif].dogru){
+        puan += 10;
+        alert("🎉 Doğru!");
+    }else{
+        alert("❌ Yanlış!");
+    }
+
     document.getElementById("puan").innerText = puan;
-    document.getElementById("level").innerText = level;
-}
 
-function ses(word){
-    let s = new SpeechSynthesisUtterance(word);
-    s.lang = "en-US";
-    window.speechSynthesis.speak(s);
-}
+    // SONRAKİ SORUYA GEÇ
+    aktif++;
 
-function dogru(){
-    puan += 10;
-
-    if(puan >= 30){
-        level = 2;
-    }
-    if(puan >= 60){
-        level = 3;
+    if(aktif >= sorular.length){
+        aktif = 0; // başa döner
     }
 
-    guncelle();
-    alert("🎉 Doğru! +10 puan");
+    soruGetir();
 }
 
-function yanlis(){
-    alert("❌ Yanlış! Tekrar dene");
-}
-
-guncelle();
+soruGetir();
 
 </script>
 
