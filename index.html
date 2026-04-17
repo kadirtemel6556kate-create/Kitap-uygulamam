@@ -7,41 +7,127 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        :root { --ana-renk: #FF595E; --arka: #FFFDF0; }
-        body { margin: 0; background: var(--arka); font-family: 'Fredoka One', cursive; padding-bottom: 120px; }
-        header { background: var(--ana-renk); padding: 30px; text-align: center; border-bottom: 8px solid #D6454B; }
-        h1 { margin: 0; color: white; font-size: 24px; }
+        :root { 
+            --arka-krem: #FFFDF0;
+            /* Pastel Boya Renk Paleti */
+            --p-kirmizi: #FF595E;
+            --p-mavi: #26C6DA;
+            --p-yesil: #66BB6A;
+            --p-turuncu: #FFA726;
+            --p-mor: #AB47BC;
+            --p-sari: #FFEE58;
+            --p-pembe: #EC407A;
+            --p-turkuaz: #26A69A;
+        }
+        
+        body { 
+            margin: 0; 
+            background: var(--arka-krem); 
+            font-family: 'Fredoka One', cursive; 
+            padding-bottom: 120px; 
+            /* Tum sayfaya hafif kagit dokusu */
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+        }
+        
+        header { 
+            background: var(--p-kirmizi); 
+            padding: 30px; 
+            text-align: center; 
+            border-bottom: 8px solid #D6454B; 
+            /* Basliga pastel golgesi */
+            box-shadow: 0 6px 0 rgba(0,0,0,0.1);
+        }
+        h1 { margin: 0; color: white; font-size: 24px; text-shadow: 2px 2px 0 rgba(0,0,0,0.2); }
         
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 25px; }
         
-        /* Pastel Boya Efektli Kartlar */
+        /* --- GERCEK PASTEL BOYA KARTI STILI --- */
         .menu-card { 
             background: white; 
-            /* Pastel boya efekti: Hafif yamuk kenarlar */
-            border-radius: 25px 35px 20px 40px; 
+            /* İyice yamuk kenarlar (El kesimi gibi) */
+            border-radius: 20px 40px 15px 50px; 
             padding: 25px; 
             display: flex; flex-direction: column; align-items: center; 
             text-decoration: none; 
-            /* Kalın pastel çerçeve */
-            border: 5px solid var(--ana-renk); 
-            /* Yumuşak pastel gölgesi */
-            box-shadow: 8px 8px 0px rgba(255, 89, 94, 0.2); 
-            transition: 0.2s;
+            transition: 0.15s;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            
+            /* Kalin, pütürlü pastel boya cercevesi */
+            border: 6px solid #ccc; /* Renk her kartta degisecek */
+            
+            /* Pastel boyanin doygun, yumusak golgesi */
+            box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
         }
         
-        .menu-card:active { transform: scale(0.95); box-shadow: 2px 2px 0px rgba(255, 89, 94, 0.2); }
-        .menu-card i { font-size: 45px; color: var(--ana-renk); margin-bottom: 15px; }
-        .menu-card span { font-size: 15px; color: #444; line-height: 1.2; }
+        /* Kartin icine pastel boya kagidi dokusu ekle */
+        .menu-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 1;
+        }
 
+        /* İkon ve yazilari dokunun uzerine cikar */
+        .menu-card i, .menu-card span { position: relative; z-index: 2; }
+
+        .menu-card:active { 
+            transform: scale(0.92); 
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.1); 
+        }
+        
+        .menu-card i { font-size: 48px; margin-bottom: 15px; text-shadow: 3px 3px 0 rgba(0,0,0,0.1); }
+        .menu-card span { font-size: 16px; color: #333; line-height: 1.2; font-weight: bold; }
+
+        /* --- HER BUTONA FARKLI PASTEL RENK VE CERCEVE --- */
+        /* 1. Kitaplik (Kirmizi) */
+        .card-1 { border-color: var(--p-kirmizi) !important; box-shadow: 10px 10px 0 rgba(255, 89, 94, 0.2) !important; }
+        .card-1 i { color: var(--p-kirmizi); }
+        
+        /* 2. Kelimeler (Mavi) */
+        .card-2 { border-color: var(--p-mavi) !important; box-shadow: 10px 10px 0 rgba(38, 198, 218, 0.2) !important; }
+        .card-2 i { color: var(--p-mavi); }
+        
+        /* 3. Oyun (Yesil) */
+        .card-3 { border-color: var(--p-yesil) !important; box-shadow: 10px 10px 0 rgba(102, 187, 106, 0.2) !important; }
+        .card-3 i { color: var(--p-yesil); }
+        
+        /* 4. Cizgi Film (Turuncu) */
+        .card-4 { border-color: var(--p-turuncu) !important; box-shadow: 10px 10px 0 rgba(255, 167, 38, 0.2) !important; }
+        .card-4 i { color: var(--p-turuncu); }
+        
+        /* 5. Sesli Hikaye (Mor) */
+        .card-5 { border-color: var(--p-mor) !important; box-shadow: 10px 10px 0 rgba(171, 71, 188, 0.2) !important; }
+        .card-5 i { color: var(--p-mor); }
+        
+        /* 6. Boyama (Sari) */
+        .card-6 { border-color: var(--p-sari) !important; box-shadow: 10px 10px 0 rgba(255, 238, 88, 0.3) !important; }
+        .card-6 i { color: var(--p-sari); text-shadow: 2px 2px 0 rgba(0,0,0,0.1); } /* Sari okunabilsin diye */
+        
+        /* 7. Oyunlar (Pembe) */
+        .card-7 { border-color: var(--p-pembe) !important; box-shadow: 10px 10px 0 rgba(236, 64, 122, 0.2) !important; }
+        .card-7 i { color: var(--p-pembe); }
+        
+        /* 8. Hayvanlar (Turkuaz) */
+        .card-8 { border-color: var(--p-turkuaz) !important; box-shadow: 10px 10px 0 rgba(38, 166, 154, 0.2) !important; }
+        .card-8 i { color: var(--p-turkuaz); }
+
+
+        /* Alt Menu */
         .candy-nav {
             position: fixed; bottom: 20px; left: 20px; right: 20px;
             background: white; display: flex; justify-content: space-around;
-            padding: 15px; border-radius: 40px; border: 4px solid var(--ana-renk);
+            padding: 15px; border-radius: 40px; border: 4px solid var(--p-kirmizi);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* Nav'a da doku */
         }
-        .nav-link { color: #BBB; text-decoration: none; font-size: 24px; }
-        .active { color: var(--ana-renk); }
+        .nav-link { color: #BBB; text-decoration: none; font-size: 24px; transition: 0.2s; }
+        .nav-link i { text-shadow: 1px 1px 0 rgba(0,0,0,0.1); }
+        .nav-link.active { color: var(--p-kirmizi); transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -49,21 +135,45 @@
 <header><h1>🐕Oyun Arkadasım Cedric🐕</h1></header>
 
 <div class="menu-grid">
-    <a href="hikayeler.html" class="menu-card"><i class="fas fa-book-open"></i><span>Cedric Kitaplık</span></a>
+    <a href="hikayeler.html" class="menu-card card-1">
+        <i class="fas fa-book-open"></i>
+        <span>Cedric Kitaplık</span>
+    </a>
     
-    <a href="ingilizce-ogren.html" class="menu-card"><i class="fas fa-font"></i><span>İngilizce Kelimeler Öğren</span></a>
+    <a href="ingilizce-ogren.html" class="menu-card card-2">
+        <i class="fas fa-font"></i>
+        <span>Ingilizce<br>Kelimeler Ögren</span>
+    </a>
     
-    <a href="ingilizce.html" class="menu-card"><i class="fas fa-puzzle-piece"></i><span>İngilizce Kelime Oyunu</span></a>
+    <a href="ingilizce.html" class="menu-card card-3">
+        <i class="fas fa-puzzle-piece"></i>
+        <span>Ingilizce<br>Kelime Oyunu</span>
+    </a>
     
-    <a href="videolar.html" class="menu-card"><i class="fas fa-play-circle"></i><span>Çizgi Film İzle</span></a>
+    <a href="videolar.html" class="menu-card card-4">
+        <i class="fas fa-play-circle"></i>
+        <span>Cizgi Film Izle</span>
+    </a>
     
-    <a href="sesli-kitaplar.html" class="menu-card"><i class="fas fa-headphones"></i><span>Sesli Hikaye Dinle</span></a>
+    <a href="sesli-kitaplar.html" class="menu-card card-5">
+        <i class="fas fa-headphones"></i>
+        <span>Sesli<br>Hikaye Dinle</span>
+    </a>
     
-    <a href="boyama.html" class="menu-card"><i class="fas fa-palette"></i><span>Boyama Defteri</span></a>
+    <a href="boyama.html" class="menu-card card-6">
+        <i class="fas fa-palette"></i>
+        <span>Boyama Defteri</span>
+    </a>
     
-    <a href="oyunlar.html" class="menu-card"><i class="fas fa-ghost"></i><span>Cedric Oyunlar</span></a>
+    <a href="oyunlar.html" class="menu-card card-7">
+        <i class="fas fa-ghost"></i>
+        <span>Cedric Oyunlar</span>
+    </a>
     
-    <a href="hayvanlar.html" class="menu-card"><i class="fas fa-paw"></i><span>Hayvan Sesleri</span></a>
+    <a href="hayvanlar.html" class="menu-card card-8">
+        <i class="fas fa-paw"></i>
+        <span>Hayvan Sesleri</span>
+    </a>
 </div>
 
 
