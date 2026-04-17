@@ -40,8 +40,8 @@
         .sarki-item {
             background: white;
             border-radius: 25px;
-            padding: 15px;
-            border: 4px solid #FFCA3A;
+            padding: 20px;
+            border: 4px solid #1982C4;
             box-shadow: 0 8px 0 rgba(0,0,0,0.05);
         }
 
@@ -49,25 +49,17 @@
             display: block;
             font-size: 18px;
             color: white;
-            margin-bottom: 12px;
-            background: #FFCA3A;
-            padding: 8px;
+            margin-bottom: 15px;
+            background: #1982C4;
+            padding: 10px;
             border-radius: 15px;
         }
 
-        /* Ses Dosyası Oynatıcısı */
-        audio { width: 100%; margin-top: 10px; border-radius: 10px; }
-
-        /* Video Kapsayıcı */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 15px;
-        }
-        .video-container iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+        audio { 
+            width: 100%; 
+            height: 45px;
+            border-radius: 50px; 
+            outline: none;
         }
 
         /* Navigasyon */
@@ -88,18 +80,17 @@
 <div class="sarki-kutusu">
     
     <div class="sarki-item" style="border-color: #1982C4;">
-        <span class="sarki-adi" style="background: #1982C4;">🌟 Neseli Cocuk Müzigi</span>
+        <span class="sarki-adi">🌟 Neşeli Çocuk Müziği</span>
         <audio controls>
             <source src="https://lesfm.net/wp-content/uploads/2022/02/Funny-Music-For-Children.mp3" type="audio/mpeg">
-            Tarayıcın bunu desteklemiyor dostum.
         </audio>
     </div>
 
-    <div class="sarki-item">
-        <span class="sarki-adi">🐮 Ali Baba'nın ciftligi</span>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/S2O6P_36WvU" allowfullscreen></iframe>
-        </div>
+    <div class="sarki-item" style="border-color: #FFCA3A;">
+        <span class="sarki-adi" style="background: #FFCA3A;">🐮 Ali Baba'nın Çiftliği</span>
+        <audio controls>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
     </div>
 
 </div>
@@ -108,7 +99,7 @@
     <a href="index.html" class="nav-link"><i class="fas fa-house"></i></a>
     <a href="videolar.html" class="nav-link"><i class="fas fa-play"></i></a>
     <a href="sarkilar.html" class="nav-link active-nav"><i class="fas fa-music"></i></a>
-    <a href="ingilizce-ogren.html" class="nav-link"><i class="fas fa-abc"></i></a>
+    <a href="ingilizce-ogren.html" class="nav-link"><i class="fas fa-chalkboard-user"></i></a>
 </nav>
 
 </body>
