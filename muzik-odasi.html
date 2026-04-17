@@ -35,10 +35,12 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
     background: #4CC9F0;
     color: white;
     cursor: pointer;
+    transition: 0.1s;
 }
 
 .pad button:active {
-    transform: scale(0.9);
+    transform: scale(0.85);
+    background: #3aa7cc;
 }
 
 .candy-nav {
@@ -60,7 +62,7 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
 <body>
 
 <header>🎹 CEDRICIN MUZIK ODASI 🎹</header>
-<div class="oda-bilgi">ENSTRÜMANLARA BAS VE ÇAL</div>
+<div class="oda-bilgi">ENSTRÜMANLARA BAS VE ÇAL 🎶</div>
 
 <div class="calgi-izgara">
 
@@ -74,17 +76,21 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
 <button onclick="nota(293)">RE</button>
 <button onclick="nota(329)">MI</button>
 <button onclick="nota(349)">FA</button>
+<button onclick="nota(392)">SOL</button>
+<button onclick="nota(440)">LA</button>
+<button onclick="nota(493)">SI</button>
 </div>
 </div>
 
 <!-- DAVUL -->
 <div class="calgi-kutu" style="border-color:#FFCA3A;">
 <i class="fas fa-drum calgi-icon" style="color:#FFCA3A;"></i>
-<span class="calgi-yazi">DAVUL</span>
+<span class="calgi-yazi">DAVUL SETİ</span>
 
 <div class="pad">
-<button onclick="davul()">BUM</button>
-<button onclick="davul()">TAP</button>
+<button onclick="kick()">KICK</button>
+<button onclick="snare()">SNARE</button>
+<button onclick="hihat()">HI-HAT</button>
 </div>
 </div>
 
@@ -94,8 +100,20 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
 <span class="calgi-yazi">GITAR</span>
 
 <div class="pad">
-<button onclick="nota(220)">TEL 1</button>
-<button onclick="nota(247)">TEL 2</button>
+<button onclick="gitar(220)">TEL 1</button>
+<button onclick="gitar(247)">TEL 2</button>
+<button onclick="gitar(262)">TEL 3</button>
+</div>
+</div>
+
+<!-- TROMPET -->
+<div class="calgi-kutu" style="border-color:#A44CD3;">
+<i class="fas fa-trumpet calgi-icon" style="color:#A44CD3;"></i>
+<span class="calgi-yazi">TROMPET</span>
+
+<div class="pad">
+<button onclick="trumpet(300)">ÇAL</button>
+<button onclick="trumpet(500)">YÜKSEK</button>
 </div>
 </div>
 
@@ -121,47 +139,50 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
 <script>
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-// Nota sesi
 function nota(freq) {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-
-    osc.frequency.value = freq;
     osc.type = "sine";
+    osc.frequency.value = freq;
 
     osc.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start();
     gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1);
-
     osc.stop(ctx.currentTime + 1);
 }
 
-// Davul sesi
-function davul() {
-    const bufferSize = ctx.sampleRate;
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-
-    for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-    }
-
-    const noise = ctx.createBufferSource();
-    noise.buffer = buffer;
-
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(1, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-
-    noise.connect(gain);
-    gain.connect(ctx.destination);
-
-    noise.start();
+function gitar(freq) {
+    const osc = ctx.createOscillator();
+    osc.type = "triangle";
+    osc.frequency.value = freq;
+    osc.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.5);
 }
 
-// Zil sesi
+function trumpet(freq) {
+    const osc = ctx.createOscillator();
+    osc.type = "sawtooth";
+    osc.frequency.value = freq;
+    osc.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.7);
+}
+
+function kick() {
+    nota(100);
+}
+
+function snare() {
+    nota(200);
+}
+
+function hihat() {
+    nota(400);
+}
+
 function zil() {
     nota(800);
     nota(1200);
