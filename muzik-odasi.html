@@ -9,23 +9,62 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <style>
-body { margin: 0; font-family: 'Fredoka One', cursive; background: #F0FBFF; text-align: center; padding-bottom: 120px; }
-header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; border-bottom: 6px solid #43B1D2; border-radius: 0 0 30px 30px; }
+body {
+    margin: 0;
+    font-family: 'Fredoka One', cursive;
+    background: #F0FBFF;
+    text-align: center;
+    padding-bottom: 120px;
+    overflow-x: hidden;
+}
 
-.oda-bilgi { color: #5BBAFF; font-size: 14px; margin: 10px; }
+header {
+    background: #4CC9F0;
+    padding: 25px;
+    color: white;
+    font-size: 22px;
+    border-bottom: 6px solid #43B1D2;
+    border-radius: 0 0 30px 30px;
+}
 
-.calgi-izgara { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
+.oda-bilgi {
+    color: #5BBAFF;
+    font-size: 14px;
+    margin: 10px;
+}
+
+.calgi-izgara {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 15px;
+}
 
 .calgi-kutu {
     background: white;
     border-radius: 25px;
     padding: 15px;
     border: 4px solid #4CC9F0;
+    transition: 0.1s;
+    position: relative;
+    overflow: hidden;
 }
 
-.calgi-icon { font-size: 40px; color: #4CC9F0; }
+.calgi-kutu:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 25px rgba(76,201,240,0.5);
+}
 
-.calgi-yazi { display: block; font-size: 13px; margin-bottom: 10px; }
+.calgi-icon {
+    font-size: 40px;
+    color: #4CC9F0;
+}
+
+.calgi-yazi {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
 
 .pad button {
     margin: 3px;
@@ -35,12 +74,38 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
     background: #4CC9F0;
     color: white;
     cursor: pointer;
+    transition: 0.1s;
 }
 
 .pad button:active {
     transform: scale(0.85);
 }
 
+/* 🌈 IŞIK EFECT */
+#fx {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: pop 0.6s ease-out forwards;
+}
+
+@keyframes pop {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(3); opacity: 0; }
+}
+
+/* NAV */
 .candy-nav {
     position: fixed;
     bottom: 20px;
@@ -52,15 +117,21 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
     padding: 15px;
     border-radius: 50px;
     border: 4px solid #4CC9F0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
-.nav-link { color: #4CC9F0; font-size: 24px; }
+
+.nav-link {
+    color: #4CC9F0;
+    font-size: 24px;
+    text-decoration: none;
+}
 </style>
 </head>
 
 <body>
 
 <header>🎹 CEDRICIN MUZIK ODASI 🎹</header>
-<div class="oda-bilgi">ENSTRÜMANLARA BAS VE ÇAL 🎶</div>
+<div class="oda-bilgi">ENSTRÜMANLARA BAS VE IŞIKLARI PATLAT 🎶</div>
 
 <div class="calgi-izgara">
 
@@ -111,73 +182,67 @@ header { background: #4CC9F0; padding: 25px; color: white; font-size: 22px; bord
 </div>
 </div>
 
-<!-- 🔥 YENİ: SAX -->
-<div class="calgi-kutu" style="border-color:#FF8C00;">
-<i class="fas fa-music calgi-icon" style="color:#FF8C00;"></i>
-<span class="calgi-yazi">SAKSAFON</span>
-<div class="pad">
-<button onclick="sax(300)">LOW</button>
-<button onclick="sax(600)">HIGH</button>
-</div>
 </div>
 
-<!-- 🔥 YENİ: KEMAN -->
-<div class="calgi-kutu" style="border-color:#8A2BE2;">
-<i class="fas fa-violin calgi-icon" style="color:#8A2BE2;"></i>
-<span class="calgi-yazi">KEMAN</span>
-<div class="pad">
-<button onclick="keman(440)">NOTE</button>
-<button onclick="keman(660)">HIGH</button>
-</div>
-</div>
+<!-- IŞIK FX -->
+<div id="fx"></div>
 
-<!-- 🔥 YENİ: BANJO -->
-<div class="calgi-kutu" style="border-color:#DEB887;">
-<i class="fas fa-guitar calgi-icon" style="color:#DEB887;"></i>
-<span class="calgi-yazi">BANJO</span>
-<div class="pad">
-<button onclick="banjo(350)">TINK</button>
-<button onclick="banjo(500)">PLINK</button>
-</div>
-</div>
-
-<!-- 🔥 YENİ: SYNTH -->
-<div class="calgi-kutu" style="border-color:#00CED1;">
-<i class="fas fa-wave-square calgi-icon" style="color:#00CED1;"></i>
-<span class="calgi-yazi">SYNTH</span>
-<div class="pad">
-<button onclick="synth(200)">SPACE</button>
-<button onclick="synth(800)">LASER</button>
-</div>
-</div>
-
-</div>
-
+<!-- NAV -->
 <nav class="candy-nav">
-<a href="index.html" class="nav-link"><i class="fas fa-house"></i></a>
-<a href="videolar.html" class="nav-link"><i class="fas fa-play"></i></a>
-<a href="sarkilar.html" class="nav-link"><i class="fas fa-music"></i></a>
-<a href="muzik-odasi.html" class="nav-link" style="color:#FFCA3A;"><i class="fas fa-guitar"></i></a>
+<a href="#" class="nav-link"><i class="fas fa-house"></i></a>
+<a href="#" class="nav-link"><i class="fas fa-play"></i></a>
+<a href="#" class="nav-link"><i class="fas fa-music"></i></a>
+<a href="#" class="nav-link" style="color:#FFCA3A;"><i class="fas fa-guitar"></i></a>
 </nav>
 
 <script>
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
+/* 🌈 efekt */
+function efekt() {
+    const fx = document.getElementById("fx");
+
+    for (let i = 0; i < 10; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+
+        p.style.left = Math.random() * window.innerWidth + "px";
+        p.style.top = Math.random() * window.innerHeight + "px";
+        p.style.background = randomColor();
+
+        fx.appendChild(p);
+
+        setTimeout(() => p.remove(), 600);
+    }
+}
+
+function randomColor() {
+    const colors = ["#4CC9F0", "#FFCA3A", "#FF595E", "#A44CD3", "#66BB6A"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+/* 🎵 SESLER */
 function nota(f) {
+    efekt();
+
     let o = ctx.createOscillator();
     let g = ctx.createGain();
+
     o.type = "sine";
     o.frequency.value = f;
+
     o.connect(g);
     g.connect(ctx.destination);
+
     o.start();
     g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1);
     o.stop(ctx.currentTime + 1);
 }
 
-function gitar(f){nota(f);}
+function gitar(f){ nota(f); }
 
 function trumpet(f){
+    efekt();
     let o=ctx.createOscillator();
     o.type="sawtooth";
     o.frequency.value=f;
@@ -186,45 +251,9 @@ function trumpet(f){
     o.stop(ctx.currentTime+0.6);
 }
 
-function kick(){nota(90);}
-function snare(){nota(180);}
-function hihat(){nota(400);}
-
-function sax(f){
-    let o=ctx.createOscillator();
-    o.type="triangle";
-    o.frequency.value=f;
-    o.connect(ctx.destination);
-    o.start();
-    o.stop(ctx.currentTime+0.7);
-}
-
-function keman(f){
-    let o=ctx.createOscillator();
-    o.type="sine";
-    o.frequency.value=f;
-    o.connect(ctx.destination);
-    o.start();
-    o.stop(ctx.currentTime+1);
-}
-
-function banjo(f){
-    let o=ctx.createOscillator();
-    o.type="square";
-    o.frequency.value=f;
-    o.connect(ctx.destination);
-    o.start();
-    o.stop(ctx.currentTime+0.4);
-}
-
-function synth(f){
-    let o=ctx.createOscillator();
-    o.type="sawtooth";
-    o.frequency.value=f;
-    o.connect(ctx.destination);
-    o.start();
-    o.stop(ctx.currentTime+1);
-}
+function kick(){ nota(90); }
+function snare(){ nota(180); }
+function hihat(){ nota(400); }
 </script>
 
 </body>
