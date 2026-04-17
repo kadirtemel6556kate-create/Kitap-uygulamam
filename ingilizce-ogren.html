@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İngilizce Öğren</title>
+<title>İngilizce Öğren - 50 Kelime</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
 
@@ -44,31 +43,99 @@ h1 {
     text-align: center;
     font-size: 20px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .word:hover {
     background: #fff3c4;
+    transform: scale(1.03);
+}
+
+/* ALT MENÜ */
+.candy-nav{
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+    border-radius: 40px;
+    border: 4px solid #FFCA3A;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    z-index: 999;
+}
+
+.nav-link{
+    font-size: 22px;
+    text-decoration: none;
+    color: #1982C4;
 }
 </style>
-
 </head>
 
 <body>
 
 <header>
-    <h1>İngilizce Öğren 🎓</h1>
+    <h1>📚 İngilizce Öğren - 50 Kelime</h1>
 </header>
 
 <div class="list">
 
-```
 <div class="word" onclick="speak('Cat')">🐱 Cat (Kedi)</div>
 <div class="word" onclick="speak('Dog')">🐶 Dog (Köpek)</div>
 <div class="word" onclick="speak('Apple')">🍎 Apple (Elma)</div>
 <div class="word" onclick="speak('Car')">🚗 Car (Araba)</div>
 <div class="word" onclick="speak('Sun')">☀️ Sun (Güneş)</div>
+
 <div class="word" onclick="speak('Moon')">🌙 Moon (Ay)</div>
-```
+<div class="word" onclick="speak('Book')">📘 Book (Kitap)</div>
+<div class="word" onclick="speak('Pen')">🖊️ Pen (Kalem)</div>
+<div class="word" onclick="speak('School')">🏫 School (Okul)</div>
+<div class="word" onclick="speak('Water')">💧 Water (Su)</div>
+
+<div class="word" onclick="speak('Milk')">🥛 Milk (Süt)</div>
+<div class="word" onclick="speak('Bread')">🍞 Bread (Ekmek)</div>
+<div class="word" onclick="speak('Cheese')">🧀 Cheese (Peynir)</div>
+<div class="word" onclick="speak('Fish')">🐟 Fish (Balık)</div>
+<div class="word" onclick="speak('Bird')">🐦 Bird (Kuş)</div>
+
+<div class="word" onclick="speak('Red')">🔴 Red (Kırmızı)</div>
+<div class="word" onclick="speak('Blue')">🔵 Blue (Mavi)</div>
+<div class="word" onclick="speak('Green')">🟢 Green (Yeşil)</div>
+<div class="word" onclick="speak('Yellow')">🟡 Yellow (Sarı)</div>
+<div class="word" onclick="speak('Black')">⚫ Black (Siyah)</div>
+
+<div class="word" onclick="speak('White')">⚪ White (Beyaz)</div>
+<div class="word" onclick="speak('House')">🏠 House (Ev)</div>
+<div class="word" onclick="speak('Door')">🚪 Door (Kapı)</div>
+<div class="word" onclick="speak('Window')">🪟 Window (Pencere)</div>
+<div class="word" onclick="speak('Table')">🪑 Table (Masa)</div>
+
+<div class="word" onclick="speak('Chair')">🪑 Chair (Sandalye)</div>
+<div class="word" onclick="speak('Phone')">📱 Phone (Telefon)</div>
+<div class="word" onclick="speak('Computer')">💻 Computer (Bilgisayar)</div>
+<div class="word" onclick="speak('TV')">📺 TV (Televizyon)</div>
+<div class="word" onclick="speak('Bag')">🎒 Bag (Çanta)</div>
+
+<div class="word" onclick="speak('Happy')">😊 Happy (Mutlu)</div>
+<div class="word" onclick="speak('Sad')">😢 Sad (Üzgün)</div>
+<div class="word" onclick="speak('Angry')">😡 Angry (Kızgın)</div>
+<div class="word" onclick="speak('Tired')">😴 Tired (Yorgun)</div>
+<div class="word" onclick="speak('Scared')">😱 Scared (Korkmuş)</div>
+
+<div class="word" onclick="speak('One')">1️⃣ One (Bir)</div>
+<div class="word" onclick="speak('Two')">2️⃣ Two (İki)</div>
+<div class="word" onclick="speak('Three')">3️⃣ Three (Üç)</div>
+<div class="word" onclick="speak('Four')">4️⃣ Four (Dört)</div>
+<div class="word" onclick="speak('Five')">5️⃣ Five (Beş)</div>
+
+<div class="word" onclick="speak('Six')">6️⃣ Six (Altı)</div>
+<div class="word" onclick="speak('Seven')">7️⃣ Seven (Yedi)</div>
+<div class="word" onclick="speak('Eight')">8️⃣ Eight (Sekiz)</div>
+<div class="word" onclick="speak('Nine')">9️⃣ Nine (Dokuz)</div>
+<div class="word" onclick="speak('Ten')">🔟 Ten (On)</div>
 
 </div>
 
@@ -79,6 +146,15 @@ function speak(word) {
     window.speechSynthesis.speak(speech);
 }
 </script>
+
+<!-- ALT MENÜ -->
+<nav class="candy-nav">
+    <a href="index.html" class="nav-link">🏠</a>
+    <a href="sesli-kitaplar.html" class="nav-link">🎧</a>
+    <a href="ingilizce.html" class="nav-link">🎮</a>
+    <a href="ingilizce-eslestirme.html" class="nav-link">🧠</a>
+    <a href="ingilizce-balon.html" class="nav-link">🎈</a>
+</nav>
 
 </body>
 </html>
