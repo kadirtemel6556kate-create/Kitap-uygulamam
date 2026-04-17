@@ -10,9 +10,8 @@
         header { padding: 25px 20px; background: #111; border-bottom: 1px solid #222; text-align: center; }
         h1 { color: #1DB954; font-size: 24px; }
         
-        /* YouTube Tarzı Liste Tasarımı */
+        /* Video Liste Tasarımı */
         .video-list { padding: 15px; }
-
         .video-item {
             display: flex;
             background: #181818;
@@ -21,78 +20,22 @@
             overflow: hidden;
             cursor: pointer;
             border: 1px solid #282828;
-            text-decoration: none;
             align-items: center;
         }
-
-        .video-thumbnail {
-            width: 140px;
-            height: 80px;
-            flex-shrink: 0;
-            background: #333;
-        }
-
-        .video-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
+        .video-thumbnail { width: 140px; height: 80px; flex-shrink: 0; position: relative; }
+        .video-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+        .video-thumbnail i { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: rgba(255,255,255,0.8); font-size: 24px; }
         .video-details { padding: 10px; }
+        .video-details h3 { margin: 0; font-size: 14px; color: #fff; line-height: 1.4; }
+        .video-details span { font-size: 12px; color: #b3b3b3; display: block; margin-top: 5px; }
 
-        .video-details h3 {
-            margin: 0;
-            font-size: 14px;
-            color: #fff;
-            line-height: 1.4;
-        }
-
-        .video-details span {
-            font-size: 12px;
-            color: #b3b3b3;
-            display: block;
-            margin-top: 5px;
-        }
+        /* VİDEO PENCERESİ (MODAL) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; }
+        .modal-content { position: relative; margin: 20% auto; width: 90%; max-width: 800px; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .close-video { position: absolute; top: -40px; right: 0; color: #1db954; font-size: 30px; cursor: pointer; font-weight: bold; }
 
         /* Alt Menü */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0 32px 0; border-top: 1px solid #282828; }
-        .nav-item { text-align: center; font-size: 11px; color: #b3b3b3; text-decoration: none; flex: 1; }
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 5px; }
-        .nav-item.active { color: #fff; }
-    </style>
-</head>
-<body>
-
-    <header><h1>🎬 Video Masallar</h1></header>
-
-    <div class="video-list">
-        <a href="https://www.youtube.com/watch?v=dJMn3kwCYtc" class="video-item" target="_blank">
-            <div class="video-thumbnail">
-                <img src="https://img.youtube.com/vi/dJMn3kwCYtc/mqdefault.jpg" alt="Video Kapağı">
-            </div>
-            <div class="video-details">
-                <h3>Verilen Söz Tutulmalı</h3>
-                <span>Masal Dünyası • 4:40 dk</span>
-            </div>
-        </a>
-
-        <a href="#" class="video-item">
-            <div class="video-thumbnail">
-                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#555;">Kapak Yok</div>
-            </div>
-            <div class="video-details">
-                <h3>Yeni Masal Yakında</h3>
-                <span>Abone Olmayı Unutma</span>
-            </div>
-        </a>
-    </div>
-
-    <div class="bottom-nav">
-        <a href="index.html" class="nav-item"><i class="fas fa-home"></i>Anasayfa</a>
-        <a href="hikayeler.html" class="nav-item"><i class="fas fa-book-open"></i>Hikayeler</a>
-        <a href="videolar.html" class="nav-item active"><i class="fas fa-video"></i>Videolar</a>
-        <a href="sesli-kitaplar.html" class="nav-item"><i class="fas fa-headphones"></i>Dinle</a>
-    </div>
-
-</body>
-</html>
+        .nav-item { text-align: center; font-size: 11px; color: #b3b3b3; text-
