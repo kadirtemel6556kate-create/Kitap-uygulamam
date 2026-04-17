@@ -6,7 +6,7 @@
     <title>Hikayeler</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { margin: 0; background-color: #000; color: #fff; font-family: sans-serif; padding-bottom: 100px; }
+        body { margin: 0; background-color: #000; color: #fff; font-family: sans-serif; padding-bottom: 120px; }
         header { padding: 25px 20px; background: #111; border-bottom: 1px solid #222; text-align: center; }
         h1 { color: #1DB954; font-size: 24px; }
         .content { padding: 20px; }
@@ -22,14 +22,20 @@
             color: white;
             cursor: pointer;
             border-left: 5px solid #1db954;
+            transition: 0.3s;
         }
+        .story-item:active { background: #282828; transform: scale(0.98); }
         .ok { color: #1db954; font-weight: bold; }
 
-        /* Menü Tasarımı */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0 32px 0; border-top: 1px solid #282828; }
-        .nav-item { text-align: center; font-size: 11px; color: #b3b3b3; text-decoration: none; flex: 1; }
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 5px; }
+        /* Alt Menü */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 12px 0 32px 0; border-top: 1px solid #282828; z-index: 1000; }
+        .nav-item { text-align: center; font-size: 10px; color: #b3b3b3; text-decoration: none; flex: 1; }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 5px; }
         .nav-item.active { color: #fff; }
+
+        /* Modal Tasarımı */
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; }
+        .modal-box { background:#121212; margin:15% auto; padding:20px; width:85%; border-radius:15px; border:1px solid #1db954; color:white; max-height:70vh; overflow-y:auto; position: relative; }
     </style>
 </head>
 <body>
@@ -47,18 +53,21 @@
                 <span class="ok">→</span>
             </div>
         </div>
-    </div> <div class="bottom-nav">
+    </div>
+
+    <div class="bottom-nav">
         <a href="index.html" class="nav-item"><i class="fas fa-home"></i>Anasayfa</a>
         <a href="hikayeler.html" class="nav-item active"><i class="fas fa-book-open"></i>Hikayeler</a>
         <a href="videolar.html" class="nav-item"><i class="fas fa-video"></i>Videolar</a>
         <a href="sesli-kitaplar.html" class="nav-item"><i class="fas fa-headphones"></i>Dinle</a>
+        <a href="boyama.html" class="nav-item"><i class="fas fa-paint-brush"></i>Boyama</a>
     </div>
 
-    <div id="storyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999;">
-        <div style="background:#121212; margin:15% auto; padding:20px; width:85%; border-radius:15px; border:1px solid #1db954; color:white; max-height:70vh; overflow-y:auto;">
+    <div id="storyModal" class="modal">
+        <div class="modal-box">
             <span onclick="hikayeKapat()" style="float:right; font-size:30px; color:#1db954; cursor:pointer;">&times;</span>
-            <h2 id="modalTitle" style="color:#1db954;"></h2>
-            <hr style="border:0.5px solid #333;">
+            <h2 id="modalTitle" style="color:#1db954; margin-top: 0;"></h2>
+            <hr style="border:0.5px solid #333; margin: 15px 0;">
             <p id="modalBody" style="line-height:1.6; font-size:16px;"></p>
         </div>
     </div>
