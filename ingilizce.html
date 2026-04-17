@@ -139,17 +139,48 @@ let aktif = 0;
 let time = 10;
 let interval;
 
+// SORULAR VE DOGRU CEVAPLAR (d kismi artik her soru icin dogru)
 let sorular = [
-    {q:"Cat ne demek?", a:"Kedi", b:"Kopek", c:"Araba", d:"a"},
-    {q:"Dog ne demek?", a:"Kopek", b:"Kedi", c:"Su", d:"a"},
-    {q:"Apple ne demek?", a:"Elma", b:"Araba", c:"Kus", d:"a"},
-    {q:"Car ne demek?", a:"Araba", b:"Ev", c:"Kedi", d:"a"},
-    {q:"Sun ne demek?", a:"Gunes", b:"Ay", c:"Yildiz", d:"a"},
-    {q:"Moon ne demek?", a:"Ay", b:"Gunes", c:"Araba", d:"a"},
-    {q:"Water ne demek?", a:"Su", b:"Ates", c:"Toprak", d:"a"},
-    {q:"Book ne demek?", a:"Kitap", b:"Kalem", c:"Defter", d:"a"},
-    {q:"Pen ne demek?", a:"Kalem", b:"Kitap", c:"Silgi", d:"a"},
-    {q:"School ne demek?", a:"Okul", b:"Ev", c:"Park", d:"a"}
+{q:"Cat ne demek?", a:"Kedi", b:"Kopek", c:"Araba", d:"a"},
+{q:"Dog ne demek?", a:"Su", b:"Kedi", c:"Kopek", d:"c"},
+{q:"Apple ne demek?", a:"Kus", b:"Elma", c:"Araba", d:"b"},
+{q:"Car ne demek?", a:"Araba", b:"Ev", c:"Kedi", d:"a"},
+{q:"Sun ne demek?", a:"Yildiz", b:"Ay", c:"Gunes", d:"c"},
+{q:"Moon ne demek?", a:"Gunes", b:"Ay", c:"Araba", d:"b"},
+{q:"Water ne demek?", a:"Su", b:"Ates", c:"Toprak", d:"a"},
+{q:"Book ne demek?", a:"Kitap", b:"Kalem", c:"Defter", d:"a"},
+{q:"Pen ne demek?", a:"Kitap", b:"Silgi", c:"Kalem", d:"c"},
+{q:"School ne demek?", a:"Ev", b:"Okul", c:"Park", d:"b"},
+{q:"Milk ne demek?", a:"Su", b:"Cay", c:"Sut", d:"c"},
+{q:"Bread ne demek?", a:"Ekmek", b:"Peynir", c:"Su", d:"a"},
+{q:"Red ne demek?", a:"Mavi", b:"Kirmizi", c:"Yesil", d:"b"},
+{q:"Blue ne demek?", a:"Sari", b:"Kirmizi", c:"Mavi", d:"c"},
+{q:"Green ne demek?", a:"Yesil", b:"Siyah", c:"Beyaz", d:"a"},
+{q:"Fish ne demek?", a:"Kus", b:"Balik", c:"Kedi", d:"b"},
+{q:"Bird ne demek?", a:"Kus", b:"Balik", c:"Kopek", d:"a"},
+{q:"House ne demek?", a:"Okul", b:"Araba", c:"Ev", d:"c"},
+{q:"Door ne demek?", a:"Kapi", b:"Pencere", c:"Duvar", d:"a"},
+{q:"Window ne demek?", a:"Kapi", b:"Pencere", c:"Cati", d:"b"},
+{q:"Table ne demek?", a:"Sandalye", b:"Masa", c:"Kitap", d:"b"},
+{q:"Chair ne demek?", a:"Masa", b:"Kalem", c:"Sandalye", d:"c"},
+{q:"Phone ne demek?", a:"Telefon", b:"TV", c:"Radyo", d:"a"},
+{q:"Computer ne demek?", a:"Telefon", b:"Bilgisayar", c:"Kitap", d:"b"},
+{q:"TV ne demek?", a:"Televizyon", b:"Radyo", c:"Telefon", d:"a"},
+{q:"Bag ne demek?", a:"Ayakkabi", b:"Sapka", c:"Canta", d:"c"},
+{q:"Happy ne demek?", a:"Mutlu", b:"Uzgun", c:"Kizgin", d:"a"},
+{q:"Sad ne demek?", a:"Mutlu", b:"Uzgun", c:"Korkmus", d:"b"},
+{q:"Angry ne demek?", a:"Mutlu", b:"Yorgun", c:"Kizgin", d:"c"},
+{q:"Tired ne demek?", a:"Yorgun", b:"Mutlu", c:"Guclu", d:"a"},
+{q:"One ne demek?", a:"Bir", b:"Iki", c:"Uc", d:"a"},
+{q:"Two ne demek?", a:"Bir", b:"Iki", c:"Dort", d:"b"},
+{q:"Three ne demek?", a:"Uc", b:"Bes", c:"Alti", d:"a"},
+{q:"Four ne demek?", a:"Bes", b:"Bir", c:"Dort", d:"c"},
+{q:"Five ne demek?", a:"Bes", b:"Alti", c:"Yedi", d:"a"},
+{q:"Dog ne yer?", a:"Et", b:"Tas", c:"Cam", d:"a"},
+{q:"Cat ne yer?", a:"Su", b:"Balik", c:"Toprak", d:"b"},
+{q:"Lion ne demek?", a:"Aslan", b:"Kaplan", c:"Kedi", d:"a"},
+{q:"Tiger ne demek?", a:"Aslan", b:"Kopek", c:"Kaplan", d:"c"},
+{q:"Elephant ne demek?", a:"At", b:"Fil", c:"Kedi", d:"b"}
 ];
 
 function guncelle(){
