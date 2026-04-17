@@ -3,181 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cedric'in Sihirli Dünyası</title>
+    <title>Cedric'in Oyun Parkı</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --ana-renk: #FF6B6B;
-            --mavi: #4ECDC4;
-            --sari: #FFE66D;
-            --pembe: #FF85A2;
-            --yesil: #77DD77;
-            --arka-plan: #F0F4F8;
+            --bulut: #FFFFFF;
+            --gokyuzu: #87CEEB;
+            --gunes: #FFD700;
+            --elma: #FF595E;
+            --limon: #FFCA3A;
+            --nane: #8AC926;
+            --deniz: #1982C4;
+            --uzum: #6A4C93;
         }
 
         body { 
             margin: 0; 
-            background: var(--arka-plan);
-            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
-            color: #444;
-            padding-bottom: 110px;
+            background: var(--gokyuzu);
+            /* Arka plana hareketli bulut efekti ekleyelim */
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 20%),
+                              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.4) 0%, transparent 25%);
+            font-family: 'Fredoka One', cursive;
+            color: #333;
+            padding-bottom: 120px;
             overflow-x: hidden;
         }
 
-        /* Gökkuşağı Üst Başlık */
+        /* Renkli ve Neşeli Başlık */
         header {
-            background: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%);
-            padding: 30px 20px;
+            background: var(--bulut);
+            padding: 40px 20px;
             text-align: center;
-            border-bottom-left-radius: 40px;
-            border-bottom-right-radius: 40px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-bottom: 8px solid var(--gunes);
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+            box-shadow: 0 10px 0 rgba(0,0,0,0.1);
         }
 
-        .avatar-box {
-            width: 80px; height: 80px;
-            background: white;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 45px;
+        .face-avatar {
+            font-size: 70px;
+            display: block;
             margin-bottom: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            animation: hopla 2s infinite ease-in-out;
+            animation: wiggle 2s infinite ease-in-out;
         }
 
-        @keyframes hopla {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.1); }
         }
 
-        h1 { margin: 0; font-size: 22px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h1 { 
+            margin: 0; 
+            font-size: 30px; 
+            color: var(--deniz);
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.05);
+        }
 
-        /* Pofuduk Menü Kartları */
-        .grid-container {
+        /* Büyük Balon Butonlar */
+        .playground {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 20px;
-            margin-top: 10px;
+            gap: 20px;
+            padding: 30px 20px;
         }
 
-        .kids-card {
-            background: white;
-            border-radius: 30px;
-            padding: 20px;
+        .toy-btn {
+            background: var(--bulut);
+            border-radius: 40px;
+            padding: 25px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            box-shadow: 0 10px 0 #E0E7FF; /* Pofuduk gölge efekti */
-            transition: all 0.2s;
-            border: 3px solid transparent;
+            box-shadow: 0 12px 0 rgba(0,0,0,0.1);
+            transition: 0.2s;
+            border: 6px solid;
         }
 
-        .kids-card:active {
-            transform: translateY(5px);
-            box-shadow: 0 2px 0 #E0E7FF;
+        .toy-btn:active {
+            transform: translateY(8px);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
         }
 
-        .kids-card i { font-size: 45px; margin-bottom: 10px; }
-        .kids-card span { font-weight: bold; font-size: 15px; color: #555; }
+        .toy-btn i { font-size: 55px; margin-bottom: 15px; }
+        .toy-btn span { font-size: 18px; color: #444; }
 
-        /* Kart Renkleri */
-        .c-kitap { border-color: var(--ana-renk); color: var(--ana-renk); }
-        .c-video { border-color: var(--mavi); color: var(--mavi); }
-        .c-sesli { border-color: var(--sari); color: var(--sari); }
-        .c-boya { border-color: var(--pembe); color: var(--pembe); }
+        /* Buton Renkleri */
+        .btn-red { border-color: var(--elma); color: var(--elma); }
+        .btn-yellow { border-color: var(--limon); color: var(--limon); }
+        .btn-green { border-color: var(--nane); color: var(--nane); }
+        .btn-blue { border-color: var(--deniz); color: var(--deniz); }
 
-        /* Dev Oyun Butonu (Hazine Sandığı) */
-        .kids-card-full {
+        /* Efsane Oyun Dünyası Butonu */
+        .btn-game-world {
             grid-column: span 2;
-            background: linear-gradient(45deg, #FFD93D, #FF8400);
-            border: none;
-            box-shadow: 0 10px 0 #CC6600;
+            background: linear-gradient(135deg, #FF00EA, #7000FF);
+            border: 6px solid #FFF;
+            box-shadow: 0 12px 0 #5000B8, 0 0 30px rgba(255,0,234,0.4);
+            animation: glow 1.5s infinite alternate;
         }
-        .kids-card-full i, .kids-card-full span { color: white !important; }
+        .btn-game-world i, .btn-game-world span { color: white !important; }
 
-        /* Alt Navigasyon (Balon Menü) */
-        .bottom-nav {
+        @keyframes glow {
+            from { box-shadow: 0 12px 0 #5000B8, 0 0 10px rgba(255,0,234,0.2); }
+            to { box-shadow: 0 12px 0 #5000B8, 0 0 40px rgba(255,0,234,0.6); }
+        }
+
+        /* Alt Menü - Şekerleme Çubuğu */
+        .candy-nav {
             position: fixed;
-            bottom: 15px;
-            left: 15px;
-            right: 15px;
-            background: white;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-around;
-            padding: 10px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 15px;
+            border-radius: 40px;
+            border: 4px solid var(--deniz);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             z-index: 1000;
         }
 
-        .nav-item {
+        .nav-link {
             text-align: center;
-            color: #BBB;
+            color: #888;
             text-decoration: none;
-            font-size: 10px;
             transition: 0.3s;
         }
 
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 3px; }
-        .nav-item.active { color: var(--ana-renk); transform: scale(1.1); }
+        .nav-link i { font-size: 28px; display: block; }
+        .nav-link.active { color: var(--elma); transform: scale(1.2) rotate(-5deg); }
 
-        /* Parlayan Oyun İkonu */
-        .nav-oyun {
-            background: linear-gradient(45deg, #FF00EA, #00FFCC);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: parla 1.5s infinite;
-        }
-
-        @keyframes parla {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+        /* Oyun İkonu Animasyonu */
+        .game-shake { animation: shake-icon 2s infinite linear; }
+        @keyframes shake-icon {
+            0% { transform: rotate(0); }
+            20% { transform: rotate(15deg); }
+            40% { transform: rotate(-15deg); }
+            60% { transform: rotate(15deg); }
+            80% { transform: rotate(-15deg); }
+            100% { transform: rotate(0); }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="avatar-box">🐾</div>
-        <h1>Hoş Geldin Küçük Kahraman!</h1>
+        <span class="face-avatar">🥳</span>
+        <h1>Sihirli Parka Hoş Geldin!</h1>
     </header>
 
-    <div class="grid-container">
-        <a href="hikayeler.html" class="kids-card c-kitap">
-            <i class="fas fa-book-reader"></i>
-            <span>Masal Oku</span>
+    <div class="playground">
+        <a href="hikayeler.html" class="toy-btn btn-red">
+            <i class="fas fa-book-sparkles"></i> <span>Masal Oku</span>
         </a>
-        <a href="videolar.html" class="kids-card c-video">
-            <i class="fas fa-tv"></i>
-            <span>Masal İzle</span>
+        <a href="videolar.html" class="toy-btn btn-blue">
+            <i class="fas fa-film"></i> <span>Çizgi Film</span>
         </a>
-        <a href="sesli-kitaplar.html" class="kids-card c-sesli">
-            <i class="fas fa-music"></i>
-            <span>Masal Dinle</span>
+        <a href="sesli-kitaplar.html" class="toy-btn btn-yellow">
+            <i class="fas fa-music"></i> <span>Masal Dinle</span>
         </a>
-        <a href="boyama.html" class="kids-card c-boya">
-            <i class="fas fa-palette"></i>
-            <span>Boyama Yap</span>
+        <a href="boyama.html" class="toy-btn btn-green">
+            <i class="fas fa-paint-roller"></i> <span>Boyama Yap</span>
         </a>
-        <a href="oyunlar.html" class="kids-card kids-card-full">
-            <i class="fas fa-gem"></i>
-            <span style="font-size: 18px;">OYUN DÜNYASINA GİR!</span>
+        
+        <a href="oyunlar.html" class="toy-btn btn-game-world">
+            <i class="fas fa-treasure-chest"></i> <span style="font-size: 24px;">OYUN DÜNYASINA GİR!</span>
+            <div style="font-size: 12px; margin-top: 5px; opacity: 0.8;">Hadi Hazineyi Keşfet! 🌟</div>
         </a>
     </div>
 
-    <div class="bottom-nav">
-        <a href="index.html" class="nav-item active"><i class="fas fa-home"></i>Evim</a>
-        <a href="hikayeler.html" class="nav-item"><i class="fas fa-book-open"></i>Oku</a>
-        <a href="videolar.html" class="nav-item"><i class="fas fa-play-circle"></i>İzle</a>
-        <a href="sesli-kitaplar.html" class="nav-item"><i class="fas fa-headphones"></i>Dinle</a>
-        <a href="boyama.html" class="nav-item"><i class="fas fa-paint-brush"></i>Boya</a>
-        <a href="oyunlar.html" class="nav-item"><i class="fas fa-gamepad nav-oyun"></i>Oyun</a>
-    </div>
+    <nav class="candy-nav">
+        <a href="index.html" class="nav-link active"><i class="fas fa-house-chimney"></i></a>
+        <a href="hikayeler.html" class="nav-link"><i class="fas fa-book-open-reader"></i></a>
+        <a href="videolar.html" class="nav-link"><i class="fas fa-circle-play"></i></a>
+        <a href="sesli-kitaplar.html" class="nav-link"><i class="fas fa-volume-high"></i></a>
+        <a href="boyama.html" class="nav-link"><i class="fas fa-wand-magic-sparkles"></i></a>
+        <a href="oyunlar.html" class="nav-link"><i class="fas fa-gamepad game-shake" style="color: #FF00EA;"></i></a>
+    </nav>
 
 </body>
 </html>
