@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Oyun Arkadaşım Cedric - Enerjik Gökkuşağı Tema Stilleri
+   Oyun Arkadaşım Cedric - Enerjik Gökkuşağı Tema Stilleri (TAMAMI)
    ========================================================================== */
 
 /* KÖK STİLLER: Bütün renklerimizi, yazı tiplerimizi ve temel ayarları burada tanımlıyoruz */
@@ -14,7 +14,6 @@
     --yumusak-beyaz: #F8F9FA;    /* Göz yormayan, hafif kırık bir beyaz */
     --koyu-yazi: #333333;       /* Okunaklı, koyu bir gri yazı rengi */
     
-    /* Çocuklara uygun, okunaklı ve eğlenceli bir yazı tipi ailesi */
     font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
 }
 
@@ -27,43 +26,113 @@ body {
     text-align: center;                     
 }
 
-/* ANA BAŞLIK STİLİ (Örn: "Oyun Arkadaşım Cedric") */
+/* ANA BAŞLIK STİLİ */
 h1 {
     color: var(--enerjik-mavi);
-    font-size: 2.5em; /* Yazıyı biraz büyütelim */
+    font-size: 2.5em;
 }
 
 /* BUTONLARIN GENEL STİLİ */
 .menu-buton {
-    display: block; /* Butonların tüm satırı kaplamasını sağla */
-    width: 80%; /* Genişlik ekranın %80'i kadar olsun */
-    max-width: 400px; /* Ama en fazla 400px olsun */
-    margin: 15px auto; /* Üstte-altta 15px, sağda-solda otomatik boşluk (ortalamak için) */
+    display: block; 
+    width: 80%; 
+    max-width: 400px; 
+    margin: 15px auto; 
     padding: 20px;
-    border: none; /* Kenarlık olmasın */
-    border-radius: 20px; /* Kenarları güzelce yuvarlayalım */
-    color: white; /* Yazı rengi beyaz olsun */
-    font-size: 1.5em; /* Yazı boyutu büyük ve okunaklı olsun */
-    text-decoration: none; /* Linklerin altındaki çizgiyi kaldır */
+    border: none; 
+    border-radius: 20px; 
+    color: white; 
+    font-size: 1.5em;
+    text-decoration: none; 
     font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif bir gölge ekleyelim */
-    transition: transform 0.2s; /* Üzerine gelince olacak animasyon için hazırlık */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s; 
 }
-
-/* Butonun üzerine gelince hafifçe büyüsün */
 .menu-buton:hover {
     transform: scale(1.05);
 }
 
-/* HER BUTONA FARKLI BİR RENK VERELİM */
+/* BUTON RENKLERİ */
 .renk-mavi { background-color: var(--enerjik-mavi); }
-.renk-sari { background-color: var(--enerjik-sari); color: var(--koyu-yazi);} /* Sarı üstünde koyu yazı daha iyi okunur */
+.renk-sari { background-color: var(--enerjik-sari); color: var(--koyu-yazi);}
 .renk-kirmizi { background-color: var(--enerjik-kirmizi); }
 .renk-yesil { background-color: var(--enerjik-yesil); }
 .renk-turuncu { background-color: var(--enerjik-turuncu); }
 .renk-mor { background-color: var(--enerjik-mor); }
+.geri-buton { background-color: #757575; }
 
-/* GERİ DÖN BUTONU */
-.geri-buton {
-    background-color: #757575; /* Nötr bir gri renk */
+/* ==========================================================================
+   Boyama Sayfası İçin Yeni Stiller
+   ========================================================================== */
+#cizim-alani {
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    cursor: crosshair; /* İmleci artı şeklinde yap */
+    touch-action: none; /* Mobilde sayfanın kaymasını engelle */
 }
+
+.arac-kutusu {
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 15px;
+    max-width: 90%;
+    display: inline-block;
+}
+
+.arac-kutusu .renk-paleti, .arac-kutusu .firca-boyutlari {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+
+.arac-kutusu .renk-secim {
+    width: 30px;
+    height: 30px;
+    border: 2px solid white;
+    border-radius: 50%; /* Yuvarlak renk kutucukları */
+    cursor: pointer;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.arac-kutusu .renk-secim.aktif, .arac-kutusu .arac.aktif {
+    border-color: #000;
+    transform: scale(1.1);
+}
+
+.arac-kutusu .arac {
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ==========================================================================
+   Oyunlar ve Hayvanlar Sayfası İçin Stiller (Önceki Adımdan)
+   ========================================================================== */
+.oyun-alani {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+}
+.kart { width: 100px; height: 100px; background-color: var(--enerjik-mavi); border-radius: 10px; cursor: pointer; position: relative; transform-style: preserve-3d; transition: transform 0.5s; }
+.kart.cevrildi { transform: rotateY(180deg); }
+.kart .on-yuz, .kart .arka-yuz { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; font-size: 3em; border-radius: 10px; }
+.kart .arka-yuz { background-color: var(--enerjik-sari); transform: rotateY(180deg); }
+.hayvan-butonu { width: 120px; height: 120px; margin: 10px; border: 5px solid transparent; border-radius: 20px; cursor: pointer; font-size: 5em; transition: all 0.2s; }
+.hayvan-butonu:hover { transform: scale(1.1); }
+.dogru-cevap { border-color: var(--enerjik-yesil); animation: shake 0.5s; }
+.yanlis-cevap { border-color: var(--enerjik-kirmizi); animation: shake 0.5s; }
+#sesi-cal { font-size: 1em; padding: 15px 30px; margin-top: 20px; background-color: var(--enerjik-turuncu); }
+@keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-10px);} 75% {transform: translateX(10px);} }
