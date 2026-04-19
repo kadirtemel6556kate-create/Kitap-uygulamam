@@ -2,35 +2,36 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Boyama</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
     <h1>Boyama Zamanı!</h1>
-    <p>İstediğin rengi seç ve çizmeye başla.</p>
 
     <!-- Çizim Araçları -->
     <div class="arac-kutusu">
         <div class="renk-paleti">
+            <!-- DÜZELTME 1: Renk kodları artık CSS'den değil, doğrudan buradan geliyor. Bu, APK'da görünmelerini garantiler. -->
             <span class="renk-secim aktif" style="background-color: black;" data-renk="black"></span>
-            <span class="renk-secim" style="background-color: red;" data-renk="red"></span>
-            <span class="renk-secim" style="background-color: blue;" data-renk="blue"></span>
-            <span class="renk-secim" style="background-color: green;" data-renk="green"></span>
-            <span class="renk-secim" style="background-color: yellow;" data-renk="yellow"></span>
+            <span class="renk-secim" style="background-color: #FF4B4B;" data-renk="#FF4B4B"></span>
+            <span class="renk-secim" style="background-color: #00A8F3;" data-renk="#00A8F3"></span>
+            <span class="renk-secim" style="background-color: #4CAF50;" data-renk="#4CAF50"></span>
+            <span class="renk-secim" style="background-color: #FFD600;" data-renk="#FFD600"></span>
         </div>
-        <div class="firca-boyutlari">
+        <div class="araclar">
             <button class="arac" data-boyut="2">S</button>
             <button class="arac aktif" data-boyut="5">M</button>
             <button class="arac" data-boyut="10">L</button>
+            <!-- DÜZELTME 2: İkon yerine artık metin kullanıyoruz -->
+            <button class="arac" id="silgi-buton">Silgi</button>
+            <button class="arac" id="temizle-buton">🗑️</button>
         </div>
-        <button class="arac" id="silgi-buton">✏️</button>
-        <button class="arac" id="temizle-buton">🗑️</button>
     </div>
 
     <!-- Çizim Yapılacak Alan -->
-    <canvas id="cizim-alani" width="500" height="400"></canvas>
+    <canvas id="cizim-alani"></canvas>
 
     <a href="index.html" class="menu-buton geri-buton">Ana Menüye Dön</a>
 
@@ -39,83 +40,73 @@
         const ctx = canvas.getContext('2d');
         const aracKutusu = document.querySelector('.arac-kutusu');
 
+        // Canvas boyutunu ekran genişliğine göre ayarla
+        canvas.width = window.innerWidth * 0.95;
+        canvas.height = window.innerHeight * 0.55;
+
         let cizimYapiliyor = false;
         let fircaRengi = 'black';
         let fircaBoyutu = 5;
+        let sonRenk = 'black'; // Silgiden sonra eski renge dönmek için
 
-        // Canvas'ı başlangıçta beyaz yap
-        ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        function cizimBaslat(e) {
-            cizimYapiliyor = true;
-            ciz(e);
+        function baslangicRengi() {
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
+        baslangicRengi();
 
-        function cizimBitir() {
-            cizimYapiliyor = false;
-            ctx.beginPath(); // Bir sonraki çizim için yolu sıfırla
-        }
+        function cizimBaslat(e) { cizimYapiliyor = true; ciz(e); }
+        function cizimBitir() { cizimYapiliyor = false; ctx.beginPath(); }
 
         function ciz(e) {
             if (!cizimYapiliyor) return;
+            e.preventDefault(); // DÜZELTME 3: Dokunmatik kaydırmayı engelle
 
-            // Mouse ve dokunmatik ekran koordinatlarını al
             const rect = canvas.getBoundingClientRect();
             const x = (e.clientX || e.touches[0].clientX) - rect.left;
             const y = (e.clientY || e.touches[0].clientY) - rect.top;
 
             ctx.lineWidth = fircaBoyutu;
-            ctx.lineCap = 'round'; // Çizgi uçlarını yuvarlak yap
+            ctx.lineCap = 'round';
             ctx.strokeStyle = fircaRengi;
-
             ctx.lineTo(x, y);
             ctx.stroke();
             ctx.beginPath();
             ctx.moveTo(x, y);
         }
 
-        // Araç kutusu tıklamalarını yönet
         aracKutusu.addEventListener('click', (e) => {
             const hedef = e.target;
+            if (!hedef.closest('.arac') && !hedef.closest('.renk-secim')) return;
 
-            // Aktif buton stilini güncelle
-            const aktifButonlar = aracKutusu.querySelectorAll('.aktif');
-            aktifButonlar.forEach(btn => btn.classList.remove('aktif'));
-            hedef.classList.add('aktif');
-
-            // Renk değiştirme
+            const mevcutAktifler = aracKutusu.querySelectorAll('.aktif');
+            mevcutAktifler.forEach(btn => btn.classList.remove('aktif'));
+            
             if (hedef.dataset.renk) {
                 fircaRengi = hedef.dataset.renk;
-                document.getElementById('silgi-buton').classList.remove('aktif'); // Silgi aktifse kapat
+                sonRenk = fircaRengi;
+                hedef.classList.add('aktif');
             }
-            // Fırça boyutu değiştirme
             if (hedef.dataset.boyut) {
+                hedef.classList.add('aktif');
                 fircaBoyutu = hedef.dataset.boyut;
             }
-            // Silgi butonu
             if (hedef.id === 'silgi-buton') {
-                fircaRengi = 'white'; // Silgi rengi arka plan rengiyle aynı olmalı
+                fircaRengi = 'white';
+                hedef.classList.add('aktif');
             }
-            // Temizle butonu
             if (hedef.id === 'temizle-buton') {
-                ctx.fillStyle = "white";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                hedef.classList.remove('aktif'); // Temizledikten sonra aktif kalmasın
+                baslangicRengi();
             }
         });
 
-        // Event Listeners for Mouse
         canvas.addEventListener('mousedown', cizimBaslat);
         canvas.addEventListener('mouseup', cizimBitir);
         canvas.addEventListener('mousemove', ciz);
         canvas.addEventListener('mouseout', cizimBitir);
-
-        // Event Listeners for Touch
-        canvas.addEventListener('touchstart', cizimBaslat);
+        canvas.addEventListener('touchstart', cizimBaslat, { passive: false });
         canvas.addEventListener('touchend', cizimBitir);
-        canvas.addEventListener('touchmove', ciz);
-
+        canvas.addEventListener('touchmove', ciz, { passive: false });
     </script>
 </body>
 </html>
