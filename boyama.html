@@ -1,128 +1,107 @@
-/* ==========================================================================
-   Oyun Arkadaşım Cedric - Enerjik Gökkuşağı Tema Stilleri (TAMAMI - v3 - Nihai Düzeltme)
-   ========================================================================== */
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Boyama</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <h1>Boyama Zamanı!</h1>
 
-/* DÜZELTME: Sayfa yenileme sorununu çözmek için en agresif yöntem.
-   Tüm sayfada kaydırmayı, dokunmayı ve seçimi engelliyoruz. */
-html, body {
-    overflow: hidden; /* Her türlü kaydırmayı engelle */
-    overscroll-behavior-y: contain; /* Kenara ulaşıldığında yenileme davranışını engelle */
-    touch-action: none; /* Varsayılan dokunmatik eylemleri engelle */
-    -webkit-user-select: none; /* Metin seçmeyi engelle */
-    user-select: none;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+    <!-- Çizim Araçları -->
+    <div class="arac-kutusu">
+        <div class="renk-paleti">
+            <span class="renk-secim aktif" style="background-color: black;" data-renk="black"></span>
+            <span class="renk-secim" style="background-color: #FF4B4B;" data-renk="#FF4B4B"></span>
+            <span class="renk-secim" style="background-color: #00A8F3;" data-renk="#00A8F3"></span>
+            <span class="renk-secim" style="background-color: #4CAF50;" data-renk="#4CAF50"></span>
+            <span class="renk-secim" style="background-color: #FFD600;" data-renk="#FFD600"></span>
+        </div>
+        <div class="araclar">
+            <button class="arac" data-boyut="2">S</button>
+            <button class="arac aktif" data-boyut="5">M</button>
+            <button class="arac" data-boyut="10">L</button>
+            <button class="arac" id="silgi-buton">Silgi</button>
+            <button class="arac" id="temizle-buton">🗑️</button>
+        </div>
+    </div>
 
-body {
-    background-color: #F8F9FA; 
-    color: #333333;
-    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
-    text-align: center;
-    padding: 15px;
-    box-sizing: border-box; /* Padding'in genişliği etkilememesi için */
-}
+    <!-- Çizim Yapılacak Alan -->
+    <canvas id="cizim-alani"></canvas>
 
-h1 {
-    color: #00A8F3;
-    font-size: 2.2em;
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-p {
-    margin-top: 0;
-    margin-bottom: 10px;
-}
+    <a href="index.html" class="menu-buton geri-buton">Ana Menüye Dön</a>
 
-/* MENÜ BUTONLARI */
-.menu-buton {
-    display: block; 
-    width: 90%; 
-    max-width: 400px; 
-    margin: 10px auto; 
-    padding: 18px;
-    border: none; 
-    border-radius: 20px; 
-    color: white; 
-    font-size: 1.4em;
-    text-decoration: none; 
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    transition: transform 0.2s; 
-}
-.menu-buton:hover {
-    transform: scale(1.05);
-}
-.renk-mavi { background-color: #00A8F3; }
-.renk-sari { background-color: #FFD600; color: #333333;}
-.renk-kirmizi { background-color: #FF4B4B; }
-.renk-yesil { background-color: #4CAF50; }
-.renk-turuncu { background-color: #FF9800; }
-.renk-mor { background-color: #9C27B0; }
-.geri-buton { background-color: #757575; }
+    <script>
+        // DÜZELTME: Sayfanın tamamında yenileme hareketini engellemek için
+        document.addEventListener('touchstart', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
 
+        const canvas = document.getElementById('cizim-alani');
+        const ctx = canvas.getContext('2d');
+        const aracKutusu = document.querySelector('.arac-kutusu');
 
-/* Boyama Sayfası Stilleri */
-#cizim-alani {
-    background-color: white;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    cursor: crosshair;
-    /* DÜZELTME: Bu kural artık body'de olduğu için burada kritik değil ama kalabilir */
-    touch-action: none;
-}
-.arac-kutusu {
-    margin: 10px auto;
-    padding: 8px;
-    background-color: #eee;
-    border-radius: 15px;
-    max-width: 95%;
-    display: inline-block;
-}
-.arac-kutusu .renk-paleti, .arac-kutusu .araclar {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0 5px;
-}
-.arac-kutusu .renk-secim {
-    width: 28px;
-    height: 28px;
-    border: 2px solid white;
-    border-radius: 50%;
-    cursor: pointer;
-    display: inline-block;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-.arac-kutusu .renk-secim.aktif, .arac-kutusu .arac.aktif {
-    border-color: #000;
-    transform: scale(1.15);
-}
-.arac-kutusu .arac {
-    width: 45px;
-    height: 35px;
-    margin: 0 3px;
-    padding: 0;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    font-size: 1.1em;
-    cursor: pointer;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    font-weight: bold;
-}
+        canvas.width = window.innerWidth * 0.95;
+        canvas.height = window.innerHeight * 0.5; // Yüksekliği biraz azalttık, butonlara yer kalsın
 
-/* Diğer sayfaların stilleri... */
-.oyun-alani { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 600px; margin: 20px auto; }
-.kart { width: 100px; height: 100px; background-color: #00A8F3; border-radius: 10px; cursor: pointer; position: relative; transform-style: preserve-3d; transition: transform 0.5s; }
-.kart.cevrildi { transform: rotateY(180deg); }
-.kart .on-yuz, .kart .arka-yuz { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; font-size: 3em; border-radius: 10px; }
-.kart .arka-yuz { background-color: #FFD600; transform: rotateY(180deg); }
-.hayvan-butonu { width: 120px; height: 120px; margin: 10px; border: 5px solid transparent; border-radius: 20px; cursor: pointer; font-size: 5em; transition: all 0.2s; }
-.hayvan-butonu:hover { transform: scale(1.1); }
-.dogru-cevap { border-color: #4CAF50; animation: shake 0.5s; }
-.yanlis-cevap { border-color: #FF4B4B; animation: shake 0.5s; }
-#sesi-cal { font-size: 1em; padding: 15px 30px; margin-top: 20px; background-color: #FF9800; }
-@keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-10px);} 75% {transform: translateX(10px);} }
+        let cizimYapiliyor = false;
+        let fircaRengi = 'black';
+        let fircaBoyutu = 5;
+
+        function baslangicRengi() {
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        baslangicRengi();
+
+        function cizimBaslat(e) {
+            cizimYapiliyor = true;
+            ciz(e);
+        }
+        function cizimBitir() {
+            cizimYapiliyor = false;
+            ctx.beginPath();
+        }
+
+        function ciz(e) {
+            if (!cizimYapiliyor) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+            ctx.lineWidth = fircaBoyutu;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = fircaRengi;
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        aracKutusu.addEventListener('click', (e) => {
+            const hedef = e.target;
+            if (!hedef.closest('.arac') && !hedef.closest('.renk-secim')) return;
+            const mevcutAktifler = aracKutusu.querySelectorAll('.aktif');
+            mevcutAktifler.forEach(btn => btn.classList.remove('aktif'));
+            if (hedef.dataset.renk) { fircaRengi = hedef.dataset.renk; hedef.classList.add('aktif'); }
+            if (hedef.dataset.boyut) { hedef.classList.add('aktif'); fircaBoyutu = hedef.dataset.boyut; }
+            if (hedef.id === 'silgi-buton') { fircaRengi = 'white'; hedef.classList.add('aktif'); }
+            if (hedef.id === 'temizle-buton') { baslangicRengi(); }
+        });
+
+        // Event listener'lar artık sadece canvas için çalışacak
+        canvas.addEventListener('mousedown', cizimBaslat);
+        canvas.addEventListener('mouseup', cizimBitir);
+        canvas.addEventListener('mousemove', ciz);
+        canvas.addEventListener('mouseout', cizimBitir);
+        
+        // Canvas üzerindeki dokunma olayları için preventDefault'u kaldırdık çünkü artık document seviyesinde engelliyoruz
+        canvas.addEventListener('touchstart', cizimBaslat);
+        canvas.addEventListener('touchend', cizimBitir);
+        canvas.addEventListener('touchmove', ciz);
+
+    </script>
+</body>
+</html>
