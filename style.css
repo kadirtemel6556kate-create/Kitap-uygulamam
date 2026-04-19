@@ -1,11 +1,16 @@
-/* Bu bir yorum satırıdır, kodları etkilemez. Sadece açıklama yapar. */
+/* ==========================================================================
+   Oyun Arkadaşım Cedric - Enerjik Gökkuşağı Tema Stilleri
+   ========================================================================== */
 
-/* KÖK STİLLER: Bütün renklerimizi ve yazı tiplerimizi burada tanımlıyoruz */
+/* KÖK STİLLER: Bütün renklerimizi, yazı tiplerimizi ve temel ayarları burada tanımlıyoruz */
 :root {
     --enerjik-mavi: #00A8F3;     /* Canlı bir gökyüzü mavisi */
     --enerjik-sari: #FFD600;     /* Güneş gibi parlak bir sarı */
     --enerjik-kirmizi: #FF4B4B; /* Enerjik ve dikkat çekici bir kırmızı */
     --enerjik-yesil: #4CAF50;    /* Canlı bir çimen yeşili */
+    --enerjik-turuncu: #FF9800; /* Sıcak bir portakal turuncusu */
+    --enerjik-mor: #9C27B0;      /* Canlı bir mor */
+
     --yumusak-beyaz: #F8F9FA;    /* Göz yormayan, hafif kırık bir beyaz */
     --koyu-yazi: #333333;       /* Okunaklı, koyu bir gri yazı rengi */
     
@@ -15,9 +20,50 @@
 
 /* BODY: Tüm sayfanın gövdesi için geçerli olacak kurallar */
 body {
-    background-color: var(--yumusak-beyaz); /* Sayfanın arka plan rengini kırık beyaz yap */
-    color: var(--koyu-yazi);                /* Genel yazı rengini koyu gri yap */
-    margin: 0;                              /* Sayfa kenarlarındaki boşlukları kaldır */
-    padding: 20px;                          /* İçerik ile ekran kenarı arasına biraz boşluk koy */
-    text-align: center;                     /* Tüm yazıları ve butonları varsayılan olarak ortala */
+    background-color: var(--yumusak-beyaz); 
+    color: var(--koyu-yazi);                
+    margin: 0;                              
+    padding: 20px;                         
+    text-align: center;                     
+}
+
+/* ANA BAŞLIK STİLİ (Örn: "Oyun Arkadaşım Cedric") */
+h1 {
+    color: var(--enerjik-mavi);
+    font-size: 2.5em; /* Yazıyı biraz büyütelim */
+}
+
+/* BUTONLARIN GENEL STİLİ */
+.menu-buton {
+    display: block; /* Butonların tüm satırı kaplamasını sağla */
+    width: 80%; /* Genişlik ekranın %80'i kadar olsun */
+    max-width: 400px; /* Ama en fazla 400px olsun */
+    margin: 15px auto; /* Üstte-altta 15px, sağda-solda otomatik boşluk (ortalamak için) */
+    padding: 20px;
+    border: none; /* Kenarlık olmasın */
+    border-radius: 20px; /* Kenarları güzelce yuvarlayalım */
+    color: white; /* Yazı rengi beyaz olsun */
+    font-size: 1.5em; /* Yazı boyutu büyük ve okunaklı olsun */
+    text-decoration: none; /* Linklerin altındaki çizgiyi kaldır */
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif bir gölge ekleyelim */
+    transition: transform 0.2s; /* Üzerine gelince olacak animasyon için hazırlık */
+}
+
+/* Butonun üzerine gelince hafifçe büyüsün */
+.menu-buton:hover {
+    transform: scale(1.05);
+}
+
+/* HER BUTONA FARKLI BİR RENK VERELİM */
+.renk-mavi { background-color: var(--enerjik-mavi); }
+.renk-sari { background-color: var(--enerjik-sari); color: var(--koyu-yazi);} /* Sarı üstünde koyu yazı daha iyi okunur */
+.renk-kirmizi { background-color: var(--enerjik-kirmizi); }
+.renk-yesil { background-color: var(--enerjik-yesil); }
+.renk-turuncu { background-color: var(--enerjik-turuncu); }
+.renk-mor { background-color: var(--enerjik-mor); }
+
+/* GERİ DÖN BUTONU */
+.geri-buton {
+    background-color: #757575; /* Nötr bir gri renk */
 }
