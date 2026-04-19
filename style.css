@@ -1,0 +1,23 @@
+/* Bu bir yorum satırıdır, kodları etkilemez. Sadece açıklama yapar. */
+
+/* KÖK STİLLER: Bütün renklerimizi ve yazı tiplerimizi burada tanımlıyoruz */
+:root {
+    --enerjik-mavi: #00A8F3;     /* Canlı bir gökyüzü mavisi */
+    --enerjik-sari: #FFD600;     /* Güneş gibi parlak bir sarı */
+    --enerjik-kirmizi: #FF4B4B; /* Enerjik ve dikkat çekici bir kırmızı */
+    --enerjik-yesil: #4CAF50;    /* Canlı bir çimen yeşili */
+    --yumusak-beyaz: #F8F9FA;    /* Göz yormayan, hafif kırık bir beyaz */
+    --koyu-yazi: #333333;       /* Okunaklı, koyu bir gri yazı rengi */
+    
+    /* Çocuklara uygun, okunaklı ve eğlenceli bir yazı tipi ailesi */
+    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+}
+
+/* BODY: Tüm sayfanın gövdesi için geçerli olacak kurallar */
+body {
+    background-color: var(--yumusak-beyaz); /* Sayfanın arka plan rengini kırık beyaz yap */
+    color: var(--koyu-yazi);                /* Genel yazı rengini koyu gri yap */
+    margin: 0;                              /* Sayfa kenarlarındaki boşlukları kaldır */
+    padding: 20px;                          /* İçerik ile ekran kenarı arasına biraz boşluk koy */
+    text-align: center;                     /* Tüm yazıları ve butonları varsayılan olarak ortala */
+}
